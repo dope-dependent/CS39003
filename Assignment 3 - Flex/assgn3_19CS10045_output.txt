@@ -1,0 +1,312 @@
+
+
+
+
+<PUNCTUATOR: #>
+<ID: include>
+<PUNCTUATOR: <>
+<ID: stdio>
+<PUNCTUATOR: .>
+<ID: h>
+<PUNCTUATOR: >>
+
+<PUNCTUATOR: #>
+<ID: include>
+<PUNCTUATOR: <>
+<ID: stdlib>
+<PUNCTUATOR: .>
+<ID: h>
+<PUNCTUATOR: >>
+
+
+<KEYWORD: struct>
+<ID: a>
+<PUNCTUATOR: {>
+
+<KEYWORD: _Bool>
+<ID: a>
+<PUNCTUATOR: ;>
+
+<KEYWORD: _Complex>
+<ID: b>
+<PUNCTUATOR: ;>
+
+<PUNCTUATOR: }>
+<PUNCTUATOR: ;>
+
+
+<KEYWORD: int>
+<ID: main>
+<PUNCTUATOR: (>
+<PUNCTUATOR: )>
+<PUNCTUATOR: {>
+
+<KEYWORD: int>
+<ID: a>
+<PUNCTUATOR: =>
+<INT_CONST: 5>
+<PUNCTUATOR: ;>
+
+<KEYWORD: const>
+<KEYWORD: int>
+<ID: b>
+<PUNCTUATOR: =>
+<INT_CONST: 22144>
+<PUNCTUATOR: ;>
+
+<KEYWORD: const>
+<KEYWORD: unsigned>
+<ID: c>
+<PUNCTUATOR: =>
+<INT_CONST: 1>
+<PUNCTUATOR: ;>
+
+<KEYWORD: unsigned>
+<KEYWORD: long>
+<KEYWORD: long>
+<ID: d>
+<PUNCTUATOR: =>
+<INT_CONST: 20006262662>
+<PUNCTUATOR: ;>
+
+
+
+<KEYWORD: float>
+<ID: _a>
+<PUNCTUATOR: =>
+<FLOATING_CONST: 4e7>
+<PUNCTUATOR: ;>
+
+<KEYWORD: float>
+<ID: _b>
+<PUNCTUATOR: =>
+<FLOATING_CONST: 1e2>
+<PUNCTUATOR: +>
+<FLOATING_CONST: 5.0>
+<PUNCTUATOR: ;>
+
+<KEYWORD: double>
+<ID: _c>
+<PUNCTUATOR: =>
+<FLOATING_CONST: 2.435E-56>
+<PUNCTUATOR: ;>
+
+<KEYWORD: float>
+<ID: _d>
+<PUNCTUATOR: =>
+<FLOATING_CONST: 0.>
+<PUNCTUATOR: ;>
+
+<KEYWORD: float>
+<ID: _e235232rhsjfh45>
+<PUNCTUATOR: =>
+<FLOATING_CONST: .523>
+<PUNCTUATOR: ;>
+
+
+
+<KEYWORD: do>
+<PUNCTUATOR: {>
+
+<KEYWORD: for>
+<PUNCTUATOR: (>
+<KEYWORD: int>
+<ID: c>
+<PUNCTUATOR: =>
+<INT_CONST: 1>
+<PUNCTUATOR: ;>
+<ID: c>
+<PUNCTUATOR: <=>
+<INT_CONST: 1>
+<PUNCTUATOR: ;>
+<ID: c>
+<PUNCTUATOR: ++>
+<PUNCTUATOR: )>
+<KEYWORD: continue>
+<PUNCTUATOR: ;>
+
+<PUNCTUATOR: }>
+<KEYWORD: while>
+<PUNCTUATOR: (>
+<ID: a>
+<PUNCTUATOR: !=>
+<INT_CONST: 5>
+<PUNCTUATOR: )>
+<PUNCTUATOR: ;>
+
+
+<KEYWORD: char>
+<ID: d1>
+<PUNCTUATOR: =>
+<CHAR_CONST: 'a'>
+<PUNCTUATOR: ;>
+
+<KEYWORD: char>
+<ID: d2>
+<PUNCTUATOR: =>
+<CHAR_CONST: '\"'>
+<PUNCTUATOR: ;>
+
+<KEYWORD: char>
+<ID: d3>
+<PUNCTUATOR: [>
+<INT_CONST: 10>
+<PUNCTUATOR: ]>
+<PUNCTUATOR: =>
+<STRING_LITERAL: "Hello\n">
+<PUNCTUATOR: ;>
+
+<KEYWORD: char>
+<ID: d4>
+<PUNCTUATOR: [>
+<INT_CONST: 50>
+<PUNCTUATOR: ]>
+<PUNCTUATOR: =>
+<STRING_LITERAL: "hello\twhatnu$#*&er02325261 make;goodtea:<3>?=-{}()\n">
+<PUNCTUATOR: ;>
+
+<KEYWORD: char>
+<ID: d5u_43>
+<PUNCTUATOR: [>
+<INT_CONST: 42>
+<PUNCTUATOR: ]>
+<PUNCTUATOR: =>
+<STRING_LITERAL: "DrDOOFENSHMIRTZ\n\tRICKANDMORTY\n">
+<PUNCTUATOR: ;>
+
+
+<KEYWORD: switch>
+<PUNCTUATOR: (>
+<ID: d1>
+<PUNCTUATOR: )>
+<PUNCTUATOR: {>
+
+<KEYWORD: case>
+<CHAR_CONST: 'a'>
+<PUNCTUATOR: :>
+<KEYWORD: break>
+<PUNCTUATOR: ;>
+
+<KEYWORD: default>
+<PUNCTUATOR: :>
+<KEYWORD: break>
+<PUNCTUATOR: ;>
+
+<PUNCTUATOR: }>
+
+
+<KEYWORD: if>
+<PUNCTUATOR: (>
+<ID: d1>
+<PUNCTUATOR: ==>
+<CHAR_CONST: 'a'>
+<PUNCTUATOR: )>
+<PUNCTUATOR: {>
+<PUNCTUATOR: }>
+
+<KEYWORD: else>
+<KEYWORD: if>
+<PUNCTUATOR: (>
+<ID: d2>
+<PUNCTUATOR: ==>
+<CHAR_CONST: 'a'>
+<PUNCTUATOR: )>
+<PUNCTUATOR: {>
+<PUNCTUATOR: }>
+
+<KEYWORD: else>
+<PUNCTUATOR: {>
+<PUNCTUATOR: }>
+
+
+<KEYWORD: int>
+<ID: e134252>
+<PUNCTUATOR: =>
+<PUNCTUATOR: (>
+<INT_CONST: 5>
+<PUNCTUATOR: +>
+<PUNCTUATOR: (>
+<INT_CONST: 9>
+<PUNCTUATOR: ->
+<INT_CONST: 12>
+<PUNCTUATOR: )>
+<PUNCTUATOR: +>
+<PUNCTUATOR: (>
+<INT_CONST: 1>
+<PUNCTUATOR: <<>
+<INT_CONST: 2>
+<PUNCTUATOR: )>
+<PUNCTUATOR: ^>
+<PUNCTUATOR: (>
+<INT_CONST: 1>
+<PUNCTUATOR: %>
+<INT_CONST: 2>
+<PUNCTUATOR: )>
+<PUNCTUATOR: )>
+<PUNCTUATOR: ;>
+
+<ID: e134252>
+<PUNCTUATOR: =>
+<ID: e134252>
+<PUNCTUATOR: &&>
+<ID: a>
+<PUNCTUATOR: ;>
+
+<ID: a>
+<PUNCTUATOR: =>
+<ID: a>
+<PUNCTUATOR: ||>
+<PUNCTUATOR: (>
+<PUNCTUATOR: !>
+<ID: e134252>
+<PUNCTUATOR: )>
+<PUNCTUATOR: ;>
+
+<ID: a>
+<PUNCTUATOR: ++>
+<PUNCTUATOR: ;>
+
+<ID: a>
+<PUNCTUATOR: -->
+<PUNCTUATOR: ;>
+
+<ID: a>
+<PUNCTUATOR: ^=>
+<INT_CONST: 2>
+<PUNCTUATOR: ;>
+
+<ID: a>
+<PUNCTUATOR: |=>
+<INT_CONST: 25>
+<PUNCTUATOR: ;>
+
+<ID: a>
+<PUNCTUATOR: %=>
+<INT_CONST: 1>
+<PUNCTUATOR: ;>
+
+<ID: a>
+<PUNCTUATOR: *=>
+<INT_CONST: 32>
+<PUNCTUATOR: ;>
+
+<ID: a>
+<PUNCTUATOR: /=>
+<INT_CONST: 2626>
+<PUNCTUATOR: ;>
+
+<ID: a>
+<PUNCTUATOR: +=>
+<INT_CONST: 12356>
+<PUNCTUATOR: ;>
+
+<KEYWORD: int>
+<PUNCTUATOR: *>
+<ID: ap>
+<PUNCTUATOR: =>
+<PUNCTUATOR: &>
+<ID: a>
+<PUNCTUATOR: ;>
+
+
+<PUNCTUATOR: }>
