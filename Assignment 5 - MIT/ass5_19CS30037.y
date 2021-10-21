@@ -1,5 +1,7 @@
 %{
 #include <stdio.h>
+#include "ass5_19CS30037_translator.h"
+
 extern int yylex();
 void yyerror(char *s);
 %}
@@ -7,6 +9,8 @@ void yyerror(char *s);
 %union
 {
         int intval;
+        char * string_type;
+        Symbol * st_entry;
 }
 
 %token STRING_LITERAL IDENTIFIER INT_CONST FLOATING_CONST CHAR_CONST ENUM_CONST SIZEOF OPEN_PARENTHESIS CLOSE_PARENTHESIS OPEN_BRACE CLOSE_BRACE OPEN_BRACKET CLOSE_BRACKET MINUS PLUS COMMA STAR SLASH MOD LESS GREATER INCREMENT DECREMENT LESS_EQUAL GREATER_EQUAL EQUAL NOT_EQUAL B_AND B_OR L_AND L_OR B_XOR ADD_ASSGN SUB_ASSGN MUL_ASSGN DIV_ASSGN MOD_ASSGN L_SHIFT R_SHIFT L_SHIFT_ASSGN R_SHIFT_ASSGN ASSGN TILDE EXCLAM DOT POINTER_DEREF COLON SEMI_COLON QUESTION AND_ASSGN OR_ASSGN XOR_ASSGN EXTERN STATIC AUTO REGISTER VOID CHAR SHORT INT LONG FLOAT DOUBLE SIGNED UNSIGNED BOOL COMPLEX IMAGINARY ENUM CONST RESTRICT VOLATILE INLINE CASE DEFAULT IF ELSE SWITCH WHILE DO FOR GOTO CONTINUE BREAK RETURN
@@ -22,30 +26,62 @@ void yyerror(char *s);
 /* Expressions */
 
 primary_expression: IDENTIFIER
-                  { printf("primary-expression -> identifier\n"); }
+                  {     $$ = new Expression();
+                        $$->loc = $1;
+                        $$->type = "int";
+                  }
 
-                  | constant
-                  { printf("primary-expression -> constant\n"); }
-
+                  | INT_CONST
+                  { 
+                        $$ = new Expression();
+                        $$->loc = ST->gentemp(new SymbolType("int"));
+                        $$->loc->initial_value = conv_int2string($1);
+                        emit("=",$$->loc->name, $$->loc->initial_value);
+                  }
+                  | FLOATING_CONST
+                  {
+                        $$ = new Expression();
+                        $$->loc = ST->gentemp(new SymbolType("float"));
+                        $$->loc->initial_value = $1;
+                        emit("=", $$->loc->name, $$->loc->initial_value);
+                  }
+                  | CHAR_CONST 
+                  {
+                        $$ = new Expression();
+                        $$->loc = ST->gentemp(new SymbolType("char"));
+                        $$->loc->initial_value = $1;
+                        emit("=", $$->loc->name, $$->loc->initial_value);
+                  }
                   | STRING_LITERAL
-                  { printf("primary-expression -> string-literal\n"); }
+                  { 
+                        $$ = new Expression();
+                        $$->loc = ST->gentemp(new SymbolType("ptr"));
+                        $$->loc->next = new SymbolType("char");
+                        $$->loc->initial_value = $1;
+                        emit("=", $$->loc->name, $$->loc->initial_value);
+                  }
 
                   | OPEN_PARENTHESIS expression CLOSE_PARENTHESIS
-                  { printf("primary-expression -> ( expression )\n"); }
-
+                  { 
+                        $$ = $2; 
+                  }
                   ;
 
-constant: INT_CONST
-        | FLOATING_CONST
-        | CHAR_CONST
-        | ENUM_CONST
-        ;
-
 postfix_expression: primary_expression
-                  { printf("postfix-expression -> primary-expression\n"); }
+                  { 
+                          $$ = new Array();
+                          $$->array = $1->loc;
+                          $$->loc = $1->loc;
+                          $$->type = $1->loc->type;
+                  }
 
                   | postfix_expression OPEN_BRACKET expression CLOSE_BRACKET
-                  { printf("postfix-expression -> postfix-expression [ expression ]\n"); }
+                  {
+                          $$ = new Array();
+                          $$->type = $1->type->next;
+                          $$->array = $1->array;
+                          $$->loc = ST->gentemp(new SymbolType("int"))
+                  }
 
                   | postfix_expression OPEN_PARENTHESIS argument_expression_list_opt CLOSE_PARENTHESIS
                   { printf("postfix-expression -> postfix-expression ( argument-expression-list(opt) )\n"); }

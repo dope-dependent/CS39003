@@ -1,6 +1,10 @@
 %{
-#include "y.tab.h"
+#include "ass5_19CS30037.tab.h"
+#include "ass5_19CS30037_translator.h"
 
+#include <cstdlib>
+
+extern YYSTYPE yylval;
 %}
 
 /* Regular Expressions Definitions */
@@ -59,11 +63,28 @@ WS             [ \t]
 "continue"       { return CONTINUE; }
 "break"          { return BREAK; }
 "return"         { return RETURN; }
-{INT_CONST}      { return INT_CONST; }
-{FLOATING_CONST} { return FLOATING_CONST; }
-{CHAR_CONST}     { return CHAR_CONST; }
-{STRING_LITERAL} { return STRING_LITERAL; }
-{IDENTIFIER}     { return IDENTIFIER; }
+
+{INT_CONST}      { yylval.intval = atoi(yytext);
+                   return INT_CONST; 
+                 }
+
+{FLOATING_CONST} { yylval.string_type = yytext;
+                   return FLOATING_CONST; 
+                 }
+
+{CHAR_CONST}     { yylval.string_type = yytext;
+                   return CHAR_CONST; 
+                 }
+
+{STRING_LITERAL} { yylval.string_type = yytext;
+                   return STRING_LITERAL; 
+                 }
+
+{IDENTIFIER}     { 
+                   yylval.st_entry = ST->lookup(yytext);
+                   return IDENTIFIER; 
+                 }
+                 
 {ENUM_CONST}     { return ENUM_CONST; }
 "("              { return OPEN_PARENTHESIS; }
 ")"              { return CLOSE_PARENTHESIS; }

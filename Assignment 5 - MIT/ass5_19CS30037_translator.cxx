@@ -93,11 +93,12 @@ Symbol * Symboltable::lookup(string _id) {
 }
 
 // Gentemp function to generate temporaries
-Symbol * Symboltable::gentemp() {
+Symbol * Symboltable::gentemp(SymbolType * _type) {
     // Name of the temporary TEMP_x, x = count of the temporaries
     string namx = "TEMP_";
     namx += to_string(this->temporary_count++);
     Symbol * ns = new Symbol(namx);
+    ns->type = _type;
 
     this->symbols.push_back(*ns);
     return &this->symbols.back();   // The latest symbol
@@ -141,7 +142,12 @@ void Symboltable::print() {
 Quad::Quad(string _res, string _op, string _arg1, string _arg2) 
     : res(_res), op(_op), arg1(_arg1), arg2(_arg2) {}
 
+// Used to set the result of the quad (used when backpatching)
+void Quad::set_res(std::string _res) {
+    this->res = _res;
+}
 
+// Print the quad
 void Quad::print() {
     // Get the quad operator
     // Relational, arithmetic and shift operators involve two operands
@@ -250,24 +256,40 @@ void backpatch(vector<int> &p1, int i) {
     string s = conv_int2string(i);    
     // Add i as the target label for all quads on the list in p1
     for (auto p : p1) {
-        Q.quads[p].res = s;
+        Q.quads[p].set_res(s);
     }
 }
 
 // Conversion of int type expression into bool type expression as done in the class
+// Note, that characters and floats can also be similarly converted to boolean types
 void conv_int2bool(Expression &E) {
-    // Sanity Checking to ensure that the expression is not already boolean
-    if (E.type != "bool") {
+    if (E.type == "int") {
         E.falselist = makelist(nextinstr());    // Update the falselist
         emit("==", "", E.loc->name, "0");       // Goto statement
         E.truelist = makelist(nextinstr());     // Update truelist
         emit("goto","");                        // Wait for backpatching
-    }
+    }    
 }
+void conv_float2bool(Expression &E) {
+    if (E.type == "float") {
+        E.falselist = makelist(nextinstr());    // Update the falselist
+        emit("==", "", E.loc->name, "0.0");     // Goto statement
+        E.truelist = makelist(nextinstr());     // Update truelist
+        emit("goto","");                        // Wait for backpatching
+    }    
+}
+void conv_char2bool(Expression &E) {
+    if (E.type == "char") {
+        E.falselist = makelist(nextinstr());    // Update the falselist
+        emit("==", "", E.loc->name, "\\'\0'");  // Goto statement
+        E.truelist = makelist(nextinstr());     // Update truelist
+        emit("goto","");                        // Wait for backpatching
+    }    
+}
+
 
 // Conversion of bool type expression into int type expression 
 void conv_bool2int(Expression &E) {
-    // Sanity checking to ensure that expression is boolean
     if (E.type == "bool") {
         SymbolType * ts = new SymbolType("int");
         E.loc = gentemp(&ST, ts);
@@ -278,10 +300,78 @@ void conv_bool2int(Expression &E) {
         emit("goto", strx);
         backpatch(E.falselist, nextinstr());
         emit("=", E.loc->name, "false");
-    }
+    }    
 }
 
-// Check the types of E1 and E2 and convert if types are compatible
+// Conversion to float is similar to int
+// Only the basic type is changed
+void conv_bool2float(Expression &E) {
+    if (E.type == "bool") {
+        SymbolType * ts = new SymbolType("float");
+        E.loc = gentemp(&ST, ts);
+        backpatch(E.truelist, nextinstr());
+        emit("==", E.loc->name, "true", "");
+        int nx = nextinstr() + 1;
+        string strx = conv_int2string(nx);
+        emit("goto", strx);
+        backpatch(E.falselist, nextinstr());
+        emit("=", E.loc->name, "false");
+    }    
+}
+
+// Conversion to char is the same as int
+// Only the basic type is changed
+void conv_bool2char(Expression &E) {
+    if (E.type == "bool") {
+        SymbolType * ts = new SymbolType("char");
+        E.loc = gentemp(&ST, ts);
+        backpatch(E.truelist, nextinstr());
+        emit("==", E.loc->name, "true", "");
+        int nx = nextinstr() + 1;
+        string strx = conv_int2string(nx);
+        emit("goto", strx);
+        backpatch(E.falselist, nextinstr());
+        emit("=", E.loc->name, "false");
+    }       
+}
+
+
+// Check the types of E1 and E2 and convert 
+// E1 to E2 if possible
+void typecheck (Expression &E1, Expression &E2) {
+    if (E1.type == E2.type) return;
+    // Int to bool conversion
+    if (E1.type == "bool") {
+        if (E2.type == "int") conv_bool2int(E1);
+        else if (E2.type == "float") conv_bool2float(E1);
+        else if (E2.type == "char") conv_bool2char(E1);
+        else {
+            // Flag error
+        }
+    }
+    else if (E1.type == "int") {
+        if (E2.type == "bool") conv_int2bool(E1);
+        if (E2.type == "float") conv_int2float(E1);
+        else {
+            // Flag error
+        }
+    }
+    else if (E1.type == "float") {
+        if (E2.type == "bool") conv_float2bool(E1);
+        else {
+            // Flag error
+        }
+    }
+    else if (E1.type == "char") {
+        if (E2.type == "bool") conv_char2bool(E1);
+        else {
+            // Flag error
+        }
+    }
+    else {
+        // Flag error
+    }
+}
 
 // Go to the next instruction
 /* Next instruction is the index which is one larger than the largest
@@ -293,3 +383,18 @@ int nextinstr() {
     return Q.quads.size();
 }
 
+
+
+// Conversion to string
+string conv_int2string(int a) {
+    return to_string(a);
+}
+
+string conv_float2sring(float b) {
+    return to_string(b);
+}
+
+
+Symbol * gentemp (Symboltable * s, SymbolType * type) {
+    return s->gentemp(type);
+}

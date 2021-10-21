@@ -10,6 +10,15 @@
 #include <vector>
 #include <iostream>
 #include <map> 
+#include <cmath>
+
+// Declarations of all classes to avoid any conflicts
+class SymbolType;
+class Symbol;
+class Symboltable;
+class SymtabStack;
+class Quad;
+class QuadArray;
 
 extern QuadArray Q;             // The program array of quads
 extern Symboltable ST;          // The current symbol table
@@ -58,7 +67,7 @@ public:
     Symboltable(std::string _name, Symboltable * _parent = nullptr);    // New symbol table
     Symboltable();                      // Empty constructor
     Symbol * lookup(std::string id);     // Lookup a given symbol using name
-    Symbol * gentemp();                  // Generate a new temporary and insert it into the symbol table
+    Symbol * gentemp(SymbolType *);      // Generate a new temporary and insert it into the symbol table
     void print();                        // Print the symbol table
     void update();                       // Update the symbol table
 };
@@ -86,13 +95,13 @@ public:
     // Constructor
     Quad (std::string _res, std::string _op, std::string _arg1 = "", std::string _arg2 = "");
     void print();                       // Print the quad
+    void set_res(std::string _res);          // Set the result (used in backpatching)
 };
 
 // Definition of the Quad Array
 class QuadArray {
-private:
-    std::vector<Quad> quads;            // All the quads stored in the array
 public:
+    std::vector<Quad> quads;            // All the quads stored in the array
     void insert (Quad q);               // Insert a quad into the quad array
     void print();                       // Print all the quads
 };
@@ -120,9 +129,9 @@ struct Next {
 
 // Arrays in Expression
 struct Array {
-    Symbol * loc;  
-    Symbol * array;
-    SymbolType * type;
+    Symbol * loc;   // Location
+    Symbol * array; // Array location
+    SymbolType * type; // Array type
 };
 
 // Global Functions
@@ -142,18 +151,24 @@ void backpatch (std::vector <int> &p, int i);
 void typecheck (Expression &E1, Expression &E2);
 
 // Conversion of int and float to string
-inline std::string conv_int2string (int a) {return to_string(a);}
-inline std::string conv_float2sring (float a) {return to_string(a);}
+std::string conv_int2string (int a);
+std::string conv_float2sring (float a);
 // Conversion of string to float and int
 inline int conv_string2int (std::string s) {return stoi(s);}
 inline float conv_string2float (std::string s) {return stof(s);}
 // Convert integer to float by multiplying by 1.0
 inline float conv_int2float (int a) {return a * 1.0;}
+// Convert float to int by taking the floor of the floating point value. 
+inline int conv_float2int (float a) {return floor(a);}
 
 // Integer to Boolean conversion in Conditional Expressions
 void conv_int2bool (Expression &E);
+void conv_float2bool (Expression &E);
+void conv_char2bool (Expression &E);
 void conv_bool2int (Expression &E);
 
+void conv_int2float(Expression &E);
+void conv_char2int(Expression &E);
 
 // Next instruction address
 int nextinstr();
