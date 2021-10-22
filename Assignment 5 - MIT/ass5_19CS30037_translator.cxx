@@ -4,7 +4,7 @@ using namespace std;
 
 // Global Variables Q for array of all quads and ST for current symbol table
 QuadArray Q;
-Symboltable ST;
+Symboltable *ST;
 
 // Basic Types and Sizes
 map <string, int> basic_sizes = {
@@ -292,11 +292,10 @@ void conv_char2bool(Expression &E) {
 void conv_bool2int(Expression &E) {
     if (E.type == "bool") {
         SymbolType * ts = new SymbolType("int");
-        E.loc = gentemp(&ST, ts);
+        E.loc = gentemp(ST, ts);
         backpatch(E.truelist, nextinstr());
         emit("==", E.loc->name, "true", "");
-        int nx = nextinstr() + 1;
-        string strx = conv_int2string(nx);
+        string strx = conv_int2string(nextinstr() + 1);
         emit("goto", strx);
         backpatch(E.falselist, nextinstr());
         emit("=", E.loc->name, "false");
@@ -308,7 +307,7 @@ void conv_bool2int(Expression &E) {
 void conv_bool2float(Expression &E) {
     if (E.type == "bool") {
         SymbolType * ts = new SymbolType("float");
-        E.loc = gentemp(&ST, ts);
+        E.loc = gentemp(ST, ts);
         backpatch(E.truelist, nextinstr());
         emit("==", E.loc->name, "true", "");
         int nx = nextinstr() + 1;
@@ -324,7 +323,7 @@ void conv_bool2float(Expression &E) {
 void conv_bool2char(Expression &E) {
     if (E.type == "bool") {
         SymbolType * ts = new SymbolType("char");
-        E.loc = gentemp(&ST, ts);
+        E.loc = gentemp(ST, ts);
         backpatch(E.truelist, nextinstr());
         emit("==", E.loc->name, "true", "");
         int nx = nextinstr() + 1;
@@ -397,4 +396,60 @@ string conv_float2sring(float b) {
 
 Symbol * gentemp (Symboltable * s, SymbolType * type) {
     return s->gentemp(type);
+}
+
+// Compare Symbols and Check if conversion is possible
+// Convert if conversion is possible
+int compare(Symbol * &s1, Symbol * &s2) {
+    if (compare(s1->type, s2->type) == 1) return 1;
+    // Try to convert s1 to s2 (flag 2)
+    pair <Symbol *, bool> c = convert(s1, s2->type->name);
+    if (c.second) {
+        s1 = c.first;
+        return 2;
+    }
+    // Convert s2 to s1 (flag 3)
+    c = convert(s2, s1->type->name);
+    if (c.second) {
+        s2 = c.first;
+        return 3;
+    }
+    // Conversion impossible (flag 0)
+    return 0;
+}
+
+// Compare Symbol Types
+int compare(SymbolType *s1, SymbolType *s2) {
+    // Follow the order
+    // char --> int --> float
+    if (s1 == nullptr && s2 == nullptr) return 1;
+    if (s1 == nullptr || s2 == nullptr) return 0;
+    if (s1->getType() != s2->getType()) return 0;
+    if (s1->size != s2->size) return 0;
+    return compare(s1->next, s2->next);
+}
+
+// Convert a symbol to a given type
+pair<Symbol *, bool> convert(Symbol *s, std::string type) {
+    Symbol *temp = ST->gentemp(new SymbolType(type));
+    // Only conversion between standard types
+    if (s->type->name == "int" && s->type->next == nullptr) {
+        if (type == "float") {
+            emit("=", temp->name, "int2float(" + s->name + ")");
+            return make_pair(temp, true);
+        }
+        else return make_pair(s, false);
+    }
+    else if (s->type->name == "char" && s->type->next == nullptr) {
+        if (type == "int") {
+            emit("=", temp->name, "char2int(" + s->name + ")");
+            return make_pair(temp, true);
+        }
+        else if (type == "float") {
+            emit("=", temp->name, "char2float(" + s->name + ")");
+            return make_pair(temp, true);
+        }
+        else return make_pair(s, false);
+    }
+    else return make_pair(s, false);
 }

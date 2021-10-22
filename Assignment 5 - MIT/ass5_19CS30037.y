@@ -24,7 +24,25 @@ void yyerror(char *s);
 
 
 /* Expressions */
+M: 
+ {
+      // M is used for backpatching in conditional
+      // and control constructs, it stores the address of the
+      // next quad which will then be backpatched to the constructs
+      $$ = nextinstr();
+ }
+ ;
 
+N:
+ {
+      // N is used as a fallthrough guard
+      // It inserts a goto statement and stores the index
+      // of the next goto
+      $$ = new Next();
+      $$->nextlist = makelist(nextinstr());
+      emit("goto", "");
+ }
+ ;
 primary_expression: IDENTIFIER
                   {     $$ = new Expression();
                         $$->loc = $1;
@@ -69,218 +87,540 @@ primary_expression: IDENTIFIER
 
 postfix_expression: primary_expression
                   { 
-                          $$ = new Array();
-                          $$->array = $1->loc;
-                          $$->loc = $1->loc;
-                          $$->type = $1->loc->type;
+                        $$ = new Array();
+                        $$->array = $1->loc;
+                        $$->loc = $1->loc;
+                        $$->type = $1->loc->type;
                   }
 
                   | postfix_expression OPEN_BRACKET expression CLOSE_BRACKET
                   {
-                          $$ = new Array();
-                          $$->type = $1->type->next;
-                          $$->array = $1->array;
-                          $$->loc = ST->gentemp(new SymbolType("int"))
+                        $$ = new Array();
+                        $$->type = $1->type->next;
+                        $$->array = $1->array;
+                        $$->loc = ST->gentemp(new SymbolType("int"));
+                        // Check if we have nested array
+                        if ($1->type == "arr") {
+                              Symbol * t = ST->gentemp(new SymbolType("int"));
+                              // Multiply by the size
+                              int t_size = $$->type->getSize();
+                              emit("*", t->name, $3->loc->name, conv_int2string(t_size));
+                              // Add to the previous size
+                              emit("+", $$->loc->name, $1->loc->name, t->name);
+                        }
+                        // No nested array, directly compute size
+                        else {
+                              Symbol * t = ST->gentemp(new SymbolType("int"));
+                              int t_size = $$->type->getSize();
+                              emit("*", $$->loc->name, $3->loc->name, conv_int2string(t_size));
+                        }
+
                   }
 
                   | postfix_expression OPEN_PARENTHESIS argument_expression_list_opt CLOSE_PARENTHESIS
-                  { printf("postfix-expression -> postfix-expression ( argument-expression-list(opt) )\n"); }
+                  {
+                        // Function call
+                        $$ = new Array();
+                        $$->array = ST->gentemp($1->type);
+                        // call function_name and send in the number of parameters ($3)
+                        emit("call", $$->array->name, $1->array->name, conv_int2string($3));
+                  }
 
-                  | postfix_expression DOT IDENTIFIER
-                  { printf("postfix-expression -> postfix-expression . identifier\n"); }
+                  | postfix_expression DOT IDENTIFIER { }
 
-                  | postfix_expression POINTER_DEREF IDENTIFIER
-                  { printf("postfix-expression -> postfix-expression −> identifier\n"); }
+                  | postfix_expression POINTER_DEREF IDENTIFIER { }
 
                   | postfix_expression INCREMENT
-                  { printf("postfix-expression -> postfix-expression++\n"); }
+                  { 
+                        // First store the value in a temporary and then increment by 1
+                        $$ = new Array();
+                        $$->array = ST->gentemp($1->array->type);
+                        emit("=", $$->array->name, $1->array->name);
+                        emit("+", $1->array->name, $1->array->name, "1");
+                  }
 
                   | postfix_expression DECREMENT
-                  { printf("postfix-expression -> postfix-expression--\n"); }
+                  { 
+                        // First store the value in a temporary and then decrement by 1
+                        $$ = new Array();
+                        $$->array = ST->gentemp($1->array->type);
+                        emit("=", $$->array->name, $1->array->name);
+                        emit("-", $1->array->name, $1->array->name, "1");
+                  }
 
-                  | OPEN_PARENTHESIS type_name CLOSE_PARENTHESIS OPEN_BRACE initializer_list CLOSE_BRACE
-                  { printf("postfix-expression -> ( type-name ) { initializer-list }\n"); }
+                  | OPEN_PARENTHESIS type_name CLOSE_PARENTHESIS OPEN_BRACE initializer_list CLOSE_BRACE { }
 
-                  | OPEN_PARENTHESIS type_name CLOSE_PARENTHESIS OPEN_BRACE initializer_list COMMA CLOSE_BRACE
-                  { printf("postfix-expression -> ( type-name ) { initializer-list , }\n"); }
+                  | OPEN_PARENTHESIS type_name CLOSE_PARENTHESIS OPEN_BRACE initializer_list COMMA CLOSE_BRACE { }
 
                   ;
 
-argument_expression_list_opt: argument_expression_list
+
+argument_expression_list_opt: argument_expression_list 
+                            {
+                                  $$ = $1;     // Equal to number of params in list
+                            }
                             |
+                            {
+                                  $$ = 0;      // No parameters
+                            }
                             ;
 
 argument_expression_list: assignment_expression
-                        { printf("assignment-expression-list -> assignment-expression\n"); }
+                        { 
+                              $$ = 1;          // One argument param parameter_name
+                              emit("param", $1->loc->name);
+                        }
 
                         | argument_expression_list COMMA assignment_expression
-                        { printf("assignment-expression-list -> argument-expression-list , assignment-expression\n"); }
-
+                        { 
+                              // Many emissions of params
+                              $$ = $1 + 1;
+                              emit("param", $3->loc->name); // Emit the name of the assignment_expression    
+                        }
                         ;
 
 unary_expression: postfix_expression
-                { printf("unary-expression -> postfix-expression\n"); }
+                { 
+                      $$ = $1;      // Equate both the expressions
+                }
 
                 | INCREMENT unary_expression
-                { printf("unary-expression -> ++unary-expression\n"); }
+                { // Add 1 to the expression and then make them equal
+                      emit("+", $2->loc->name, $2->loc->name, "1");
+                      $$ = $2;
+                }
 
                 | DECREMENT unary_expression
-                { printf("unary-expression -> --unary-expression\n"); }
+                {
+                      // Subtract 1 and then make them equal
+                      emit("-", $2->loc->name, $2->loc->name, "1");
+                      $$ = $2;
+                }     
 
                 | unary_operator cast_expression
-                { printf("unary-expression -> unary-operator cast-expression\n"); }
+                {
+                      // Checking all the unary operators one by 1
+                      $$ = new Array();
+                      // Check first character
+                      switch ($1[0]) {
+                        case '&':   // Generation of pointer
+                                    // The new temp has type ptr(type of $2)
+                                    $$->array = ST->gentemp(new SymbolType("ptr"));
+                                    $$->array->type->next = $2->array->type;
+                                    emit("=&", $$->array->name, $2->array->name);
+                                    break;
+                        case '*':   // Pointer Dereferencing and value generation
+                                    $$->loc = ST->gentemp($2->array->type->next);
+                                    $$->array = $2->array;
+                                    emit("=*", $$->loc->name, $2->array->name);
+                                    break;
+                        case '+':   // Unary +, expression copy
+                                    $$ = $2;
+                                    break;
+                        case '-':   // Unary -, create a temporary of same type
+                                    $$->array = ST->gentemp(new SymbolType($2->array->type->name));
+                                    emit("uminus", $$->array->name, $2->array->name);
+                                    break;
+                        case '~':   // Bitwise NOT, handled in a similar manner
+                                    $$->array = ST->gentemp(new SymbolType($2->array->type->name));
+                                    emit("~", $$->array->name, $2->array->name);
+                                    break;
+                        case '!':   // Logical NOT, generate new temporary of same type
+                                    $$->array = ST->gentemp(new SymbolType($2->array->type->name));
+                                    emit("!", $$->array->name, $2->array->name);
+                                    break;
+                      }             
+                }
 
-                | SIZEOF unary_expression
-                { printf("unary-expression -> sizeof unary-expression\n"); }
+                | SIZEOF unary_expression { }
 
-                | SIZEOF OPEN_PARENTHESIS type_name CLOSE_PARENTHESIS
-                { printf("unary-expression -> sizeof ( type-name )\n"); }
-
+                | SIZEOF OPEN_PARENTHESIS type_name CLOSE_PARENTHESIS { }
                 ;
 
 unary_operator: B_AND
-              { printf("unary-operator -> &\n"); }
-
+              { $$ = "&"; }
+              
               | STAR
-              { printf("unary-operator -> *\n"); }
+              { $$ = "*"; }
 
               | PLUS 
-              { printf("unary-operator -> +\n"); }
+              { $$ = "+"; }
 
               | MINUS 
-              { printf("unary-operator -> -\n"); }
+              { $$ = "-"; }
 
               | TILDE 
-              { printf("unary-operator -> ~\n"); }               
+              { $$ = "~"; }               
 
               | EXCLAM 
-              { printf("unary-operator -> !\n"); }
-
+              { $$ = "!"; }
               ;
 
 cast_expression: unary_expression 
-               { printf("cast-expression -> unary-expression\n"); }
+               { 
+                     $$ = $1; // Simply equate in the case of unary expression
+               }
 
 
                | OPEN_PARENTHESIS type_name CLOSE_PARENTHESIS cast_expression 
-               { printf("cast-expression -> ( type-name ) cast-expression\n"); }
-
+               { 
+                     // If Cast type is given, generate a symbol of 
+                     // new type
+                     $$ = new Array();
+                     $$->array->update(new SymbolType($2));
+               }
                ;
 
 multiplicative_expression: cast_expression 
-                         { printf("multiplicative-expression -> cast-expression\n"); }
+                         { 
+                              $$ = new Expression();
+                              if ($1->type->name == "arr") {
+                                    $$->loc = ST->gentemp($1->loc->type);
+                                    emit("=[]", $$->loc->name, $1->array->name, $1->loc->name);
+                              }
+                              else if ($1->type->name == "ptr") {
+                                    $$->loc = $1->loc;
+                              }     
+                              else {
+                                    $$->loc = $1->array;
+                              }
+                         }
 
                          | multiplicative_expression STAR cast_expression 
-                         { printf("multiplicative-expression -> multiplicative-expression ∗ cast-expression\n"); }
+                         { 
+                              if (!compare($1->loc, $3->array)) {
+                                    cout << "TypeError: Multiplication between inconvertible types\n";
+                              }
+                              else {
+                                    // Types have already been changed
+                                    // New temporary for the product
+                                    $$ = new Expression();
+                                    $$->loc = ST->gentemp($1->loc->type->name);
+                                    emit("*", $$->loc->name, $1->loc->name, $3->array->name);
+                              }
+                         }
 
                          | multiplicative_expression SLASH cast_expression 
-                         { printf("multiplicative-expression -> multiplicative-expression / cast-expression\n"); }
+                         { 
+                              if (!compare($1->loc, $3->array)) {
+                                    cout << "TypeError: Division between inconvertible types\n";
+                              }
+                              else {
+                                    // Types have already been changed
+                                    // New temporary for the quotient
+                                    $$ = new Expression();
+                                    $$->loc = ST->gentemp($1->loc->type->name);
+                                    emit("/", $$->loc->name, $1->loc->name, $3->array->name);
+                              }
+                         }
 
                          | multiplicative_expression MOD cast_expression 
-                         { printf("multiplicative-expression -> multiplicative-expression %% cast-expression\n"); }
+                         { 
+                              if (!compare($1->loc, $3->array)) {
+                                    cout << "TypeError: Division between inconvertible types\n";
+                              }
+                              else {
+                                    // Types have already been changed
+                                    // New temporary for the remainder
+                                    $$ = new Expression();
+                                    $$->loc = ST->gentemp($1->loc->type->name);
+                                    emit("%", $$->loc->name, $1->loc->name, $3->array->name);
+                              }      
+                         }
 
                          ;
 
 additive_expression: multiplicative_expression
-                   { printf("additive-expression -> multiplicative-expression\n"); }
+                   { 
+                        $$ = $1; // Simply equate expressions 
+                   }
 
                    | additive_expression PLUS multiplicative_expression
-                   { printf("additive-expression -> additive-expression + multiplicative-expression\n"); }
+                   { 
+                        // Type checking and conversion first
+                        if (!compare($1->loc, $3->array)) {
+                              cout << "TypeError: Addition between inconvertible types\n";
+                        }
+                        else {
+                              // Types have already been changed
+                              // New temporary for the sum
+                              $$ = new Expression();
+                              $$->loc = ST->gentemp($1->loc->type->name);
+                              emit("+", $$->loc->name, $1->loc->name, $3->array->name);
+                        }
+                   }
 
                    | additive_expression MINUS multiplicative_expression
-                   { printf("additive-expression -> additive-expression − multiplicative-expression\n"); }
+                   { 
+                        if (!compare($1->loc, $3->array)) {
+                              cout << "TypeError: Subtraction between inconvertible types\n";
+                        }
+                        else {
+                              // Types have already been changed
+                              // New temporary for the sum
+                              $$ = new Expression();
+                              $$->loc = ST->gentemp($1->loc->type->name);
+                              emit("-", $$->loc->name, $1->loc->name, $3->array->name);
+                        }
+                   }
 
                    ;
 
 shift_expression: additive_expression
-                { printf("shift-expression -> additive-expression\n"); }
+                { 
+                      $$ = $1; // Equate the expressions
+                }
 
                 | shift_expression L_SHIFT additive_expression
-                { printf("shift-expression -> shift-expression << additive-expression\n"); }
+                { 
+                      // In shift (x << i),x and i must be integers
+                      // the $3 must be of integer type
+                      if (!($3->type->name == "int" && $1->type->name == "int")) {
+                        cout << "TypeError: Bits to shift should be integers\n";
+                      }
+                      // Else shift and generate temporary
+                      else {
+                        $$ = new Expression();
+                        $$->loc = ST->gentemp(new SymbolType("int"));
+                        emit("<<", $$->loc->name, $1->loc->name, $3->loc->name);      
+                      }
+                }
 
                 | shift_expression R_SHIFT additive_expression
-                { printf("shift-expression -> hift-expression >> additive-expression\n"); }
-
+                { // Similar to left shift 
+                      if (!($3->type->name == "int" && $1->type->name == "int")) {
+                        cout << "TypeError: Bits to shift should be integers\n";
+                      }
+                      else {
+                        $$ = new Expression();
+                        $$->loc = ST->gentemp(new SymbolType("int"));
+                        emit("<<", $$->loc->name, $1->loc->name, $3->loc->name);      
+                      }
+                }
                 ;
 
 relational_expression: shift_expression
-                     { printf("relational-expression -> shift-expression\n"); }
+                     { 
+                        $$ = $1; // Equate 
+                     }
 
                      | relational_expression LESS shift_expression
-                     { printf("relational-expression -> relational-expression < shift-expression\n"); }
+                     { 
+                        // Again compare symbol types
+                        if (!compare($1->loc, $3->loc)) {
+                              yyerror("TypeError: Comparison between incompatible types");
+                        }
+                        else {
+                              $$ = new Expression();
+                              $$->type == "bool";     // New expression of type bool
+                              $$->truelist = makelist(nextinstr()); // the instr numbers of true path
+                              $$->falselist = makelist(nextinstr() + 1); // the instr numbers of false path 
+                              emit("<", "", $1->loc->name, $3->loc->name); // If a < b, goto ... (backpatched later)
+                              emit("goto", ""); // goto ... (backpatched later)
+                        }
+                     }
 
                      | relational_expression GREATER shift_expression
-                     { printf("relational-expression -> relational-expression > shift-expression\n"); }
+                     { 
+                        // Compare Symbol Types
+                        if (!compare($1->loc, $3->loc)) {
+                              yyerror("TypeError: Comparison between incompatible types");
+                        }
+                        else {
+                              $$ = new Expression();
+                              $$->type == "bool";     // New expression of type bool
+                              $$->truelist = makelist(nextinstr()); // the instr numbers of true path
+                              $$->falselist = makelist(nextinstr() + 1); // the instr numbers of false path 
+                              emit(">", "", $1->loc->name, $3->loc->name); // If a > b, goto ... (backpatched later)
+                              emit("goto", ""); // goto ... (backpatched later)
+                        }
+                     }
 
                      | relational_expression LESS_EQUAL shift_expression
-                     { printf("relational-expression -> relational-expression <= shift-expression\n"); }
+                     { 
+                        // Compare Symbol Types
+                        if (!compare($1->loc, $3->loc)) {
+                              yyerror("TypeError: Comparison between incompatible types");
+                        }
+                        else {
+                              $$ = new Expression();
+                              $$->type == "bool";     // New expression of type bool
+                              $$->truelist = makelist(nextinstr()); // the instr numbers of true path
+                              $$->falselist = makelist(nextinstr() + 1); // the instr numbers of false path 
+                              emit("<=", "", $1->loc->name, $3->loc->name); // If a <= b, goto ... (backpatched later)
+                              emit("goto", ""); // goto ... (backpatched later)
+                        }
+                     }
 
                      | relational_expression GREATER_EQUAL shift_expression
-                     { printf("relational-expression -> relational-expression >= shift-expression\n"); }
+                     { 
+                        // Compare Symbol Types
+                        if (!compare($1->loc, $3->loc)) {
+                              yyerror("TypeError: Comparison between incompatible types");
+                        }
+                        else {
+                              $$ = new Expression();
+                              $$->type == "bool";     // New expression of type bool
+                              $$->truelist = makelist(nextinstr()); // the instr numbers of true path
+                              $$->falselist = makelist(nextinstr() + 1); // the instr numbers of false path 
+                              emit(">=", "", $1->loc->name, $3->loc->name); // If a > b, goto ... (backpatched later)
+                              emit("goto", ""); // goto ... (backpatched later)
+                        }
+                     }
 
                      ;
 
 equality_expression: relational_expression
-                   { printf("equality-expression -> relational-expression\n"); }
+                   { $$ = $1; }
 
                    | equality_expression EQUAL relational_expression
-                   { printf("equality-expression -> equality-expression == relational-expression\n"); }
+                   { 
+                        if (!compare($1->loc, $3->loc)) {
+                              yyerror("TypeError: Comparison between incompatible types");
+                        }
+                        else {
+                              // Implicit conversion between bool and int types
+                              conv_bool2int($1);
+                              conv_bool2int($3);
+                              $$ = new Expression();
+                              $$->type == "bool";     // New expression of type bool
+                              $$->truelist = makelist(nextinstr()); // the instr numbers of true path
+                              $$->falselist = makelist(nextinstr() + 1); // the instr numbers of false path 
+                              emit("==", "", $1->loc->name, $3->loc->name); // If a > b, goto ... (backpatched later)
+                              emit("goto", ""); // goto ... (backpatched later)
+                        }
+                   }
 
                    | equality_expression NOT_EQUAL relational_expression
-                   { printf("equality-expression -> equality-expression != relational-expression\n"); }
+                   { 
+                        if (!compare($1->loc, $3->loc)) {
+                              yyerror("TypeError: Comparison between incompatible types");
+                        }
+                        else {
+                              // Implicit conversion between bool and int types
+                              conv_bool2int($1);
+                              conv_bool2int($3);
+                              $$ = new Expression();
+                              $$->type == "bool";     // New expression of type bool
+                              $$->truelist = makelist(nextinstr()); // the instr numbers of true path
+                              $$->falselist = makelist(nextinstr() + 1); // the instr numbers of false path 
+                              emit("!=", "", $1->loc->name, $3->loc->name); // If a > b, goto ... (backpatched later)
+                              emit("goto", ""); // goto ... (backpatched later)
+                        }
+                   }
 
                    ;
                    
 and_expression: equality_expression
-              { printf("AND-expression -> equality-expression\n"); }
+              { $$ = $1; }
 
               | and_expression B_AND equality_expression
-              { printf("AND-expression -> AND-expression & equality-expression\n"); }
-              
+              { 
+                  // compatibility
+                  if (!compare($1->loc, $3->loc)) {
+                        yyerror("TypeError: Bitwise AND between incompatible types");
+                  }
+                  else {
+                        // Implicit conversion between bool and int types after checking
+                        conv_bool2int($1);
+                        conv_bool2int($3);
+                        $$ = new Expression();
+                        $$->type == "int";      // AND will give int type expression
+                        $$->loc = gentemp(new SymbolType("int"));
+                        emit("&", $$->loc->name, $1->loc->name, $3->loc->name);
+                  }                  
+              }              
               ;
 
 exclusive_or_expression: and_expression
-                       { printf("exclusive-OR-expression -> AND-expression\n"); }
+                       { $$ = $1; }
 
                        | exclusive_or_expression B_XOR and_expression
-                       { printf("exclusive-OR-expression -> exclusive-OR-expression ^ AND-expression\n"); }
-
+                       { 
+                            // compatibility
+                              if (!compare($1->loc, $3->loc)) {
+                                    yyerror("TypeError: Bitwise XOR between incompatible types");
+                              }
+                              else {
+                                    // Implicit conversion between bool and int types after checking
+                                    conv_bool2int($1);
+                                    conv_bool2int($3);
+                                    $$ = new Expression();
+                                    $$->type == "int"; // XOR will give int type expression
+                                    $$->loc = gentemp(new SymbolType("int"));
+                                    emit("^", $$->loc->name, $1->loc->name, $3->loc->name);
+                              }   
+                       }
                        ;
 
 inclusive_or_expression: exclusive_or_expression
-                       { printf("inclusive-OR-expression -> exclusive-OR-expression\n"); }
+                       { $$ = $1; }
 
                        | inclusive_or_expression B_OR exclusive_or_expression
-                       { printf("inclusive-OR-expression -> inclusive-OR-expression | exclusive-OR-expression\n"); }
-
+                       { 
+                              if (!compare($1->loc, $3->loc)) {
+                                    yyerror("TypeError: Bitwise XOR between incompatible types");
+                              }
+                              else {
+                                    // Implicit conversion between bool and int types after checking
+                                    conv_bool2int($1);
+                                    conv_bool2int($3);
+                                    $$ = new Expression();
+                                    $$->type == "int";      // OR will give int type expression
+                                    $$->loc = gentemp(new SymbolType("int"));
+                                    emit("|", $$->loc->name, $1->loc->name, $3->loc->name);
+                              }
+                       }
                        ;
 
 logical_and_expression: inclusive_or_expression
-                      { printf("logical-AND-expression -> inclusive-OR-expression\n"); }
+                      { 
+                        $$ = $1;
+                      }
 
-                      | logical_and_expression L_AND inclusive_or_expression
-                      { printf("logical-AND-expression -> logical-AND-expression && inclusive-OR-expression\n"); }
+                      | logical_and_expression L_AND M inclusive_or_expression
+                      { 
+                        convertIntToBool($1);                                  //convert logical_and_expression to bool
+                        convertIntToBool($4);                                  //convert inclusive_or_expression int to bool	
+                        $$ = new Expression();                                 
+                        $$->type = "bool";                                     // Expression type is bool
+                        backpatch($1->truelist, $3);                           //if $1 is true, we move to the next instruction and add a backpatch
+                        $$->truelist = $4->truelist;                           //The expression AND is true if the next expression is also true
+                        $$->falselist = merge($1->falselist, $4->falselist);   //If either $1 or $t4 are false, then AND is false => merge the falselists
+                      }
 
                       ;
 
 logical_or_expression: logical_and_expression
-                     { printf("logical-OR-expression -> logical-AND-expression\n"); }
+                     { $$ = $1; }
 
-                     | logical_or_expression L_OR logical_and_expression
-                     { printf("logical-OR-expression -> logical-OR-expression || logical-AND-expression\n"); }
-
+                     | logical_or_expression L_OR M logical_and_expression
+                     { 
+                        convertIntToBool($1);                                  // convert logical_and_expression to bool
+                        convertIntToBool($4);                                  // convert inclusive_or_expression int to bool	
+                        $$ = new Expression();                                 
+                        $$->type = "bool";                                     // Expression type is bool
+                        backpatch($1->falselist, $3);                          //if $1 is false, we move to the next instruction and add a backpatch
+                        $$->falselist = $4->falselist;                         //The expression OR is false if the next expression is also false
+                        $$->truelist = merge($1->truelist, $4->truelist);   //If either $1 or $t4 are false, then AND is false => merge the falselists  
+                     }
                      ;
 
 conditional_expression: logical_or_expression
-                      { printf("conditional-expression -> logical-OR-expression\n"); }
+                      { $$ = $1; }
 
-                      | logical_or_expression QUESTION expression COLON conditional_expression
-                      { printf("conditional-expression -> logical-OR-expression ? expression : conditional-expression\n"); }
+                      | logical_or_expression N QUESTION M expression N COLON M conditional_expression
+                      { 
+                        // E1 N1 ? M1 E2 N2 : M2 E3
+
+///// START FROM HERE                        
+                        
+                      }
 
                       ;
 
 assignment_expression: conditional_expression
-                     { printf("assignment-expression -> conditional-expression\n"); }
+                     { $$ = $1; }
 
                      | unary_expression assignment_operator assignment_expression
                      { printf("assignment-expression -> unary-expression assignment-operator assignment-expression\n"); }

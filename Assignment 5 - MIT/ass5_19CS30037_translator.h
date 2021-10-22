@@ -21,15 +21,14 @@ class Quad;
 class QuadArray;
 
 extern QuadArray Q;             // The program array of quads
-extern Symboltable ST;          // The current symbol table
+extern Symboltable *ST;          // The current symbol table
 
 // The type of an object in the symbol table defined in a recursive manner
 class SymbolType {
-private:
+public:
     std::string name;       // Type name
     int size;               // Size of the current type
     SymbolType * next;      // Pointer to the type deeper in the recursive tree
-public:
     SymbolType(std::string _name, int _size = 1, SymbolType * _next = nullptr);
     std::string getType();// Print the type depicting the string
     void printType();
@@ -169,6 +168,11 @@ void conv_bool2int (Expression &E);
 
 void conv_int2float(Expression &E);
 void conv_char2int(Expression &E);
+
+// Compare and convert between symbol types and Symbols
+int compare(SymbolType *s1, SymbolType *s2);
+int compare(Symbol * &s1, Symbol * &s2);
+std::pair<Symbol *,bool> convert(Symbol *S1, std::string new_type);
 
 // Next instruction address
 int nextinstr();
