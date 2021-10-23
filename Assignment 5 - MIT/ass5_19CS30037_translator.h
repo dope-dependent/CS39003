@@ -72,7 +72,7 @@ public:
 // The symboltable which is a list of symbols
 class Symboltable{
 public:
-    std::vector<Symbol> symbols;        // The symbols in the symbol table
+    std::vector<Symbol *> symbols;        // The symbols in the symbol table
     std::string name;                   // Name of the symbol table
     Symboltable * parent;               // Parent table of the symbol table
     int temporary_count;                // Counts the number of temporaries
@@ -116,8 +116,8 @@ public:
 // Definition of the Quad Array
 class QuadArray {
 public:
-    std::vector<Quad> quads;            // All the quads stored in the array
-    void insert (Quad q);               // Insert a quad into the quad array
+    std::vector<Quad *> quads;            // All the quads stored in the array
+    void insert (Quad *q);               // Insert a quad into the quad array
     void print();                       // Print all the quads
 };
 
@@ -177,7 +177,7 @@ void typecheck (Expression &E1, Expression &E2);
 
 // Conversion of int and float to string
 std::string conv_int2string (int a);
-std::string conv_float2sring (float a);
+std::string conv_float2string (float a);
 // Conversion of string to float and int
 inline int conv_string2int (std::string s) {return stoi(s);}
 inline float conv_string2float (std::string s) {return stof(s);}

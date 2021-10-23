@@ -75,7 +75,6 @@ extern char * variable_type;      // Global variable which controls the type of 
       declarator
 
 %type <s_type> 
-      pointer_opt 
       pointer
 
 %type <intval>
@@ -143,7 +142,8 @@ changetable: %empty
             }
             ;
 primary_expression: IDENTIFIER
-                  {     $$ = new Expression();
+                  {     
+                        $$ = new Expression();
                         $$->loc = $1;
                         $$->type = "int";
                   }
@@ -159,14 +159,14 @@ primary_expression: IDENTIFIER
                   {
                         $$ = new Expression();
                         $$->loc = ST->gentemp(new SymbolType("float"));
-                        $$->loc->initial_value = $1;
+                        $$->loc->initial_value = string($1);
                         emit("=", $$->loc->name, $$->loc->initial_value);
                   }
                   | CHAR_CONST 
                   {
                         $$ = new Expression();
                         $$->loc = ST->gentemp(new SymbolType("char"));
-                        $$->loc->initial_value = $1;
+                        $$->loc->initial_value = string($1);
                         emit("=", $$->loc->name, $$->loc->initial_value);
                   }
                   | STRING_LITERAL
@@ -890,24 +890,24 @@ type_qualifier: CONST { }
 function_specifier: INLINE { }
                   ;
 
-declarator: pointer_opt direct_declarator
-          { 
+declarator: pointer direct_declarator
+          {       
                 SymbolType *t1 = $1;            // Get the type of the pointer
                 while (t1->next != nullptr) t1 = t1->next; // Reach the leaf
                 t1->next = $2->type;            // Type of the declarator added to leaf
                 $2->update(t1);            // Update the symbol with the new type
                 $$ = $2;
-          }         
+          }  
+          | direct_declarator 
+          {
+                // Copy everything
+                $$ = $1;
+          }       
           ;
 
-pointer_opt: %empty { }
-           | pointer {
-                        $$ = $1;                // Copy the type
-                     }
-           ;
 
 direct_declarator: IDENTIFIER
-                 { 
+                 {     
                        $1->update(new SymbolType(variable_type));
                        $$ = $1;
                        // Current Symbol Pointer?
