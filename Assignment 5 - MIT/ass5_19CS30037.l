@@ -1,10 +1,11 @@
 %{
-#include "ass5_19CS30037.tab.h"
 #include "ass5_19CS30037_translator.h"
+#include "ass5_19CS30037.tab.h"
 
-#include <cstdlib>
+#include <stdlib.h>
 
 extern YYSTYPE yylval;
+extern "C" int yylex();
 %}
 
 /* Regular Expressions Definitions */
@@ -13,7 +14,6 @@ INT_CONST      [1-9][0-9]*|[0]
 STRING_LITERAL \"("\'"|"\""|"\?"|"\\"|"\a"|"\b"|"\f"|"\n"|"\r"|"\t"|"\v"|[^\"\\])*\"
 FLOATING_CONST [0-9]+[eE][+-]?[0-9]+|[0-9]*\.[0-9]+([eE][+-]?[0-9]+)?|[0-9]+\.([eE][+-]?[0-9]+)?
 CHAR_CONST     \'("\'"|"\""|"\?"|"\\"|"\a"|"\b"|"\f"|"\n"|"\r"|"\t"|"\v"|[^\'\\\n])*\'
-ENUM_CONST     [a-zA-Z_][a-zA-Z0-9_]*
 WS             [ \t]
 %x CMT_LINE
 %x CMT_BLK
@@ -85,7 +85,6 @@ WS             [ \t]
                    return IDENTIFIER; 
                  }
                  
-{ENUM_CONST}     { return ENUM_CONST; }
 "("              { return OPEN_PARENTHESIS; }
 ")"              { return CLOSE_PARENTHESIS; }
 "{"              { return OPEN_BRACE; }

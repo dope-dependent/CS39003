@@ -1,30 +1,98 @@
 %{
+#define YYDEBUG 1
 #include <stdio.h>
 #include "ass5_19CS30037_translator.h"
+using namespace std;
 
-extern int yylex();
-void yyerror(char *s);
+extern "C" int yylex();
+void yyerror(string s);
+extern vector<Label> label_table; // The collection of all label vectors
+extern char * variable_type;      // Global variable which controls the type of the most recent identifier
 %}
 
 %union
 {
-        int intval;
-        char * string_type;
-        Symbol * st_entry;
+      int intval;
+      char * string_type;
+      Symbol * st_entry;
+      Array * ar_entry;
+      Next * statement_entry;
+      Expression * exp_entry;
+      SymbolType * s_type;
+      const char * u_op;
 }
 
-%token STRING_LITERAL IDENTIFIER INT_CONST FLOATING_CONST CHAR_CONST ENUM_CONST SIZEOF OPEN_PARENTHESIS CLOSE_PARENTHESIS OPEN_BRACE CLOSE_BRACE OPEN_BRACKET CLOSE_BRACKET MINUS PLUS COMMA STAR SLASH MOD LESS GREATER INCREMENT DECREMENT LESS_EQUAL GREATER_EQUAL EQUAL NOT_EQUAL B_AND B_OR L_AND L_OR B_XOR ADD_ASSGN SUB_ASSGN MUL_ASSGN DIV_ASSGN MOD_ASSGN L_SHIFT R_SHIFT L_SHIFT_ASSGN R_SHIFT_ASSGN ASSGN TILDE EXCLAM DOT POINTER_DEREF COLON SEMI_COLON QUESTION AND_ASSGN OR_ASSGN XOR_ASSGN EXTERN STATIC AUTO REGISTER VOID CHAR SHORT INT LONG FLOAT DOUBLE SIGNED UNSIGNED BOOL COMPLEX IMAGINARY ENUM CONST RESTRICT VOLATILE INLINE CASE DEFAULT IF ELSE SWITCH WHILE DO FOR GOTO CONTINUE BREAK RETURN
+%token SIZEOF OPEN_PARENTHESIS CLOSE_PARENTHESIS OPEN_BRACE CLOSE_BRACE OPEN_BRACKET CLOSE_BRACKET MINUS PLUS COMMA STAR SLASH MOD LESS GREATER INCREMENT DECREMENT LESS_EQUAL GREATER_EQUAL EQUAL NOT_EQUAL B_AND B_OR L_AND L_OR B_XOR ADD_ASSGN SUB_ASSGN MUL_ASSGN DIV_ASSGN MOD_ASSGN L_SHIFT R_SHIFT L_SHIFT_ASSGN R_SHIFT_ASSGN ASSGN TILDE EXCLAM DOT POINTER_DEREF COLON SEMI_COLON QUESTION AND_ASSGN OR_ASSGN XOR_ASSGN EXTERN STATIC AUTO REGISTER VOID CHAR SHORT INT LONG FLOAT DOUBLE SIGNED UNSIGNED BOOL COMPLEX IMAGINARY ENUM CONST RESTRICT VOLATILE INLINE CASE DEFAULT IF ELSE SWITCH WHILE DO FOR GOTO CONTINUE BREAK RETURN
 
-%nonassoc CLOSE_PARENTHESIS
-%nonassoc ELSE
+%token <st_entry> IDENTIFIER
+%token <intval> INT_CONST
+%token <string_type> STRING_LITERAL FLOATING_CONST CHAR_CONST
 
 %start translation_unit 
+
+%type <u_op>
+      unary_operator
+
+%type <exp_entry>
+      expression
+	primary_expression 
+	multiplicative_expression
+	additive_expression
+	shift_expression
+	relational_expression
+	equality_expression
+	and_expression
+	exclusive_or_expression
+	inclusive_or_expression
+	logical_and_expression
+	logical_or_expression
+	conditional_expression
+	assignment_expression
+	expression_statement
+      constant_expression
+
+%type <ar_entry>
+      postfix_expression
+	unary_expression
+	cast_expression
+
+%type <statement_entry>
+      statement
+      compound_statement
+	selection_statement
+	iteration_statement
+	labeled_statement 
+	jump_statement
+	block_item
+	block_item_list
+	block_item_list_opt
+      N
+
+%type <st_entry>  
+      initializer
+      direct_declarator 
+      init_declarator 
+      declarator
+
+%type <s_type> 
+      pointer_opt 
+      pointer
+
+%type <intval>
+      argument_expression_list
+      argument_expression_list_opt
+      M
+
+// dangling else problem
+%right "then" ELSE
+
+
 
 %%
 
 
 /* Expressions */
-M: 
+M: %empty
  {
       // M is used for backpatching in conditional
       // and control constructs, it stores the address of the
@@ -33,7 +101,7 @@ M:
  }
  ;
 
-N:
+N: %empty
  {
       // N is used as a fallthrough guard
       // It inserts a goto statement and stores the index
@@ -43,6 +111,37 @@ N:
       emit("goto", "");
  }
  ;
+X: %empty
+	{
+            // Change the current symbol pointer
+            // Used in statements involving nested blocks
+		string name = ST->name+".$"+to_string(table_count); // give name for nested table
+		table_count++; // increment the table count
+		Symbol* s = ST->lookup(name); // lookup the table for new entry
+		s->nested_table = new Symboltable(name);
+		s->nested_table->parent = ST;
+		s->name = name;
+		s->type = new SymbolType("block");
+		curr_symbol = s;
+	}  
+	;
+
+changetable: %empty
+            {
+                  if(curr_symbol->nested_table==NULL) 
+                  {
+                        // HELP!!! CHECK THIS FUNCTION
+                        Symboltable *_new = new Symboltable("");
+                        _new->parent = ST;
+                        updateSymbolTable(_new); // Function symbol table doesn't already exist
+                  }
+                  else 
+                  {
+                        updateSymbolTable(curr_symbol->nested_table); // Function symbol table already exists	
+                        emit("label", ST->name);
+                  }
+            }
+            ;
 primary_expression: IDENTIFIER
                   {     $$ = new Expression();
                         $$->loc = $1;
@@ -74,7 +173,7 @@ primary_expression: IDENTIFIER
                   { 
                         $$ = new Expression();
                         $$->loc = ST->gentemp(new SymbolType("ptr"));
-                        $$->loc->next = new SymbolType("char");
+                        $$->loc->type->next = new SymbolType("char");
                         $$->loc->initial_value = $1;
                         emit("=", $$->loc->name, $$->loc->initial_value);
                   }
@@ -100,7 +199,7 @@ postfix_expression: primary_expression
                         $$->array = $1->array;
                         $$->loc = ST->gentemp(new SymbolType("int"));
                         // Check if we have nested array
-                        if ($1->type == "arr") {
+                        if ($1->type->name == "arr") {
                               Symbol * t = ST->gentemp(new SymbolType("int"));
                               // Multiply by the size
                               int t_size = $$->type->getSize();
@@ -159,7 +258,7 @@ argument_expression_list_opt: argument_expression_list
                             {
                                   $$ = $1;     // Equal to number of params in list
                             }
-                            |
+                            | %empty
                             {
                                   $$ = 0;      // No parameters
                             }
@@ -238,22 +337,22 @@ unary_expression: postfix_expression
                 ;
 
 unary_operator: B_AND
-              { $$ = "&"; }
+              { $$ = string("&").c_str(); }
               
               | STAR
-              { $$ = "*"; }
+              { $$ = string("*").c_str(); }
 
               | PLUS 
-              { $$ = "+"; }
+              { $$ = string("+").c_str(); }
 
               | MINUS 
-              { $$ = "-"; }
+              { $$ = string("-").c_str(); }
 
               | TILDE 
-              { $$ = "~"; }               
+              { $$ = string("~").c_str(); }               
 
               | EXCLAM 
-              { $$ = "!"; }
+              { $$ = string("!").c_str(); }
               ;
 
 cast_expression: unary_expression 
@@ -267,7 +366,7 @@ cast_expression: unary_expression
                      // If Cast type is given, generate a symbol of 
                      // new type
                      $$ = new Array();
-                     $$->array->update(new SymbolType($2));
+                     $$->array->update(new SymbolType(variable_type));
                }
                ;
 
@@ -295,7 +394,7 @@ multiplicative_expression: cast_expression
                                     // Types have already been changed
                                     // New temporary for the product
                                     $$ = new Expression();
-                                    $$->loc = ST->gentemp($1->loc->type->name);
+                                    $$->loc = ST->gentemp($1->loc->type);
                                     emit("*", $$->loc->name, $1->loc->name, $3->array->name);
                               }
                          }
@@ -309,7 +408,7 @@ multiplicative_expression: cast_expression
                                     // Types have already been changed
                                     // New temporary for the quotient
                                     $$ = new Expression();
-                                    $$->loc = ST->gentemp($1->loc->type->name);
+                                    $$->loc = ST->gentemp($1->loc->type);
                                     emit("/", $$->loc->name, $1->loc->name, $3->array->name);
                               }
                          }
@@ -323,7 +422,7 @@ multiplicative_expression: cast_expression
                                     // Types have already been changed
                                     // New temporary for the remainder
                                     $$ = new Expression();
-                                    $$->loc = ST->gentemp($1->loc->type->name);
+                                    $$->loc = ST->gentemp($1->loc->type);
                                     emit("%", $$->loc->name, $1->loc->name, $3->array->name);
                               }      
                          }
@@ -338,29 +437,29 @@ additive_expression: multiplicative_expression
                    | additive_expression PLUS multiplicative_expression
                    { 
                         // Type checking and conversion first
-                        if (!compare($1->loc, $3->array)) {
+                        if (!compare($1->loc, $3->loc)) {
                               cout << "TypeError: Addition between inconvertible types\n";
                         }
                         else {
                               // Types have already been changed
                               // New temporary for the sum
                               $$ = new Expression();
-                              $$->loc = ST->gentemp($1->loc->type->name);
-                              emit("+", $$->loc->name, $1->loc->name, $3->array->name);
+                              $$->loc = ST->gentemp($1->loc->type);
+                              emit("+", $$->loc->name, $1->loc->name, $3->loc->name);
                         }
                    }
 
                    | additive_expression MINUS multiplicative_expression
                    { 
-                        if (!compare($1->loc, $3->array)) {
+                        if (!compare($1->loc, $3->loc)) {
                               cout << "TypeError: Subtraction between inconvertible types\n";
                         }
                         else {
                               // Types have already been changed
                               // New temporary for the sum
                               $$ = new Expression();
-                              $$->loc = ST->gentemp($1->loc->type->name);
-                              emit("-", $$->loc->name, $1->loc->name, $3->array->name);
+                              $$->loc = ST->gentemp($1->loc->type);
+                              emit("-", $$->loc->name, $1->loc->name, $3->loc->name);
                         }
                    }
 
@@ -375,7 +474,7 @@ shift_expression: additive_expression
                 { 
                       // In shift (x << i),x and i must be integers
                       // the $3 must be of integer type
-                      if (!($3->type->name == "int" && $1->type->name == "int")) {
+                      if (!($3->type == "int" && $1->type == "int")) {
                         cout << "TypeError: Bits to shift should be integers\n";
                       }
                       // Else shift and generate temporary
@@ -388,7 +487,7 @@ shift_expression: additive_expression
 
                 | shift_expression R_SHIFT additive_expression
                 { // Similar to left shift 
-                      if (!($3->type->name == "int" && $1->type->name == "int")) {
+                      if (!($3->type == "int" && $1->type == "int")) {
                         cout << "TypeError: Bits to shift should be integers\n";
                       }
                       else {
@@ -408,7 +507,7 @@ relational_expression: shift_expression
                      { 
                         // Again compare symbol types
                         if (!compare($1->loc, $3->loc)) {
-                              yyerror("TypeError: Comparison between incompatible types");
+                              yyerror(string("TypeError: Comparison between incompatible types"));
                         }
                         else {
                               $$ = new Expression();
@@ -424,7 +523,7 @@ relational_expression: shift_expression
                      { 
                         // Compare Symbol Types
                         if (!compare($1->loc, $3->loc)) {
-                              yyerror("TypeError: Comparison between incompatible types");
+                              yyerror(string("TypeError: Comparison between incompatible types"));
                         }
                         else {
                               $$ = new Expression();
@@ -440,7 +539,7 @@ relational_expression: shift_expression
                      { 
                         // Compare Symbol Types
                         if (!compare($1->loc, $3->loc)) {
-                              yyerror("TypeError: Comparison between incompatible types");
+                              yyerror(string("TypeError: Comparison between incompatible types"));
                         }
                         else {
                               $$ = new Expression();
@@ -456,7 +555,7 @@ relational_expression: shift_expression
                      { 
                         // Compare Symbol Types
                         if (!compare($1->loc, $3->loc)) {
-                              yyerror("TypeError: Comparison between incompatible types");
+                              yyerror(string("TypeError: Comparison between incompatible types"));
                         }
                         else {
                               $$ = new Expression();
@@ -476,12 +575,12 @@ equality_expression: relational_expression
                    | equality_expression EQUAL relational_expression
                    { 
                         if (!compare($1->loc, $3->loc)) {
-                              yyerror("TypeError: Comparison between incompatible types");
+                              yyerror(string("TypeError: Comparison between incompatible types"));
                         }
                         else {
                               // Implicit conversion between bool and int types
-                              conv_bool2int($1);
-                              conv_bool2int($3);
+                              conv_bool2int(*$1);
+                              conv_bool2int(*$3);
                               $$ = new Expression();
                               $$->type == "bool";     // New expression of type bool
                               $$->truelist = makelist(nextinstr()); // the instr numbers of true path
@@ -494,12 +593,12 @@ equality_expression: relational_expression
                    | equality_expression NOT_EQUAL relational_expression
                    { 
                         if (!compare($1->loc, $3->loc)) {
-                              yyerror("TypeError: Comparison between incompatible types");
+                              yyerror(string("TypeError: Comparison between incompatible types"));
                         }
                         else {
                               // Implicit conversion between bool and int types
-                              conv_bool2int($1);
-                              conv_bool2int($3);
+                              conv_bool2int(*$1);
+                              conv_bool2int(*$3);
                               $$ = new Expression();
                               $$->type == "bool";     // New expression of type bool
                               $$->truelist = makelist(nextinstr()); // the instr numbers of true path
@@ -518,15 +617,15 @@ and_expression: equality_expression
               { 
                   // compatibility
                   if (!compare($1->loc, $3->loc)) {
-                        yyerror("TypeError: Bitwise AND between incompatible types");
+                        yyerror(string("TypeError: Bitwise AND between incompatible types"));
                   }
                   else {
                         // Implicit conversion between bool and int types after checking
-                        conv_bool2int($1);
-                        conv_bool2int($3);
+                        conv_bool2int(*$1);
+                        conv_bool2int(*$3);
                         $$ = new Expression();
                         $$->type == "int";      // AND will give int type expression
-                        $$->loc = gentemp(new SymbolType("int"));
+                        $$->loc = ST->gentemp(new SymbolType("int"));
                         emit("&", $$->loc->name, $1->loc->name, $3->loc->name);
                   }                  
               }              
@@ -543,11 +642,11 @@ exclusive_or_expression: and_expression
                               }
                               else {
                                     // Implicit conversion between bool and int types after checking
-                                    conv_bool2int($1);
-                                    conv_bool2int($3);
+                                    conv_bool2int(*$1);
+                                    conv_bool2int(*$3);
                                     $$ = new Expression();
                                     $$->type == "int"; // XOR will give int type expression
-                                    $$->loc = gentemp(new SymbolType("int"));
+                                    $$->loc = ST->gentemp(new SymbolType("int"));
                                     emit("^", $$->loc->name, $1->loc->name, $3->loc->name);
                               }   
                        }
@@ -563,11 +662,11 @@ inclusive_or_expression: exclusive_or_expression
                               }
                               else {
                                     // Implicit conversion between bool and int types after checking
-                                    conv_bool2int($1);
-                                    conv_bool2int($3);
+                                    conv_bool2int(*$1);
+                                    conv_bool2int(*$3);
                                     $$ = new Expression();
                                     $$->type == "int";      // OR will give int type expression
-                                    $$->loc = gentemp(new SymbolType("int"));
+                                    $$->loc = ST->gentemp(new SymbolType("int"));
                                     emit("|", $$->loc->name, $1->loc->name, $3->loc->name);
                               }
                        }
@@ -580,8 +679,8 @@ logical_and_expression: inclusive_or_expression
 
                       | logical_and_expression L_AND M inclusive_or_expression
                       { 
-                        convertIntToBool($1);                                  //convert logical_and_expression to bool
-                        convertIntToBool($4);                                  //convert inclusive_or_expression int to bool	
+                        conv_int2bool(*$1);                                  //convert logical_and_expression to bool
+                        conv_int2bool(*$4);                                  //convert inclusive_or_expression int to bool	
                         $$ = new Expression();                                 
                         $$->type = "bool";                                     // Expression type is bool
                         backpatch($1->truelist, $3);                           //if $1 is true, we move to the next instruction and add a backpatch
@@ -596,8 +695,8 @@ logical_or_expression: logical_and_expression
 
                      | logical_or_expression L_OR M logical_and_expression
                      { 
-                        convertIntToBool($1);                                  // convert logical_and_expression to bool
-                        convertIntToBool($4);                                  // convert inclusive_or_expression int to bool	
+                        conv_int2bool(*$1);                                  // convert logical_and_expression to bool
+                        conv_int2bool(*$4);                                  // convert inclusive_or_expression int to bool	
                         $$ = new Expression();                                 
                         $$->type = "bool";                                     // Expression type is bool
                         backpatch($1->falselist, $3);                          //if $1 is false, we move to the next instruction and add a backpatch
@@ -612,518 +711,591 @@ conditional_expression: logical_or_expression
                       | logical_or_expression N QUESTION M expression N COLON M conditional_expression
                       { 
                         // E1 N1 ? M1 E2 N2 : M2 E3
-
-///// START FROM HERE                        
-                        
+                        $$ = new Expression();                        
+                        $$->loc = ST->gentemp($5->loc->type);     // Type same as E2
+                        emit("=", $$->loc->name, $9->loc->name);  // Equal to second expression
+                        vector <int> l = makelist(nextinstr());
+                        emit("goto", "");                         // prevent fallthrough
+                        backpatch($6->nextlist, nextinstr());     // After N2, go out
+                        emit("=", $$->loc->name, $5->loc->name);  // Equal to first expression
+                        vector <int> m = makelist(nextinstr());
+                        l = merge(l, m);
+                        emit("goto", "");                         // prevent fallthrough
+                        backpatch($2->nextlist, nextinstr());     // Goto the end from 2
+                        conv_int2bool(*$1);                  // Conversion of $1 to bool to test
+                        backpatch($1->truelist, $4);        // If $1 is true, goto expression
+                        backpatch($1->falselist, $8);       // If $1 is false, goto conditional_expression
+                        backpatch(l, nextinstr());                        
                       }
-
                       ;
 
 assignment_expression: conditional_expression
                      { $$ = $1; }
 
                      | unary_expression assignment_operator assignment_expression
-                     { printf("assignment-expression -> unary-expression assignment-operator assignment-expression\n"); }
-                     
+                     { 
+                        if ($1->type->name == "arr") {
+                              // Check for conversion and then emit
+                              pair<Symbol *, bool> c = convert($3->loc, $1->type->name);
+                              if (c.second) {
+                                    $3->loc = c.first;
+                                    emit("[]=", $1->array->name, $1->loc->name, $3->loc->name);	
+                              }
+                              else {
+                                    // Error
+                                    yyerror("AssignmentError: Conversion between incompatible types (ARRAY)");
+                              }
+
+                        }
+                        else if ($1->type->name == "ptr") {
+                              emit("*=", $1->array->name, $3->loc->name); // For pointer types simply emit
+                        }
+                        else {
+                              // Check if conversion is possible and convert
+                              pair<Symbol *, bool> c = convert($3->loc, $1->array->type->name);
+                              if (c.second) {
+                                    $3->loc = c.first;
+                                    emit("=", $1->array->name, $3->loc->name);
+                              }
+                              else {
+                                    yyerror("AssignmentError: Conversion between incompatible types");
+                              }
+                        }
+
+                        $$ = $3;
+                     }                     
                      ;
 
-assignment_expression_opt:
-                         | assignment_expression
-                         ;
-
 assignment_operator: ASSGN 
-                   { printf("assignment-operator -> =\n"); }
-
-                   | MUL_ASSGN 
-                   { printf("assignment-operator -> *=\n"); }
-                   
-                   | DIV_ASSGN 
-                   { printf("assignment-operator -> /=\n"); }
-                   
-                   | MOD_ASSGN 
-                   { printf("assignment-operator -> %%=\n"); }
-                   
-                   | ADD_ASSGN 
-                   { printf("assignment-operator -> +=\n"); }
-                   
-                   | SUB_ASSGN
-                   { printf("assignment-operator -> -=\n"); }
-                   
-                   | L_SHIFT_ASSGN 
-                   { printf("assignment-operator -> <<=\n"); }
-                   
-                   | R_SHIFT_ASSGN 
-                   { printf("assignment-operator -> >>=\n"); }
-                   
-                   | AND_ASSGN 
-                   { printf("assignment-operator -> &=\n"); }
-                   
-                   | XOR_ASSGN 
-                   { printf("assignment-operator -> ^=\n"); }
-                   
-                   | OR_ASSGN
-                   { printf("assignment-operator -> |=\n"); }
-                   
+                   { /* Already handled assign in the assignment_expression_section */}
+                   | MUL_ASSGN  { }                   
+                   | DIV_ASSGN { }                   
+                   | MOD_ASSGN { }                   
+                   | ADD_ASSGN { }                   
+                   | SUB_ASSGN  { }                   
+                   | L_SHIFT_ASSGN { }                    
+                   | R_SHIFT_ASSGN { }                   
+                   | AND_ASSGN { }                   
+                   | XOR_ASSGN { }                   
+                   | OR_ASSGN { }
                    ;
 
 expression: assignment_expression
-          { printf("expression -> assignment-expression\n"); }
+          { $$ = $1; }
                    
           | expression COMMA assignment_expression
-          { printf("expression -> expression , assignment-expression\n"); }
-                   
+          {    }                   
           ;
 
 constant_expression: conditional_expression
-                   { printf("constant-expression -> conditional-expression\n"); }
-                   
+                   { $$ = $1; }
                    ;
 
 /* Declarations */
 
 declaration: declaration_specifiers init_declarator_list_opt SEMI_COLON
-           { printf("declaration -> declaration-specifiers init-declarator-list(opt) ;\n"); }
-                   
+           {    }
            ;
 
-declaration_specifiers: storage_class_specifier declaration_specifiers_opt
-                      { printf("declaration-specifiers -> storage-class-specifier declaration-specifiers(opt)\n"); }
-                   
-                      | type_specifier declaration_specifiers_opt
-                      { printf("declaration-specifiers -> type-specifier declaration-specifiers(opt)\n"); }
-                   
-                      | type_qualifier declaration_specifiers_opt
-                      { printf("declaration-specifiers -> type-qualifier declaration-specifiers(opt)\n"); }
-                   
-                      | function_specifier declaration_specifiers_opt
-                      { printf("declaration-specifiers -> function-specifier declaration-specifiers(opt)\n"); }
-
+declaration_specifiers: storage_class_specifier declaration_specifiers_opt { }
+                      | type_specifier declaration_specifiers_opt {  }
+                      | type_qualifier declaration_specifiers_opt {  }
+                      | function_specifier declaration_specifiers_opt {  }
                       ;
                    
-declaration_specifiers_opt:
-                          | declaration_specifiers
+declaration_specifiers_opt: %empty { }
+                          | declaration_specifiers { }
                           ;
 
 init_declarator_list: init_declarator
-                    { printf("init-declarator-list -> init-declarator\n"); }
-                   
+                    { }                   
                     | init_declarator_list COMMA init_declarator
-                    { printf("init-declarator-list -> init-declarator-list , init-declarator\n"); }
-                   
+                    { }                   
                     ;
 
-init_declarator_list_opt:
-                        | init_declarator_list
+init_declarator_list_opt: %empty { }
+                        | init_declarator_list { }
                         ;
 
 init_declarator: declarator
-               { printf("init-declarator -> declarator\n"); }
-                   
+               { $$ = $1; }
                | declarator ASSGN initializer
-               { printf("init-declarator -> declarator = initializer\n"); }
-                   
+               { 
+                  $1->initial_value = $3->initial_value;    // Make initial values equal
+                  emit("=", $1->name, $3->name);            // Emit equivaluence
+               }
                ;
 
-storage_class_specifier: EXTERN
-                       { printf("storage-class-specifier -> extern\n"); }
-                   
-                       | STATIC
-                       { printf("storage-class-specifier -> static\n"); }
-                   
-                       | AUTO
-                       { printf("storage-class-specifier -> auto\n"); }
-                   
-                       | REGISTER
-                       { printf("storage-class-specifier -> register\n"); }
-                   
+storage_class_specifier: EXTERN { }
+                       | STATIC { }
+                       | AUTO { } 
+                       | REGISTER { }
                        ;
 
 type_specifier: VOID
-              { printf("type-specifier -> void\n"); }
+              { variable_type = (char *)"void"; }
                    
               | CHAR
-              { printf("type-specifier -> char\n"); }
-                   
-              | SHORT
-              { printf("type-specifier -> short\n"); }
+              { variable_type = (char *)"char"; }                   
                    
               | INT
-              { printf("type-specifier -> int\n"); }
-                   
-              | LONG
-              { printf("type-specifier -> long\n"); }
+              { variable_type = (char *)"int"; }     
                    
               | FLOAT
-              { printf("type-specifier -> float\n"); }
-                   
-              | DOUBLE
-              { printf("type-specifier -> double=\n"); }
-                   
-              | SIGNED
-              { printf("type-specifier -> signed\n"); }
-                   
-              | UNSIGNED
-              { printf("type-specifier -> unsigned\n"); }
-                   
-              | BOOL
-              { printf("type-specifier -> _Bool\n"); }
-                   
-              | COMPLEX
-              { printf("type-specifier -> _Complex\n"); }
-                   
-              | IMAGINARY
-              { printf("type-specifier -> _Imaginary\n"); }
-                   
-              | enum_specifier
-              { printf("type-specifier -> enum-specifier\n"); }
-                   
+              { variable_type = (char *)"float"; }
+              
+              | LONG { }
+              | SHORT { }
+              | DOUBLE { }
+              | SIGNED { }
+              | UNSIGNED { }
+              | BOOL { }
+              | COMPLEX { }
+              | IMAGINARY { }
+              | enum_specifier { }
               ;
 
 specifier_qualifier_list: type_specifier specifier_qualifier_list_opt
-                        { printf("specifier-qualifier-list -> type-specifier specifier-qualifier-list(opt)\n"); }
-                   
+                        { }                    
                         | type_qualifier specifier_qualifier_list_opt
-                        { printf("specifier-qualifier-list -> type-qualifier specifier-qualifier-list(opt)\n"); }
-                   
+                        { }                   
                         ;
 
-specifier_qualifier_list_opt:
-                            | specifier_qualifier_list
+specifier_qualifier_list_opt: %empty { }
+                            | specifier_qualifier_list { }
                             ;
 
-enum_specifier: ENUM identifier_opt OPEN_BRACE enumerator_list CLOSE_BRACE
-              { printf("enum-specifier -> enum identifier(opt) { enumerator-list }\n"); }
-                   
-              | ENUM identifier_opt OPEN_BRACE enumerator_list COMMA CLOSE_BRACE
-              { printf("enum-specifier -> enum identifier(opt) { enumerator-list , }\n"); }
-                   
-              | ENUM IDENTIFIER
-              { printf("enum-specifier -> enum identifier\n"); }
-                   
+enum_specifier: ENUM identifier_opt OPEN_BRACE enumerator_list CLOSE_BRACE { }
+              | ENUM identifier_opt OPEN_BRACE enumerator_list COMMA CLOSE_BRACE { }
+              | ENUM IDENTIFIER { }
               ;
 
-identifier_opt: 
-              | IDENTIFIER
+identifier_opt: %empty { }
+              | IDENTIFIER { }
               ;
               
-enumerator_list: enumerator
-               { printf("enumerator-list -> enumerator\n"); }
-                   
-               | enumerator_list COMMA enumerator
-               { printf("enumerator-list -> enumerator-list , enumerator\n"); }
-                   
+enumerator_list: enumerator { }                  
+               | enumerator_list COMMA enumerator { }                   
                ;
 
-enumerator: IDENTIFIER
-          { printf("enumerator -> enumeration-constant\n"); }
-                   
-          | IDENTIFIER ASSGN constant_expression
-          { printf("enumerator -> enumeration-constant = constant-expression\n"); }
-                   
+enumerator: IDENTIFIER { }
+          | IDENTIFIER ASSGN constant_expression { }
           ;
 
-type_qualifier: CONST
-              { printf("type-qualifier -> const\n"); }
-                   
-              | RESTRICT
-              { printf("type-qualifier -> restrict\n"); }
-                   
-              | VOLATILE
-              { printf("type-qualifier -> volatile\n"); }
-                   
+type_qualifier: CONST { }
+              | RESTRICT { }
+              | VOLATILE { }
               ;
  
-function_specifier: INLINE
-                  { printf("function-specifier -> inline\n"); }
-                   
+function_specifier: INLINE { }
                   ;
 
 declarator: pointer_opt direct_declarator
-          { printf("declarator -> pointer(opt) direct-declarator\n"); }
-                   
+          { 
+                SymbolType *t1 = $1;            // Get the type of the pointer
+                while (t1->next != nullptr) t1 = t1->next; // Reach the leaf
+                t1->next = $2->type;            // Type of the declarator added to leaf
+                $2->update(t1);            // Update the symbol with the new type
+                $$ = $2;
+          }         
           ;
 
-pointer_opt: 
-           | pointer
+pointer_opt: %empty { }
+           | pointer {
+                        $$ = $1;                // Copy the type
+                     }
            ;
 
 direct_declarator: IDENTIFIER
-                 { printf("direct-declarator -> identifier\n"); }
+                 { 
+                       $1->update(new SymbolType(variable_type));
+                       $$ = $1;
+                       // Current Symbol Pointer?
+                       curr_symbol = $$;
+                 }
                    
                  | OPEN_PARENTHESIS declarator CLOSE_PARENTHESIS
-                 { printf("direct-declarator -> ( declarator )\n"); }
+                 { $$ = $2; }
                    
-                 | direct_declarator OPEN_BRACKET type_qualifier_list_opt assignment_expression_opt CLOSE_BRACKET
-                 { printf("direct-declarator -> direct-declarator [ type-qualifier-list(opt) assignment-expression(opt) ]\n"); }
-                   
-                 | direct_declarator OPEN_BRACKET STATIC type_qualifier_list_opt assignment_expression CLOSE_BRACKET
-                 { printf("direct-declarator -> direct-declarator [ static type-qualifier-list(opt) assignment-expression ]\n"); }
-                   
-                 | direct_declarator OPEN_BRACKET type_qualifier_list STATIC assignment_expression CLOSE_BRACKET
-                 { printf("direct-declarator -> direct-declarator [ type-qualifier-list static assignment-expression ]\n"); }
-                   
-                 | direct_declarator OPEN_BRACKET type_qualifier_list_opt STAR CLOSE_BRACKET
-                 { printf("direct-declarator -> direct-declarator [ type-qualifier-listopt * ]\n"); }
+                 | direct_declarator OPEN_BRACKET type_qualifier_list assignment_expression CLOSE_BRACKET { }
+                 | direct_declarator OPEN_BRACKET type_qualifier_list CLOSE_BRACKET
+                 { 
+                       // This extra projection has been added to handle _opt in assignment_expression
+                 }
+
+                 | direct_declarator OPEN_BRACKET assignment_expression CLOSE_BRACKET
+                 { 
+                       // This extra projection has been added to handle _opt in type_qualifier_list 
+                       SymbolType * t1 = $1->type;
+                       if (t1->next == nullptr)  {
+                             // Create new array type
+                             SymbolType * s = new SymbolType("arr");
+                             s->next = t1;
+                             // Get the size of the array;
+                             int c_size = conv_string2int($3->loc->initial_value);
+                             s->size = c_size;
+                             // Update the type in the symbol table
+                             $1->update(s);
+                             $$ = $1;
+                       }
+                       else {
+                             // Type is already an array type
+                              SymbolType *p = nullptr;
+                              while (t1->next != nullptr) {
+                                    p = t1;
+                                    t1 = t1->next;
+                              }
+                              // Creation of new array type symbol
+                              p->next = new SymbolType("arr");
+                              p->next->size = conv_string2int($3->loc->initial_value);
+                              p->next->next = t1;
+                       }              
+                 }
+                 | direct_declarator OPEN_BRACKET CLOSE_BRACKET
+                 {
+                       // When both type_qualifier_list_opt and assignment_expression_opt are epsilon transitions
+                       SymbolType * t1 = $1->type;
+                       if (t1->next == nullptr)  {
+                             // Create new array type
+                             SymbolType * s = new SymbolType("arr");
+                             s->next = t1;
+                             // Put size = 0;
+                             s->size = 0;
+                             // Update the type in the symbol table
+                             $1->update(s);
+                             $$ = $1;
+                       }
+                       else {
+                             // Type is already an array type
+                              SymbolType *p = nullptr;
+                              while (t1->next != nullptr) {
+                                    p = t1;
+                                    t1 = t1->next;
+                              }
+                              // Creation of new array type symbol
+                              p->next = new SymbolType("arr");
+                              p->next->size = 0;
+                              p->next->next = t1;
+                       }
+                 }
+                 | direct_declarator OPEN_BRACKET STATIC type_qualifier_list assignment_expression CLOSE_BRACKET { }
+	           | direct_declarator OPEN_BRACKET STATIC assignment_expression CLOSE_BRACKET {	}                 
+                 | direct_declarator OPEN_BRACKET type_qualifier_list STAR CLOSE_BRACKET { }
+                 | direct_declarator OPEN_BRACKET STAR CLOSE_BRACKET
+                 { /* This extra projection has been added to handle _opt in type_qualifier_list */}
                    
                  | direct_declarator OPEN_PARENTHESIS parameter_type_list CLOSE_PARENTHESIS
-                 { printf("direct-declarator -> direct-declarator ( parameter-type-list )\n"); }
+                 { 
+                       // Function Call and location with parameters
+                       ST->name = $1->name;
+                       if ($1->type->name != "void") {
+                             Symbol *val = ST->lookup("return");
+                             val->update($1->type);
+                       }
+                       $1->nested_table = ST;
+                       ST->parent = STS.global();
+                       ST = STS.global();
+                       curr_symbol = $$;
+
+                 }
+                 | direct_declarator OPEN_PARENTHESIS CLOSE_PARENTHESIS
+                 { 
+                       // Function Call and location with no parameters
+                       ST->name = $1->name;
+                       if ($1->type->name != "void") {
+                             Symbol *val = ST->lookup("return");
+                             val->update($1->type);
+                       }
+                       $1->nested_table = ST;
+                       ST->parent = STS.global();
+                       ST = STS.global();
+                       curr_symbol = $$;
+                 }
                    
-                 | direct_declarator OPEN_PARENTHESIS identifier_list_opt CLOSE_PARENTHESIS
-                 { printf("direct-declarator -> ( identifier-list(opt) )\n"); }
-                   
+                 | direct_declarator OPEN_PARENTHESIS identifier_list CLOSE_PARENTHESIS
+                 { }                   
                  ;
 
 pointer: STAR type_qualifier_list_opt
-       { printf("pointer -> * type-qualifier-list(opt)\n"); }
+       {    // Create new pointer
+            $$ = new SymbolType("ptr"); 
+       }
                    
        | STAR type_qualifier_list_opt pointer
-       { printf("pointer -> * type-qualifier-list(opt) pointer\n"); }
-                   
+       { 
+            // Pointer of pointer
+            $$ = new SymbolType("ptr");
+            $$->next = $3;
+       }                   
        ;
 
-type_qualifier_list: type_qualifier
-                   { printf("type-qualifier-list -> type-qualifier\n"); }
-                   
-                   | type_qualifier_list type_qualifier
-                   { printf("type-qualifier-list -> type-qualifier-list type-qualifier\n"); }
-                   
+type_qualifier_list: type_qualifier { }
+                   | type_qualifier_list type_qualifier { }                  
                    ;
 
-type_qualifier_list_opt: 
-                       | type_qualifier_list
+type_qualifier_list_opt: %empty { }
+                       | type_qualifier_list { }
                        ;
 
-parameter_type_list: parameter_list
-                   { printf("parameter-type-list -> parameter-list\n"); }
-                   
-                   | parameter_list COMMA DOT DOT DOT
-                   { printf("parameter-type-list -> parameter-list , ...\n"); }
-                   
+parameter_type_list: parameter_list { }
+                   | parameter_list COMMA DOT DOT DOT { }
                    ;
 
-parameter_list: parameter_declaration
-              { printf("parameter-list -> parameter-declaration\n"); }
-                   
-              | parameter_list COMMA parameter_declaration
-              { printf("parameter-list -> parameter-list , parameter-declaration\n"); }
-                   
+parameter_list: parameter_declaration { }
+              | parameter_list COMMA parameter_declaration { }                   
               ;
 
-parameter_declaration: declaration_specifiers declarator
-                     { printf("parameter-declaration -> declaration-specifiers declarator\n"); }
-                   
-                     | declaration_specifiers
-                     { printf("parameter-declaration -> declaration-specifiers\n"); }
-                   
+parameter_declaration: declaration_specifiers declarator { }                   
+                     | declaration_specifiers { }                   
                      ;
 
-identifier_list: IDENTIFIER
-               { printf("identifier-list -> identifier\n"); }
-                   
-               | identifier_list COMMA IDENTIFIER
-               { printf("identifier-list -> identifier-list , identifier\n"); }
-                   
+identifier_list: IDENTIFIER { }
+               | identifier_list COMMA IDENTIFIER { }                   
                ;
 
-identifier_list_opt:
-                   | identifier_list
-                   ;
-
-type_name: specifier_qualifier_list
-         { printf("type-name -> specifier-qualifier-list\n"); }
-                   
+type_name: specifier_qualifier_list { }                   
          ;
 
 initializer: assignment_expression
-           { printf("initializer -> assignment-expression\n"); }
-                   
-           | OPEN_BRACE initializer_list CLOSE_BRACE
-           { printf("initializer -> { initializer-list }\n"); }
-                   
-           | OPEN_BRACE initializer_list COMMA CLOSE_BRACE
-           { printf("initializer -> { initializer-list , }\n"); }
-                   
+           { 
+                 $$ = $1->loc;      // Assignment
+           }
+                    
+           | OPEN_BRACE initializer_list CLOSE_BRACE { }
+
+           | OPEN_BRACE initializer_list COMMA CLOSE_BRACE { }                   
            ;
 
-initializer_list: designation_opt initializer
-                { printf("initializer-list -> designation(opt) initializer\n"); }
-                   
-                | initializer_list COMMA designation_opt initializer
-                { printf("initializer-list -> initializer-list , designation(opt) initializer\n"); }
-                   
+initializer_list: designation_opt initializer { }
+                | initializer_list COMMA designation_opt initializer { }
                 ;
 
-designation: designator_list ASSGN
-           { printf("designation -> designator-list =\n"); }
-                   
+designation: designator_list ASSGN { }
            ;
 
-designation_opt: 
-               | designation
+designation_opt: %empty { }
+               | designation { }
                ;
 
-designator_list: designator
-               { printf("designator-list -> designator\n"); }
-                   
-               | designator_list designator
-               { printf("designator-list -> designator-list designator\n"); }
-                   
+designator_list: designator { }
+               | designator_list designator { }
                ;
 
-designator: OPEN_BRACKET constant_expression CLOSE_BRACKET
-          { printf("designator -> [ constant-expression ]\n"); }
-                   
-          | DOT IDENTIFIER
-          { printf("designator -> . identifier\n"); }
-                   
+designator: OPEN_BRACKET constant_expression CLOSE_BRACKET { }
+          | DOT IDENTIFIER { }
           ;
 
 /* Statements */
 
-statement: labeled_statement
-         { printf("statement -> labeled-statement\n"); }
-                   
-         | compound_statement
-         { printf("statement -> compound-statement\n"); }
-                   
+statement: labeled_statement { $$ = $1; }
+         | compound_statement { $$ = $1; }       
          | expression_statement
-         { printf("statement -> expression-statement\n"); }
-                   
-         | selection_statement
-         { printf("statement -> selection-statement\n"); }
-                   
-         | iteration_statement
-         { printf("statement -> iteration-statement\n"); }
-                   
-         | jump_statement
-         { printf("statement -> jump-statement\n"); }
-                   
+         { 
+            $$ = new Next();
+            $$->nextlist = $1->nextlist; // New Expression with same nextlist
+         }
+         | selection_statement { $$ = $1; }
+         | iteration_statement { $$ = $1; }
+         | jump_statement { $$ = $1; }
          ;
 
-labeled_statement: IDENTIFIER COLON statement
-                 { printf("labeled-statement -> identifier : statement\n"); }
+labeled_statement: IDENTIFIER COLON M statement
+                 { 
+                        $$ = $4;
+                        Label *l = find_label($1->name);
+                        if (l != nullptr) {
+                              l->addr = $3;
+                              backpatch(l->nextlist,l->addr);
+                        }
+                        else {
+                              l = new Label($1->name);
+                              l->addr = nextinstr();
+                              l->nextlist = makelist($3);
+                              label_table.push_back(*l);
+                        }
+                 }
                    
                  | CASE constant_expression COLON statement
-                 { printf("labeled-statement -> case constant-expression : statement\n"); }
-                   
+                 { }                   
                  | DEFAULT COLON statement
-                 { printf("labeled-statement -> default : statement\n"); }
-                   
+                 { }
                  ;
 
-compound_statement: OPEN_BRACE block_item_list_opt CLOSE_BRACE
-                  { printf("compound-statement -> { block-item-list(opt) }\n"); }
+compound_statement: OPEN_BRACE X changetable block_item_list_opt CLOSE_BRACE
+                  { 
+                        // Copy the block item list
+                        $$ = $4;
+                        // Set symbol table back to original
+                        updateSymbolTable(ST->parent);
+                  }
                    
                   ;
 
 block_item_list: block_item
-               { printf("block-item-list -> block-item\n"); }
-                   
-               | block_item_list block_item
-               { printf("block-item-list -> block-item-list block-item\n"); }
+               { 
+                  $$ = $1;
+               }                   
+               | block_item_list M block_item
+               { 
+                  $$ = $3;
+                  backpatch($1->nextlist, $2);  // Move to block_item after block_item_list
+               }
                    
                ;
 
-block_item_list_opt:
-                   | block_item_list
+block_item_list_opt: %empty {$$ = new Next();}
+                   | block_item_list {$$ = $1;}
                    ;
 
 block_item: declaration
-          { printf("block-item -> declaration\n"); }
+          { $$ = new Next(); }
                    
           | statement
-          { printf("block-item -> statement\n"); }
+          { $$ = $1; }
 
           ;               
 
-expression_statement: expression_opt SEMI_COLON
-                    { printf("expression-statement -> expression(opt) ;\n"); }
-                   
+expression_statement: expression SEMI_COLON
+                    { $$ = $1; }
+                    | SEMI_COLON 
+                    { $$ = new Expression(); }
                     ;
                     
-expression_opt:
-              | expression
+expression_opt: %empty { }
+              | expression { }
               ;
 
-selection_statement: IF OPEN_PARENTHESIS expression CLOSE_PARENTHESIS statement
-                   { printf("selection-statement -> if ( expression ) statement\n"); }
+selection_statement: IF OPEN_PARENTHESIS expression CLOSE_PARENTHESIS M statement N %prec "then"
+                   { 
+                        // If without else
+                        // If (B) M1 statement N2
+                        conv_int2bool(*$3);       // Convert this to a boolean expression b
+                        $$ = new Next();        // New statement
+                        backpatch($3->truelist, $5);  // Backpatch this with M1, to go inside the statement
+                        vector <int> tx = merge($3->falselist, $6->nextlist); // merge false condition of expression, nextlist of statement and N (out of the if statement)
+                        $$->nextlist = merge(tx, $7->nextlist);
+                   }
                    
-                   | IF OPEN_PARENTHESIS expression CLOSE_PARENTHESIS statement ELSE statement
-                   { printf("selection-statement -> if ( expression ) statement else statement\n"); }
+                   | IF OPEN_PARENTHESIS expression CLOSE_PARENTHESIS M statement N ELSE M statement
+                   { 
+                        // If with else
+                        // If (B) M1 S1 N1 else M2 S2
+                        conv_int2bool(*$3);      // Convert Expression to Boolean B
+                        $$ = new Next();  
+                        backpatch($3->truelist, $5);  // Go inside S1
+                        backpatch($3->falselist, $9); // Go inside S2
+                        vector <int> temp = merge($6->nextlist, $7->nextlist); // Merge nextlists of S1 and N1 and S2
+                        $$->nextlist = merge(temp, $10->nextlist);      
+                   }
                    
                    | SWITCH OPEN_PARENTHESIS expression CLOSE_PARENTHESIS statement
-                   { printf("selection-statement -> switch ( expression ) statement\n"); }
+                   { /* Not supported */ }
                    
                    ;
 
-iteration_statement: WHILE OPEN_PARENTHESIS expression CLOSE_PARENTHESIS statement
-                   { printf("iteration-statement -> while ( expression ) statement\n"); }
+iteration_statement: WHILE OPEN_PARENTHESIS X changetable M expression CLOSE_PARENTHESIS M statement
+                   { 
+                        // X creates the separate symbol table
+                        // Changetable changes to the nested symbol table
+                        // while M1 (B) M2 S1
+                        $$ = new Next();
+                        conv_int2bool(*$6);      // Convert expression to boolean
+                        backpatch($6->truelist, $8);  // Enter the while loop if statment is true
+                        backpatch($9->nextlist, $5); // Go back to M1 after block execution
+                        $$->nextlist = $6->falselist; // Move out when expression false
+                        // Emit
+                        emit("goto", conv_int2string($5));
+                        // Change to the parent table
+                        updateSymbolTable(ST->parent);
+                   }
+
+                   | DO M statement M WHILE OPEN_PARENTHESIS expression CLOSE_PARENTHESIS SEMI_COLON
+                   { 
+                        // do M1 while M2 (B1);
+                        $$ = new Next();
+                        conv_int2bool(*$7);        // Make B1 from expression
+                        backpatch($7->truelist, $2); // Goto M1 if B1 is true
+                        backpatch($3->nextlist, $4); // Goto M2 if do executed
+                        $$->nextlist = $7->falselist; // Exit to the falselist of expression
+                   }
                    
-                   | DO statement WHILE OPEN_PARENTHESIS expression CLOSE_PARENTHESIS SEMI_COLON
-                   { printf("iteration-statement -> do statement while ( expression ) ;\n"); }
+                   | FOR OPEN_PARENTHESIS X changetable expression_statement M expression_statement M expression N CLOSE_PARENTHESIS M statement
+                   { 
+                        // for M1 (E1; M1 E2; M2 E3 N) M3 S 
+                        $$ = new Next();
+                        conv_int2bool(*$7);      // Convert E2 to Boolean B (Condition Checking)
+                        backpatch($7->truelist, $12); // If B is true, go to M3 (statement)
+                        backpatch($10->nextlist, $6); // After N go back to M1
+                        backpatch($13->nextlist, $8); // After S, go back to increment step (M2)
+                        emit ("goto", conv_int2string($8));  // goto M2 (prevent fall through)
+                        $$->nextlist = $7->falselist; // Move out of the loop when B is false
+                        updateSymbolTable(ST->parent);
+                   }
+
+                   | FOR OPEN_PARENTHESIS X changetable declaration M expression_statement M expression N CLOSE_PARENTHESIS M statement
+                   { 
+                        // for M1 (E1; M1 E2; M2 E3 N) M3 S 
+                        // Repeat the same as above. 
+                        $$ = new Next();
+                        conv_int2bool(*$7);      // Convert E2 to Boolean B (Condition Checking)
+                        backpatch($7->truelist, $12); // If B is true, go to M3 (statement)
+                        backpatch($10->nextlist, $6); // After N go back to M1
+                        backpatch($13->nextlist, $8); // After S, go back to increment step (M2)
+                        emit ("goto", conv_int2string($8));  // goto M2 (prevent fall through)
+                        $$->nextlist = $7->falselist; // Move out of the loop when B is false
+                        updateSymbolTable(ST->parent);
+                   }
                    
-                   | FOR OPEN_PARENTHESIS expression_opt SEMI_COLON expression_opt SEMI_COLON expression_opt CLOSE_PARENTHESIS statement
-                   { printf("iteration-statement -> for ( expression(opt) ; expression(opt) ; expression(opt) ) statement\n"); }
-                   
-                   | FOR OPEN_PARENTHESIS declaration expression_opt SEMI_COLON expression_opt CLOSE_PARENTHESIS statement
-                   { printf("iteration-statement -> for ( declaration  expression(opt) ; expression(opt) ) statement\n"); }
-                   
+                   | FOR OPEN_PARENTHESIS X changetable declaration M expression_statement M expression_statement M expression N CLOSE_PARENTHESIS M statement
+                   { /* Not supported */ }
                    ;
 
-jump_statement: GOTO IDENTIFIER SEMI_COLON
-              { printf("jump-statement -> goto identifier ;\n"); }
+jump_statement: GOTO IDENTIFIER SEMI_COLON { }
                    
-              | CONTINUE SEMI_COLON
-              { printf("jump-statement -> continue ;\n"); }
+              | CONTINUE SEMI_COLON { }
                    
-              | BREAK SEMI_COLON
-              { printf("jump-statement -> break ;\n"); }
+              | BREAK SEMI_COLON { }
                    
               | RETURN expression_opt SEMI_COLON
-              { printf("jump-statement -> return expression(opt) ;\n"); }
+              { 
+                  $$ = new Next();
+                  emit("return", ""); // Emit return (from function call)
+              }
                    
               ;
 
 /* External definitions */
 
-translation_unit: external_declaration
-                { printf("translation-unit -> external-declaration\n\n\n"); }
-                   
-                | translation_unit external_declaration
-                { printf("translation-unit -> translation-unit external-declaration\n\n\n"); }
-                   
+translation_unit: external_declaration {  }
+                | translation_unit external_declaration { }
                 ;
 
-external_declaration: function_definition
-                    { printf("external-declaration -> function-definition\n"); }
-                   
-                    | declaration
-                    { printf("external-declaration -> declaration\n"); }
-                   
+external_declaration: function_definition { }
+                    | declaration { }
                     ;
                     
-function_definition: declaration_specifiers declarator declaration_list_opt compound_statement
-                   { printf("function-definition -> declaration-specifiers declarator declaration-list(opt) compound-statement\n"); }
+function_definition: declaration_specifiers declarator declaration_list_opt changetable compound_statement
+                   { 
+                        ST->parent = STS.global();
+                        table_count = 0;
+                        updateSymbolTable(STS.global());
+                   }
                    
                    ;
 
-declaration_list: declaration
-                { printf("declaration-list -> declaration\n"); }
-                   
-                | declaration_list declaration
-                { printf("declaration-list -> declaration-list declaration\n"); }
-                   
+declaration_list: declaration { }
+                | declaration_list declaration { }                   
                 ;
 
-declaration_list_opt: 
-                    | declaration_list
+declaration_list_opt: %empty { }
+                    | declaration_list { }
                     ;
 
 
 %%
 
-void yyerror(char *s)
+void yyerror(string s)
 {
-        printf("Error: %s\n", s);
-        return;
+      cout << s << "\n";
+      return;
 }

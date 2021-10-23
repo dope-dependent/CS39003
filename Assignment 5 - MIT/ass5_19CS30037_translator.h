@@ -12,6 +12,8 @@
 #include <map> 
 #include <cmath>
 
+
+
 // Declarations of all classes to avoid any conflicts
 class SymbolType;
 class Symbol;
@@ -19,9 +21,20 @@ class Symboltable;
 class SymtabStack;
 class Quad;
 class QuadArray;
+class Label;
+
+
+extern char* yytext;
+extern int yyparse();
+
 
 extern QuadArray Q;             // The program array of quads
 extern Symboltable *ST;          // The current symbol table
+extern char * variable_type;    // Stores the variable type (int, char, float)
+extern Symbol *curr_symbol;     // The current Symbol being pointed to in the table
+extern long long int table_count;  // denotes count of nested tables
+extern SymtabStack STS;         // Stores all the symbol tables
+extern int yydebug;
 
 // The type of an object in the symbol table defined in a recursive manner
 class SymbolType {
@@ -75,11 +88,14 @@ public:
 class SymtabStack {
 private:
     std::vector<Symboltable *> tables;
-    Symboltable * ST;
 public:
     Symboltable * current();    
     Symboltable * global ();    // First symbol table
     void updateCurrent (Symboltable * newST); // Update current symbol table
+    inline void add (Symboltable * st) {
+        this->tables.push_back(st);
+    }
+    Symboltable * search(std::string _name);
 };
 
 // Definition of the Quad
@@ -110,6 +126,16 @@ void emit (std::string _res, std::string _op, std::string _arg1 = "", std::strin
 void emit (std::string _res, std::string _op, int _arg1, std::string _arg2 = "");
 void emit (std::string _res, std::string _op, float _arg1, std::string _arg2 = "");
 
+
+// The Label Class for label symbols
+class Label {
+    public:
+        std::string name;                    // Name of the label
+        int addr;                       // Address the label is pointing to 
+        std::vector <int> nextlist;          // All the dangling goto statements
+        Label (std::string _name, int address = -1, std::vector <int> nextlist = std::vector<int>(0)); // Constructor
+        
+};
 
 // Expressions
 struct Expression {
@@ -176,5 +202,7 @@ std::pair<Symbol *,bool> convert(Symbol *S1, std::string new_type);
 
 // Next instruction address
 int nextinstr();
+Label * find_label(std::string _str);
+void updateSymbolTable(Symboltable *_new);
 
 #endif // _TRANSLATOR_H_
