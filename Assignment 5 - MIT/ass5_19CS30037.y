@@ -118,20 +118,23 @@ X: %empty
 		table_count++; // increment the table count
 		Symbol* s = ST->lookup(name); // lookup the table for new entry
 		s->nested_table = new Symboltable(name);
+            STS.add(s->nested_table);
 		s->nested_table->parent = ST;
 		s->name = name;
 		s->type = new SymbolType("block");
+            s->size = 0;
 		curr_symbol = s;
 	}  
 	;
 
 changetable: %empty
             {
-                  if(curr_symbol->nested_table==NULL) 
+                  if(curr_symbol->nested_table==nullptr) 
                   {
                         // HELP!!! CHECK THIS FUNCTION
                         Symboltable *_new = new Symboltable("");
                         _new->parent = ST;
+                        STS.add(_new);
                         updateSymbolTable(_new); // Function symbol table doesn't already exist
                   }
                   else 
@@ -190,16 +193,18 @@ postfix_expression: primary_expression
                         $$->array = $1->loc;
                         $$->loc = $1->loc;
                         $$->type = $1->loc->type;
+                        
                   }
 
                   | postfix_expression OPEN_BRACKET expression CLOSE_BRACKET
                   {
                         $$ = new Array();
-                        $$->type = $1->type->next;
-                        $$->array = $1->array;
+                        $$->type = $1->type->next;    // 
+                        $$->array = $1->array;        // 
                         $$->loc = ST->gentemp(new SymbolType("int"));
                         // Check if we have nested array
-                        if ($1->type->name == "arr") {
+                        $$->variety = "arr";
+                        if ($1->variety == "arr") {
                               Symbol * t = ST->gentemp(new SymbolType("int"));
                               // Multiply by the size
                               int t_size = $$->type->getSize();
@@ -299,6 +304,7 @@ unary_expression: postfix_expression
                 | unary_operator cast_expression
                 {
                       // Checking all the unary operators one by 1
+                      cout << $1[0] << "\n";
                       $$ = new Array();
                       // Check first character
                       switch ($1[0]) {
@@ -308,10 +314,11 @@ unary_expression: postfix_expression
                                     $$->array->type->next = $2->array->type;
                                     emit("=&", $$->array->name, $2->array->name);
                                     break;
-                        case '*':   // Pointer Dereferencing and value generation
+                        case '*':   // Pointer array
                                     $$->loc = ST->gentemp($2->array->type->next);
                                     $$->array = $2->array;
                                     emit("=*", $$->loc->name, $2->array->name);
+                                    $$->variety = "ptr";
                                     break;
                         case '+':   // Unary +, expression copy
                                     $$ = $2;
@@ -337,27 +344,28 @@ unary_expression: postfix_expression
                 ;
 
 unary_operator: B_AND
-              { $$ = string("&").c_str(); }
+              { $$ = (char *)("&"); }
               
               | STAR
-              { $$ = string("*").c_str(); }
+              { $$ = (char *)("*"); }
 
               | PLUS 
-              { $$ = string("+").c_str(); }
+              { $$ = (char *)("+"); }
 
               | MINUS 
-              { $$ = string("-").c_str(); }
+              { $$ = (char *)("-"); }
 
               | TILDE 
-              { $$ = string("~").c_str(); }               
+              { $$ = (char *)("~"); }               
 
               | EXCLAM 
-              { $$ = string("!").c_str(); }
+              { $$ = (char *)("!"); }
               ;
 
 cast_expression: unary_expression 
                { 
-                     $$ = $1; // Simply equate in the case of unary expression
+                  
+                  $$ = $1; // Simply equate in the case of unary expression
                }
 
 
@@ -373,11 +381,11 @@ cast_expression: unary_expression
 multiplicative_expression: cast_expression 
                          { 
                               $$ = new Expression();
-                              if ($1->type->name == "arr") {
+                              if ($1->variety == "arr") {
                                     $$->loc = ST->gentemp($1->loc->type);
                                     emit("=[]", $$->loc->name, $1->array->name, $1->loc->name);
                               }
-                              else if ($1->type->name == "ptr") {
+                              else if ($1->variety == "ptr") {
                                     $$->loc = $1->loc;
                               }     
                               else {
@@ -570,7 +578,9 @@ relational_expression: shift_expression
                      ;
 
 equality_expression: relational_expression
-                   { $$ = $1; }
+                   {    
+                        $$ = $1; 
+                   }
 
                    | equality_expression EQUAL relational_expression
                    { 
@@ -611,7 +621,9 @@ equality_expression: relational_expression
                    ;
                    
 and_expression: equality_expression
-              { $$ = $1; }
+              { 
+                  $$ = $1; 
+              }
 
               | and_expression B_AND equality_expression
               { 
@@ -632,7 +644,9 @@ and_expression: equality_expression
               ;
 
 exclusive_or_expression: and_expression
-                       { $$ = $1; }
+                       {     
+                             $$ = $1; 
+                        }
 
                        | exclusive_or_expression B_XOR and_expression
                        { 
@@ -730,12 +744,15 @@ conditional_expression: logical_or_expression
                       ;
 
 assignment_expression: conditional_expression
-                     { $$ = $1; }
+                     {
+                        $$ = $1; 
+                     }
 
                      | unary_expression assignment_operator assignment_expression
                      { 
-                        if ($1->type->name == "arr") {
+                        if ($1->variety == "arr") {
                               // Check for conversion and then emit
+                              cout << $1->type->getType() << "\n";
                               pair<Symbol *, bool> c = convert($3->loc, $1->type->name);
                               if (c.second) {
                                     $3->loc = c.first;
@@ -747,12 +764,12 @@ assignment_expression: conditional_expression
                               }
 
                         }
-                        else if ($1->type->name == "ptr") {
+                        else if ($1->variety == "ptr") {
                               emit("*=", $1->array->name, $3->loc->name); // For pointer types simply emit
                         }
                         else {
                               // Check if conversion is possible and convert
-                              pair<Symbol *, bool> c = convert($3->loc, $1->array->type->name);
+                              pair<Symbol *, bool> c = convert($3->loc, $1->type->name);
                               if (c.second) {
                                     $3->loc = c.first;
                                     emit("=", $1->array->name, $3->loc->name);
@@ -781,7 +798,9 @@ assignment_operator: ASSGN
                    ;
 
 expression: assignment_expression
-          { $$ = $1; }
+          { 
+            $$ = $1; 
+          }
                    
           | expression COMMA assignment_expression
           {    }                   
@@ -927,11 +946,12 @@ direct_declarator: IDENTIFIER
                  { 
                        // This extra projection has been added to handle _opt in type_qualifier_list 
                        SymbolType * t1 = $1->type;
-                       if (t1->next == nullptr)  {
+                       if (t1->name == "ptr" || t1->next == nullptr) {
                              // Create new array type
                              SymbolType * s = new SymbolType("arr");
                              s->next = t1;
                              // Get the size of the array;
+                             cout << "KEK\n";
                              int c_size = conv_string2int($3->loc->initial_value);
                              s->size = c_size;
                              // Update the type in the symbol table
@@ -940,22 +960,20 @@ direct_declarator: IDENTIFIER
                        }
                        else {
                              // Type is already an array type
-                              SymbolType *p = nullptr;
                               while (t1->next != nullptr) {
-                                    p = t1;
                                     t1 = t1->next;
                               }
                               // Creation of new array type symbol
-                              p->next = new SymbolType("arr");
-                              p->next->size = conv_string2int($3->loc->initial_value);
-                              p->next->next = t1;
+                              t1->next = t1;
+                              t1 = new SymbolType("arr");
+                              t1->size = conv_string2int($3->loc->initial_value);
                        }              
                  }
                  | direct_declarator OPEN_BRACKET CLOSE_BRACKET
                  {
                        // When both type_qualifier_list_opt and assignment_expression_opt are epsilon transitions
-                       SymbolType * t1 = $1->type;
-                       if (t1->next == nullptr)  {
+                       SymbolType * t1 = $1->type;     
+                       if (t1->name == "ptr" || t1->next == nullptr)  {
                              // Create new array type
                              SymbolType * s = new SymbolType("arr");
                              s->next = t1;
@@ -967,15 +985,13 @@ direct_declarator: IDENTIFIER
                        }
                        else {
                              // Type is already an array type
-                              SymbolType *p = nullptr;
                               while (t1->next != nullptr) {
-                                    p = t1;
                                     t1 = t1->next;
                               }
                               // Creation of new array type symbol
-                              p->next = new SymbolType("arr");
-                              p->next->size = 0;
-                              p->next->next = t1;
+                              t1->next = t1;
+                              t1 = new SymbolType("arr");
+                              t1->size = 0;
                        }
                  }
                  | direct_declarator OPEN_BRACKET STATIC type_qualifier_list assignment_expression CLOSE_BRACKET { }
@@ -984,7 +1000,7 @@ direct_declarator: IDENTIFIER
                  | direct_declarator OPEN_BRACKET STAR CLOSE_BRACKET
                  { /* This extra projection has been added to handle _opt in type_qualifier_list */}
                    
-                 | direct_declarator OPEN_PARENTHESIS parameter_type_list CLOSE_PARENTHESIS
+                 | direct_declarator OPEN_PARENTHESIS changetable parameter_type_list CLOSE_PARENTHESIS
                  { 
                        // Function Call and location with parameters
                        ST->name = $1->name;
@@ -998,7 +1014,7 @@ direct_declarator: IDENTIFIER
                        curr_symbol = $$;
 
                  }
-                 | direct_declarator OPEN_PARENTHESIS CLOSE_PARENTHESIS
+                 | direct_declarator OPEN_PARENTHESIS changetable CLOSE_PARENTHESIS
                  { 
                        // Function Call and location with no parameters
                        ST->name = $1->name;
@@ -1088,7 +1104,9 @@ designator: OPEN_BRACKET constant_expression CLOSE_BRACKET { }
 /* Statements */
 
 statement: labeled_statement { $$ = $1; }
-         | compound_statement { $$ = $1; }       
+         | compound_statement { 
+               $$ = $1; 
+           }       
          | expression_statement
          { 
             $$ = new Next();
@@ -1143,8 +1161,14 @@ block_item_list: block_item
                    
                ;
 
-block_item_list_opt: %empty {$$ = new Next();}
-                   | block_item_list {$$ = $1;}
+block_item_list_opt: %empty 
+                     {
+                        $$ = new Next();
+                     }
+                   | block_item_list 
+                     {
+                        $$ = $1;
+                     }
                    ;
 
 block_item: declaration
@@ -1161,10 +1185,6 @@ expression_statement: expression SEMI_COLON
                     { $$ = new Expression(); }
                     ;
                     
-expression_opt: %empty { }
-              | expression { }
-              ;
-
 selection_statement: IF OPEN_PARENTHESIS expression CLOSE_PARENTHESIS M statement N %prec "then"
                    { 
                         // If without else
@@ -1206,7 +1226,7 @@ iteration_statement: WHILE OPEN_PARENTHESIS X changetable M expression CLOSE_PAR
                         // Emit
                         emit("goto", conv_int2string($5));
                         // Change to the parent table
-                        updateSymbolTable(ST->parent);
+                        ST = ST->parent;
                    }
 
                    | DO M statement M WHILE OPEN_PARENTHESIS expression CLOSE_PARENTHESIS SEMI_COLON
@@ -1229,7 +1249,7 @@ iteration_statement: WHILE OPEN_PARENTHESIS X changetable M expression CLOSE_PAR
                         backpatch($13->nextlist, $8); // After S, go back to increment step (M2)
                         emit ("goto", conv_int2string($8));  // goto M2 (prevent fall through)
                         $$->nextlist = $7->falselist; // Move out of the loop when B is false
-                        updateSymbolTable(ST->parent);
+                        ST = ST->parent;
                    }
 
                    | FOR OPEN_PARENTHESIS X changetable declaration M expression_statement M expression N CLOSE_PARENTHESIS M statement
@@ -1243,7 +1263,7 @@ iteration_statement: WHILE OPEN_PARENTHESIS X changetable M expression CLOSE_PAR
                         backpatch($13->nextlist, $8); // After S, go back to increment step (M2)
                         emit ("goto", conv_int2string($8));  // goto M2 (prevent fall through)
                         $$->nextlist = $7->falselist; // Move out of the loop when B is false
-                        updateSymbolTable(ST->parent);
+                        ST = ST->parent;
                    }
                    
                    | FOR OPEN_PARENTHESIS X changetable declaration M expression_statement M expression_statement M expression N CLOSE_PARENTHESIS M statement
@@ -1256,10 +1276,15 @@ jump_statement: GOTO IDENTIFIER SEMI_COLON { }
                    
               | BREAK SEMI_COLON { }
                    
-              | RETURN expression_opt SEMI_COLON
+              | RETURN expression SEMI_COLON
               { 
                   $$ = new Next();
-                  emit("return", ""); // Emit return (from function call)
+                  emit("return", $2->loc->name); // Emit return (from function call)
+              }
+              | RETURN SEMI_COLON 
+              {
+                  $$ = new Next();
+                  emit("return", "");
               }
                    
               ;

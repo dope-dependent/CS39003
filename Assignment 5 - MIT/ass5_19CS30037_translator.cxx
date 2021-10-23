@@ -95,13 +95,13 @@ Symboltable::Symboltable(string _name, Symboltable *_parent)
     : name(_name), parent(_parent), symbols({})
 {
     cout << "New Symboltable created\n";
-    this->temporary_count = 0;
 }
 
 // Lookup function in a Symboltable
 Symbol *Symboltable::lookup(string _id)
 {
     cout << "Symboltable Lookup called \n";
+    cout << _id << "\n";
     // If the symbol is already found
     vector<Symbol *>::iterator it = this->symbols.begin();
     while (it != this->symbols.end())
@@ -113,6 +113,12 @@ Symbol *Symboltable::lookup(string _id)
         }
         it++;
     }
+    // Search in the upper tables
+    Symbol * check = nullptr;
+    if (this->parent != nullptr) {
+        check = this->parent->check_parent(_id);
+    } 
+    if (check != nullptr) return check;
     // Else create a new symbol with this name
     Symbol *ns = new Symbol(_id);
     // Add to the list of symbols
@@ -120,17 +126,33 @@ Symbol *Symboltable::lookup(string _id)
     cout << "Symboltable Lookup exited \n";
     return this->symbols.back(); // The latest symbol which was inserted
 }
+Symbol* Symboltable::check_parent(string _id) {
+    cout << "Parent Check called \n";
+    vector<Symbol *>::iterator it = this->symbols.begin();
+    while (it != this->symbols.end())
+    {
+        if ((*it)->name == _id)
+        {
+            cout << "Symboltable Lookup exited \n";
+            return (*it);
+        }
+        it++;
+    }
+    // Repeat the same for the parent
+    if (this->parent != nullptr) return this->parent->check_parent(_id);
+    return nullptr;
+}
 
 // Gentemp function to generate temporaries
 Symbol *Symboltable::gentemp(SymbolType *_type)
 {
     cout << "ST->gentemp called\n";
     // Name of the temporary TEMP_x, x = count of the temporaries
-    string namx = "TEMP_";
-    namx += to_string(this->temporary_count++);
+    string namx = "_t";
+    namx += to_string(STS.temp_count++);
     Symbol *ns = new Symbol(namx);
     ns->type = _type;
-
+    ns->size = _type->getSize();
     this->symbols.push_back(ns);
     cout << "ST->gentemp ended\n";
     return this->symbols.back(); // The latest symbol
@@ -144,6 +166,7 @@ void Symboltable::update()
     for (Symbol * c : this->symbols)
     {
         c->offset = off;
+        c->size = c->type->getSize();
         off += c->size;
         if (c->nested_table != nullptr)
         {
@@ -168,7 +191,7 @@ void Symboltable::print()
     cout << "\n++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n";
     int k = 0;
     for (Symbol * c : this->symbols)
-    {
+    { 
         cout << "\t\tName          : " << c->name << "\n";
         cout << "\t\tType          : " << c->type->getType() << "\n";
         cout << "\t\tInitial Value : ";
@@ -178,7 +201,7 @@ void Symboltable::print()
             cout << c->initial_value << "\n";
         cout << "\t\tSize          : " << c->size << "\n";
         cout << "\t\tOffset        : " << c->offset << "\n";
-        if (c->nested_table == nullptr) {cout << "\t\tNested Table : null\n";} 
+        if (c->nested_table == nullptr) {cout << "\t\tNested Table  : null\n";} 
         else cout << "\t\tNested Table  : " << c->nested_table->name << "\n";
         if (k != this->symbols.size() - 1) {
             cout << "--------------------------------------------------------------\n";
@@ -271,7 +294,9 @@ void Quad::print()
             cout << res << " = "
                  << "call " << arg1 << ", " << arg2;
         // Label ?
-
+        else if (op == "label") {
+            cout << res << ": ";
+        }
         else
             cout << "No matching operator found";
 
@@ -290,9 +315,12 @@ void QuadArray::insert(Quad *q)
 void QuadArray::print()
 {
     cout << "------------------TAC-----------------\n";
+    int index = 0;
     for (Quad * q : this->quads)
     {
+        printf("%4d : ", index);
         q->print();
+        index++;
     }
 }
 
@@ -541,6 +569,7 @@ int compare(SymbolType *s1, SymbolType *s2)
 pair<Symbol *, bool> convert(Symbol *s, std::string type)
 {
     cout << "Convert SymbolType called\n";
+    if (s->type->name == type) return make_pair(s, true);
     Symbol *temp = ST->gentemp(new SymbolType(type));
     // Only conversion between standard types
     if (s->type->name == "int" && s->type->next == nullptr)
@@ -617,18 +646,24 @@ void updateSymbolTable(Symboltable *_new)
     cout << "UpdateSymbolTable ended\n";
 }
 
+void SymtabStack::print() {
+    cout << "Number of Symbol Tables: " << this->tables.size() << "\n";
+    for (Symboltable * p : this->tables) {
+        p->print();
+    }
+}
+
 int main()
 {
 
     ST = new Symboltable("Global");
     STS.add(ST);
-
     yyparse();
     ST->update();
 
-    cout << "\n\nPRINTING ALL SYMBOL TABLES\n";
-    ST->print();
-
+    // cout << "\n\nPRINTING ALL SYMBOL TABLES\n";
+    
+    STS.print();
     cout << "\n\nPRINTING ALL QUADS\n\n";
     Q.print();
 

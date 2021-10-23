@@ -3,6 +3,7 @@
 #include "ass5_19CS30037.tab.h"
 
 #include <stdlib.h>
+#include <iostream>
 
 extern YYSTYPE yylval;
 extern "C" int yylex();
