@@ -72,10 +72,10 @@ void SymbolType::printType() { cout << this->getType(); }
 Symbol::Symbol(string name, string type, string initval, int width, Symboltable *nested_table)
     : name(name), type(new SymbolType(type, width)), initial_value(initval), nested_table(nested_table)
 {
-    // cout << "Symbol constructor called\n";
+    cout << "Symbol constructor called\n";
     this->size = this->type->getSize(); // Get the size
     this->offset = 0;                   // Initial offset is 0
-    // cout << "Symbol constructor ended\n";
+    cout << "Symbol constructor ended\n";
 }
 
 Symbol::Symbol(string _name) : name(_name) {}
@@ -84,23 +84,23 @@ Symbol::Symbol(string _name) : name(_name) {}
 // Used when conversion to different types
 void Symbol::update(SymbolType *new_type)
 {
-    // cout << "Symbol update called\n";
+    cout << "Symbol update called\n";
     this->type = new_type;              // Change the type
     this->size = this->type->getSize(); // Get the size of the new type
-    // cout << "Symbol update ended\n";
+    cout << "Symbol update ended\n";
 }
 
 // Symboltable constructor
 Symboltable::Symboltable(string _name, Symboltable *_parent)
     : name(_name), parent(_parent), symbols({})
 {
-    // cout << "New Symboltable created\n";
+    cout << "New Symboltable created\n";
 }
 
 // Lookup function in a Symboltable
 Symbol *Symboltable::lookup(string _id)
 {
-    // cout << "Symboltable Lookup called \n";
+    cout << "Symboltable Lookup called \n";
     // cout << _id << "\n";
     // If the symbol is already found
     vector<Symbol *>::iterator it = this->symbols.begin();
@@ -108,7 +108,7 @@ Symbol *Symboltable::lookup(string _id)
     {
         if ((*it)->name == _id)
         {
-            // cout << "Symboltable Lookup exited \n";
+            cout << "Symboltable Lookup exited \n";
             return (*it);
         }
         it++;
@@ -127,13 +127,13 @@ Symbol *Symboltable::lookup(string _id)
     return this->symbols.back(); // The latest symbol which was inserted
 }
 Symbol* Symboltable::check_parent(string _id) {
-    // cout << "Parent Check called \n";
+    cout << "Parent Check called \n";
     vector<Symbol *>::iterator it = this->symbols.begin();
     while (it != this->symbols.end())
     {
         if ((*it)->name == _id)
         {
-            // cout << "Symboltable Lookup exited \n";
+            cout << "Symboltable Lookup exited \n";
             return (*it);
         }
         it++;
@@ -146,7 +146,7 @@ Symbol* Symboltable::check_parent(string _id) {
 // Gentemp function to generate temporaries
 Symbol *Symboltable::gentemp(SymbolType *_type)
 {
-    // cout << "ST->gentemp called\n";
+    cout << "ST->gentemp called\n";
     // Name of the temporary TEMP_x, x = count of the temporaries
     string namx = "_t";
     namx += to_string(STS.temp_count++);
@@ -154,14 +154,14 @@ Symbol *Symboltable::gentemp(SymbolType *_type)
     ns->type = _type;
     ns->size = _type->getSize();
     this->symbols.push_back(ns);
-    // cout << "ST->gentemp ended\n";
+    cout << "ST->gentemp ended\n";
     return this->symbols.back(); // The latest symbol
 }
 
 // Update function to update the symbol table offsets
 void Symboltable::update()
 {
-    // cout << "ST->update called\n";
+    cout << "ST->update called\n";
     int off = 0;
     for (Symbol * c : this->symbols)
     {
@@ -173,7 +173,7 @@ void Symboltable::update()
             c->nested_table->update();
         }
     }
-    // cout << "ST->update ended\n";
+    cout << "ST->update ended\n";
 }
 
 // Symboltable print function
@@ -214,7 +214,7 @@ void Symboltable::print()
 // Quad constructor
 Quad::Quad(string _res, string _op, string _arg1, string _arg2)
     : res(_res), op(_op), arg1(_arg1), arg2(_arg2) {
-        // cout << "New Quad Created\n";
+        cout << "New Quad Created\n";
     }
 
 // Used to set the result of the quad (used when backpatching)
@@ -418,7 +418,7 @@ void conv_bool2int(Expression &E)
         string strx = conv_int2string(nextinstr() + 1);
         emit("goto", strx);
         backpatch(E.falselist, nextinstr());
-        emit("=", E.loc->name, "false");
+        emit("==", E.loc->name, "false");
     }
 }
 
@@ -490,7 +490,7 @@ Symbol *gentemp(Symboltable *s, SymbolType *type)
 // Convert if conversion is possible
 int compare(Symbol *&s1, Symbol *&s2)
 {
-    // cout << "Compare Symbol Called\n";
+    cout << "Compare Symbol Called\n";
     if (compare(s1->type, s2->type) == 1)
         return 1;
     // Try to convert s1 to s2 (flag 2)
@@ -607,7 +607,7 @@ Symboltable *SymtabStack::search(string _name)
 
 Label *find_label(string _str)
 {
-    // cout << "find_label called\n";
+    cout << "find_label called\n";
     vector<Label>::iterator it = label_table.begin();
     while (it != label_table.end())
     {
@@ -619,9 +619,9 @@ Label *find_label(string _str)
 
 void updateSymbolTable(Symboltable *_new)
 {
-    // cout << "UpdateSymbolTable called\n";
+    cout << "UpdateSymbolTable called\n";
     ST = _new;
-    // cout << "UpdateSymbolTable ended\n";
+    cout << "UpdateSymbolTable ended\n";
 }
 
 void SymtabStack::print() {
@@ -633,7 +633,9 @@ void SymtabStack::print() {
 
 int main()
 {
-
+    #ifdef YYDEBUG
+    yydebug = 1;
+    #endif
     ST = new Symboltable("Global");
     STS.add(ST);
     yyparse();

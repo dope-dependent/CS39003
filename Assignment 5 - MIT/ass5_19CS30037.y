@@ -182,7 +182,7 @@ primary_expression: IDENTIFIER
 
                   | OPEN_PARENTHESIS expression CLOSE_PARENTHESIS
                   { 
-                        $$ = $2; 
+                        $$ = $2;
                   }
                   ;
 
@@ -191,8 +191,7 @@ postfix_expression: primary_expression
                         $$ = new Array();
                         $$->array = $1->loc;
                         $$->loc = $1->loc;
-                        $$->type = $1->loc->type;
-                        
+                        $$->type = $1->loc->type;                        
                   }
 
                   | postfix_expression OPEN_BRACKET expression CLOSE_BRACKET
@@ -516,8 +515,10 @@ relational_expression: shift_expression
                               yyerror(string("TypeError: Comparison between incompatible types"));
                         }
                         else {
+                              
                               $$ = new Expression();
-                              $$->type == "bool";     // New expression of type bool
+                              $$->loc = ST->gentemp(new SymbolType("int"));
+                              $$->type = "bool";     // New expression of type bool
                               $$->truelist = makelist(nextinstr()); // the instr numbers of true path
                               $$->falselist = makelist(nextinstr() + 1); // the instr numbers of false path 
                               emit("<", "", $1->loc->name, $3->loc->name); // If a < b, goto ... (backpatched later)
@@ -533,7 +534,8 @@ relational_expression: shift_expression
                         }
                         else {
                               $$ = new Expression();
-                              $$->type == "bool";     // New expression of type bool
+                              $$->loc = ST->gentemp(new SymbolType("int"));
+                              $$->type = "bool";     // New expression of type bool
                               $$->truelist = makelist(nextinstr()); // the instr numbers of true path
                               $$->falselist = makelist(nextinstr() + 1); // the instr numbers of false path 
                               emit(">", "", $1->loc->name, $3->loc->name); // If a > b, goto ... (backpatched later)
@@ -549,7 +551,8 @@ relational_expression: shift_expression
                         }
                         else {
                               $$ = new Expression();
-                              $$->type == "bool";     // New expression of type bool
+                              $$->loc = ST->gentemp(new SymbolType("int"));
+                              $$->type = "bool";     // New expression of type bool
                               $$->truelist = makelist(nextinstr()); // the instr numbers of true path
                               $$->falselist = makelist(nextinstr() + 1); // the instr numbers of false path 
                               emit("<=", "", $1->loc->name, $3->loc->name); // If a <= b, goto ... (backpatched later)
@@ -565,7 +568,8 @@ relational_expression: shift_expression
                         }
                         else {
                               $$ = new Expression();
-                              $$->type == "bool";     // New expression of type bool
+                              $$->loc = ST->gentemp(new SymbolType("int"));
+                              $$->type = "bool";     // New expression of type bool
                               $$->truelist = makelist(nextinstr()); // the instr numbers of true path
                               $$->falselist = makelist(nextinstr() + 1); // the instr numbers of false path 
                               emit(">=", "", $1->loc->name, $3->loc->name); // If a > b, goto ... (backpatched later)
@@ -590,7 +594,8 @@ equality_expression: relational_expression
                               conv_bool2int(*$1);
                               conv_bool2int(*$3);
                               $$ = new Expression();
-                              $$->type == "bool";     // New expression of type bool
+                              $$->loc = ST->gentemp(new SymbolType("int"));
+                              $$->type = "bool";     // New expression of type bool
                               $$->truelist = makelist(nextinstr()); // the instr numbers of true path
                               $$->falselist = makelist(nextinstr() + 1); // the instr numbers of false path 
                               emit("==", "", $1->loc->name, $3->loc->name); // If a > b, goto ... (backpatched later)
@@ -608,7 +613,8 @@ equality_expression: relational_expression
                               conv_bool2int(*$1);
                               conv_bool2int(*$3);
                               $$ = new Expression();
-                              $$->type == "bool";     // New expression of type bool
+                              $$->loc = ST->gentemp(new SymbolType("int"));
+                              $$->type = "bool";     // New expression of type bool
                               $$->truelist = makelist(nextinstr()); // the instr numbers of true path
                               $$->falselist = makelist(nextinstr() + 1); // the instr numbers of false path 
                               emit("!=", "", $1->loc->name, $3->loc->name); // If a > b, goto ... (backpatched later)
@@ -634,7 +640,7 @@ and_expression: equality_expression
                         conv_bool2int(*$1);
                         conv_bool2int(*$3);
                         $$ = new Expression();
-                        $$->type == "int";      // AND will give int type expression
+                        $$->type = "int";      // AND will give int type expression
                         $$->loc = ST->gentemp(new SymbolType("int"));
                         emit("&", $$->loc->name, $1->loc->name, $3->loc->name);
                   }                  
@@ -657,7 +663,7 @@ exclusive_or_expression: and_expression
                                     conv_bool2int(*$1);
                                     conv_bool2int(*$3);
                                     $$ = new Expression();
-                                    $$->type == "int"; // XOR will give int type expression
+                                    $$->type = "int"; // XOR will give int type expression
                                     $$->loc = ST->gentemp(new SymbolType("int"));
                                     emit("^", $$->loc->name, $1->loc->name, $3->loc->name);
                               }   
@@ -677,7 +683,7 @@ inclusive_or_expression: exclusive_or_expression
                                     conv_bool2int(*$1);
                                     conv_bool2int(*$3);
                                     $$ = new Expression();
-                                    $$->type == "int";      // OR will give int type expression
+                                    $$->type = "int";      // OR will give int type expression
                                     $$->loc = ST->gentemp(new SymbolType("int"));
                                     emit("|", $$->loc->name, $1->loc->name, $3->loc->name);
                               }
@@ -693,7 +699,8 @@ logical_and_expression: inclusive_or_expression
                       { 
                         conv_int2bool(*$1);                                  //convert logical_and_expression to bool
                         conv_int2bool(*$4);                                  //convert inclusive_or_expression int to bool	
-                        $$ = new Expression();                                 
+                        $$ = new Expression();                         
+                        $$->loc = ST->gentemp(new SymbolType("int"));
                         $$->type = "bool";                                     // Expression type is bool
                         backpatch($1->truelist, $3);                           //if $1 is true, we move to the next instruction and add a backpatch
                         $$->truelist = $4->truelist;                           //The expression AND is true if the next expression is also true
@@ -703,13 +710,16 @@ logical_and_expression: inclusive_or_expression
                       ;
 
 logical_or_expression: logical_and_expression
-                     { $$ = $1; }
+                     { $$ = $1; 
+
+                     }
 
                      | logical_or_expression L_OR M logical_and_expression
                      { 
                         conv_int2bool(*$1);                                  // convert logical_and_expression to bool
                         conv_int2bool(*$4);                                  // convert inclusive_or_expression int to bool	
-                        $$ = new Expression();                                 
+                        $$ = new Expression();               
+                        $$->loc = ST->gentemp(new SymbolType("int"));
                         $$->type = "bool";                                     // Expression type is bool
                         backpatch($1->falselist, $3);                          //if $1 is false, we move to the next instruction and add a backpatch
                         $$->falselist = $4->falselist;                         //The expression OR is false if the next expression is also false
@@ -718,7 +728,9 @@ logical_or_expression: logical_and_expression
                      ;
 
 conditional_expression: logical_or_expression
-                      { $$ = $1; }
+                      { 
+                            $$ = $1; 
+                      }
 
                       | logical_or_expression N QUESTION M expression N COLON M conditional_expression
                       { 
@@ -743,7 +755,7 @@ conditional_expression: logical_or_expression
 
 assignment_expression: conditional_expression
                      {
-                        $$ = $1; 
+                        $$ = $1;
                      }
 
                      | unary_expression assignment_operator assignment_expression
