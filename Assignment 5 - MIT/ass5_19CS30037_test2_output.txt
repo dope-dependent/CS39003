@@ -1,0 +1,659 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+PRINTING ALL SYMBOL TABLES
+Number of Symbol Tables: 11
+
+
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+	ST Name         : Global
+	ST Parent       : null
+	ST Symbol Count : 5
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+		Name          : swappy
+		Type          : void
+		Initial Value : null
+		Size          : 0
+		Offset        : 0
+		Nested Table  : swappy
+--------------------------------------------------------------
+		Name          : div1
+		Type          : int
+		Initial Value : null
+		Size          : 4
+		Offset        : 0
+		Nested Table  : div1
+--------------------------------------------------------------
+		Name          : mul1
+		Type          : int
+		Initial Value : null
+		Size          : 4
+		Offset        : 4
+		Nested Table  : mul1
+--------------------------------------------------------------
+		Name          : mull
+		Type          : int
+		Initial Value : null
+		Size          : 4
+		Offset        : 8
+		Nested Table  : mull
+--------------------------------------------------------------
+		Name          : main
+		Type          : int
+		Initial Value : null
+		Size          : 4
+		Offset        : 12
+		Nested Table  : main
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+
+
+
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+	ST Name         : swappy
+	ST Parent       : Global
+	ST Symbol Count : 3
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+		Name          : a
+		Type          : ptr(int)
+		Initial Value : null
+		Size          : 4
+		Offset        : 0
+		Nested Table  : null
+--------------------------------------------------------------
+		Name          : b
+		Type          : ptr(int)
+		Initial Value : null
+		Size          : 4
+		Offset        : 4
+		Nested Table  : null
+--------------------------------------------------------------
+		Name          : swappy.$0
+		Type          : block
+		Initial Value : null
+		Size          : 0
+		Offset        : 8
+		Nested Table  : swappy.$0
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+
+
+
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+	ST Name         : swappy.$0
+	ST Parent       : swappy
+	ST Symbol Count : 6
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+		Name          : temp
+		Type          : int
+		Initial Value : null
+		Size          : 4
+		Offset        : 0
+		Nested Table  : null
+--------------------------------------------------------------
+		Name          : _t0
+		Type          : int
+		Initial Value : null
+		Size          : 4
+		Offset        : 4
+		Nested Table  : null
+--------------------------------------------------------------
+		Name          : _t1
+		Type          : int
+		Initial Value : null
+		Size          : 4
+		Offset        : 8
+		Nested Table  : null
+--------------------------------------------------------------
+		Name          : _t2
+		Type          : int
+		Initial Value : null
+		Size          : 4
+		Offset        : 12
+		Nested Table  : null
+--------------------------------------------------------------
+		Name          : _t3
+		Type          : int
+		Initial Value : null
+		Size          : 4
+		Offset        : 16
+		Nested Table  : null
+--------------------------------------------------------------
+		Name          : _t4
+		Type          : int
+		Initial Value : null
+		Size          : 4
+		Offset        : 20
+		Nested Table  : null
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+
+
+
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+	ST Name         : div1
+	ST Parent       : Global
+	ST Symbol Count : 4
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+		Name          : a
+		Type          : float
+		Initial Value : null
+		Size          : 8
+		Offset        : 0
+		Nested Table  : null
+--------------------------------------------------------------
+		Name          : b
+		Type          : float
+		Initial Value : null
+		Size          : 8
+		Offset        : 8
+		Nested Table  : null
+--------------------------------------------------------------
+		Name          : return
+		Type          : int
+		Initial Value : null
+		Size          : 4
+		Offset        : 16
+		Nested Table  : null
+--------------------------------------------------------------
+		Name          : div1.$0
+		Type          : block
+		Initial Value : null
+		Size          : 0
+		Offset        : 20
+		Nested Table  : div1.$0
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+
+
+
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+	ST Name         : div1.$0
+	ST Parent       : div1
+	ST Symbol Count : 3
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+		Name          : q
+		Type          : int
+		Initial Value : null
+		Size          : 4
+		Offset        : 0
+		Nested Table  : null
+--------------------------------------------------------------
+		Name          : _t5
+		Type          : float
+		Initial Value : null
+		Size          : 8
+		Offset        : 4
+		Nested Table  : null
+--------------------------------------------------------------
+		Name          : _t6
+		Type          : int
+		Initial Value : null
+		Size          : 4
+		Offset        : 12
+		Nested Table  : null
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+
+
+
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+	ST Name         : mul1
+	ST Parent       : Global
+	ST Symbol Count : 4
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+		Name          : a
+		Type          : int
+		Initial Value : null
+		Size          : 4
+		Offset        : 0
+		Nested Table  : null
+--------------------------------------------------------------
+		Name          : b
+		Type          : int
+		Initial Value : null
+		Size          : 4
+		Offset        : 4
+		Nested Table  : null
+--------------------------------------------------------------
+		Name          : return
+		Type          : int
+		Initial Value : null
+		Size          : 4
+		Offset        : 8
+		Nested Table  : null
+--------------------------------------------------------------
+		Name          : mul1.$0
+		Type          : block
+		Initial Value : null
+		Size          : 0
+		Offset        : 12
+		Nested Table  : mul1.$0
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+
+
+
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+	ST Name         : mul1.$0
+	ST Parent       : mul1
+	ST Symbol Count : 1
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+		Name          : _t7
+		Type          : int
+		Initial Value : null
+		Size          : 4
+		Offset        : 0
+		Nested Table  : null
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+
+
+
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+	ST Name         : mull
+	ST Parent       : Global
+	ST Symbol Count : 6
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+		Name          : a
+		Type          : int
+		Initial Value : null
+		Size          : 4
+		Offset        : 0
+		Nested Table  : null
+--------------------------------------------------------------
+		Name          : b
+		Type          : int
+		Initial Value : null
+		Size          : 4
+		Offset        : 4
+		Nested Table  : null
+--------------------------------------------------------------
+		Name          : c
+		Type          : float
+		Initial Value : null
+		Size          : 8
+		Offset        : 8
+		Nested Table  : null
+--------------------------------------------------------------
+		Name          : d
+		Type          : int
+		Initial Value : null
+		Size          : 4
+		Offset        : 16
+		Nested Table  : null
+--------------------------------------------------------------
+		Name          : return
+		Type          : int
+		Initial Value : null
+		Size          : 4
+		Offset        : 20
+		Nested Table  : null
+--------------------------------------------------------------
+		Name          : mull.$0
+		Type          : block
+		Initial Value : null
+		Size          : 0
+		Offset        : 24
+		Nested Table  : mull.$0
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+
+
+
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+	ST Name         : mull.$0
+	ST Parent       : mull
+	ST Symbol Count : 4
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+		Name          : _t8
+		Type          : int
+		Initial Value : null
+		Size          : 4
+		Offset        : 0
+		Nested Table  : null
+--------------------------------------------------------------
+		Name          : _t9
+		Type          : int
+		Initial Value : null
+		Size          : 4
+		Offset        : 4
+		Nested Table  : null
+--------------------------------------------------------------
+		Name          : _t10
+		Type          : int
+		Initial Value : null
+		Size          : 4
+		Offset        : 8
+		Nested Table  : null
+--------------------------------------------------------------
+		Name          : _t11
+		Type          : int
+		Initial Value : null
+		Size          : 4
+		Offset        : 12
+		Nested Table  : null
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+
+
+
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+	ST Name         : main
+	ST Parent       : Global
+	ST Symbol Count : 2
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+		Name          : return
+		Type          : int
+		Initial Value : null
+		Size          : 4
+		Offset        : 0
+		Nested Table  : null
+--------------------------------------------------------------
+		Name          : main.$0
+		Type          : block
+		Initial Value : null
+		Size          : 0
+		Offset        : 4
+		Nested Table  : main.$0
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+
+
+
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+	ST Name         : main.$0
+	ST Parent       : main
+	ST Symbol Count : 23
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+		Name          : a_232
+		Type          : int
+		Initial Value : null
+		Size          : 4
+		Offset        : 0
+		Nested Table  : null
+--------------------------------------------------------------
+		Name          : _t12
+		Type          : int
+		Initial Value : 21
+		Size          : 4
+		Offset        : 4
+		Nested Table  : null
+--------------------------------------------------------------
+		Name          : _t13
+		Type          : int
+		Initial Value : null
+		Size          : 4
+		Offset        : 8
+		Nested Table  : null
+--------------------------------------------------------------
+		Name          : _b2
+		Type          : int
+		Initial Value : 1
+		Size          : 4
+		Offset        : 12
+		Nested Table  : null
+--------------------------------------------------------------
+		Name          : _t14
+		Type          : int
+		Initial Value : 1
+		Size          : 4
+		Offset        : 16
+		Nested Table  : null
+--------------------------------------------------------------
+		Name          : _t15
+		Type          : ptr(int)
+		Initial Value : null
+		Size          : 4
+		Offset        : 20
+		Nested Table  : null
+--------------------------------------------------------------
+		Name          : _t16
+		Type          : void
+		Initial Value : null
+		Size          : 0
+		Offset        : 24
+		Nested Table  : null
+--------------------------------------------------------------
+		Name          : f1
+		Type          : float
+		Initial Value : 0.1
+		Size          : 8
+		Offset        : 24
+		Nested Table  : null
+--------------------------------------------------------------
+		Name          : _t17
+		Type          : float
+		Initial Value : 0.1
+		Size          : 8
+		Offset        : 32
+		Nested Table  : null
+--------------------------------------------------------------
+		Name          : f2
+		Type          : float
+		Initial Value : 1
+		Size          : 8
+		Offset        : 40
+		Nested Table  : null
+--------------------------------------------------------------
+		Name          : _t18
+		Type          : int
+		Initial Value : 1
+		Size          : 4
+		Offset        : 48
+		Nested Table  : null
+--------------------------------------------------------------
+		Name          : c
+		Type          : int
+		Initial Value : null
+		Size          : 4
+		Offset        : 52
+		Nested Table  : null
+--------------------------------------------------------------
+		Name          : _t19
+		Type          : int
+		Initial Value : null
+		Size          : 4
+		Offset        : 56
+		Nested Table  : null
+--------------------------------------------------------------
+		Name          : _t20
+		Type          : int
+		Initial Value : null
+		Size          : 4
+		Offset        : 60
+		Nested Table  : null
+--------------------------------------------------------------
+		Name          : _t21
+		Type          : int
+		Initial Value : 1
+		Size          : 4
+		Offset        : 64
+		Nested Table  : null
+--------------------------------------------------------------
+		Name          : _t22
+		Type          : float
+		Initial Value : 1.2
+		Size          : 8
+		Offset        : 68
+		Nested Table  : null
+--------------------------------------------------------------
+		Name          : b
+		Type          : int
+		Initial Value : 0
+		Size          : 4
+		Offset        : 76
+		Nested Table  : null
+--------------------------------------------------------------
+		Name          : _t23
+		Type          : int
+		Initial Value : 0
+		Size          : 4
+		Offset        : 80
+		Nested Table  : null
+--------------------------------------------------------------
+		Name          : d
+		Type          : int
+		Initial Value : 51
+		Size          : 4
+		Offset        : 84
+		Nested Table  : null
+--------------------------------------------------------------
+		Name          : _t24
+		Type          : int
+		Initial Value : 51
+		Size          : 4
+		Offset        : 88
+		Nested Table  : null
+--------------------------------------------------------------
+		Name          : e
+		Type          : int
+		Initial Value : null
+		Size          : 4
+		Offset        : 92
+		Nested Table  : null
+--------------------------------------------------------------
+		Name          : _t25
+		Type          : int
+		Initial Value : null
+		Size          : 4
+		Offset        : 96
+		Nested Table  : null
+--------------------------------------------------------------
+		Name          : _t26
+		Type          : int
+		Initial Value : 0
+		Size          : 4
+		Offset        : 100
+		Nested Table  : null
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+
+
+
+PRINTING ALL QUADS
+
+------------------TAC-----------------
+   0 : swappy: 
+   1 : swappy.$0: 
+   2 : _t0= * a
+   3 : temp = _t0
+   4 : _t1= * a
+   5 : _t2= * b
+   6 : a* = _t2
+   7 : _t3= * b
+   8 : _t4= * a
+   9 : b* = _t4
+  10 : return 
+  11 : div1: 
+  12 : div1.$0: 
+  13 : _t5 = a / b
+  14 : _t6 = float2int(_t5)
+  15 : q = _t6
+  16 : return q
+  17 : mul1: 
+  18 : mul1.$0: 
+  19 : _t7 = a * b
+  20 : return _t7
+  21 : mull: 
+  22 : mull.$0: 
+  23 : _t8 = float2int(c)
+  24 : _t9 = _t8 * a
+  25 : _t10 = _t9 * b
+  26 : _t11 = _t10 * d
+  27 : return _t11
+  28 : main: 
+  29 : main.$0: 
+  30 : _t12 = 21
+  31 : _t13= -_t12
+  32 : a_232 = _t13
+  33 : _t14 = 1
+  34 : _b2 = _t14
+  35 : _t15= & a_232
+  36 : param _t15
+  37 : param _b2
+  38 : _t16 = call swappy, 2
+  39 : _t17 = 0.1
+  40 : f1 = _t17
+  41 : _t18 = 1
+  42 : f2 = _t18
+  43 : param f1
+  44 : param f2
+  45 : _t19 = call div1, 2
+  46 : c = _t19
+  47 : param a_232
+  48 : param _b2
+  49 : _t20 = call mul1, 2
+  50 : c = _t20
+  51 : _t21 = 1
+  52 : c = _t21
+  53 : _t22 = 1.2
+  54 : f1 = _t22
+  55 : _t23 = 0
+  56 : b = _t23
+  57 : _t24 = 51
+  58 : d = _t24
+  59 : param c
+  60 : param b
+  61 : param f1
+  62 : param d
+  63 : _t25 = call mull, 4
+  64 : e = _t25
+  65 : _t26 = 0
+  66 : return _t26

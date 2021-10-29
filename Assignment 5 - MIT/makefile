@@ -32,4 +32,9 @@ clean:
 		  ass5_19CS30037.output
 
 test:
-	./a.out < ass5_19CS30037_test1.c
+	./a.out < ass5_19CS30037_test1.c > ass5_19CS30037_test1_output.txt
+	./a.out < ass5_19CS30037_test2.c > ass5_19CS30037_test2_output.txt
+	./a.out < ass5_19CS30037_test3.c > ass5_19CS30037_test3_output.txt
+	./a.out < ass5_19CS30037_test4.c > ass5_19CS30037_test4_output.txt
+	./a.out < ass5_19CS30037_test5.c > ass5_19CS30037_test5_output.txt
+	./a.out < ass5_19CS30037_test6.c > ass5_19CS30037_test6_output.txt

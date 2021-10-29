@@ -1,0 +1,647 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+PRINTING ALL SYMBOL TABLES
+Number of Symbol Tables: 15
+
+
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+	ST Name         : Global
+	ST Parent       : null
+	ST Symbol Count : 2
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+		Name          : heavy_looper
+		Type          : void
+		Initial Value : null
+		Size          : 0
+		Offset        : 0
+		Nested Table  : heavy_looper
+--------------------------------------------------------------
+		Name          : main
+		Type          : int
+		Initial Value : null
+		Size          : 4
+		Offset        : 0
+		Nested Table  : main
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+
+
+
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+	ST Name         : heavy_looper
+	ST Parent       : Global
+	ST Symbol Count : 1
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+		Name          : heavy_looper.$0
+		Type          : block
+		Initial Value : null
+		Size          : 0
+		Offset        : 0
+		Nested Table  : heavy_looper.$0
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+
+
+
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+	ST Name         : heavy_looper.$0
+	ST Parent       : heavy_looper
+	ST Symbol Count : 5
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+		Name          : k
+		Type          : int
+		Initial Value : 0
+		Size          : 4
+		Offset        : 0
+		Nested Table  : null
+--------------------------------------------------------------
+		Name          : _t0
+		Type          : int
+		Initial Value : 0
+		Size          : 4
+		Offset        : 4
+		Nested Table  : null
+--------------------------------------------------------------
+		Name          : heavy_looper.$0.$1
+		Type          : block
+		Initial Value : null
+		Size          : 0
+		Offset        : 8
+		Nested Table  : heavy_looper.$0.$1
+--------------------------------------------------------------
+		Name          : heavy_looper.$0.$2
+		Type          : block
+		Initial Value : null
+		Size          : 0
+		Offset        : 8
+		Nested Table  : heavy_looper.$0.$2
+--------------------------------------------------------------
+		Name          : _t7
+		Type          : int
+		Initial Value : null
+		Size          : 4
+		Offset        : 8
+		Nested Table  : null
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+
+
+
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+	ST Name         : heavy_looper.$0.$1
+	ST Parent       : heavy_looper.$0
+	ST Symbol Count : 1
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+		Name          : _t1
+		Type          : int
+		Initial Value : 0
+		Size          : 4
+		Offset        : 0
+		Nested Table  : null
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+
+
+
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+	ST Name         : heavy_looper.$0.$2
+	ST Parent       : heavy_looper.$0
+	ST Symbol Count : 4
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+		Name          : _t2
+		Type          : int
+		Initial Value : 1
+		Size          : 4
+		Offset        : 0
+		Nested Table  : null
+--------------------------------------------------------------
+		Name          : _t3
+		Type          : int
+		Initial Value : 10
+		Size          : 4
+		Offset        : 4
+		Nested Table  : null
+--------------------------------------------------------------
+		Name          : _t4
+		Type          : int
+		Initial Value : null
+		Size          : 4
+		Offset        : 8
+		Nested Table  : null
+--------------------------------------------------------------
+		Name          : heavy_looper.$0.$2.$3
+		Type          : block
+		Initial Value : null
+		Size          : 0
+		Offset        : 12
+		Nested Table  : heavy_looper.$0.$2.$3
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+
+
+
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+	ST Name         : heavy_looper.$0.$2.$3
+	ST Parent       : heavy_looper.$0.$2
+	ST Symbol Count : 2
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+		Name          : _t5
+		Type          : int
+		Initial Value : 10
+		Size          : 4
+		Offset        : 0
+		Nested Table  : null
+--------------------------------------------------------------
+		Name          : _t6
+		Type          : int
+		Initial Value : null
+		Size          : 4
+		Offset        : 4
+		Nested Table  : null
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+
+
+
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+	ST Name         : main
+	ST Parent       : Global
+	ST Symbol Count : 2
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+		Name          : return
+		Type          : int
+		Initial Value : null
+		Size          : 4
+		Offset        : 0
+		Nested Table  : null
+--------------------------------------------------------------
+		Name          : main.$0
+		Type          : block
+		Initial Value : null
+		Size          : 0
+		Offset        : 4
+		Nested Table  : main.$0
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+
+
+
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+	ST Name         : main.$0
+	ST Parent       : main
+	ST Symbol Count : 12
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+		Name          : i
+		Type          : int
+		Initial Value : 0
+		Size          : 4
+		Offset        : 0
+		Nested Table  : null
+--------------------------------------------------------------
+		Name          : _t8
+		Type          : int
+		Initial Value : 0
+		Size          : 4
+		Offset        : 4
+		Nested Table  : null
+--------------------------------------------------------------
+		Name          : j
+		Type          : int
+		Initial Value : 0
+		Size          : 4
+		Offset        : 8
+		Nested Table  : null
+--------------------------------------------------------------
+		Name          : _t9
+		Type          : int
+		Initial Value : 0
+		Size          : 4
+		Offset        : 12
+		Nested Table  : null
+--------------------------------------------------------------
+		Name          : k
+		Type          : int
+		Initial Value : 0
+		Size          : 4
+		Offset        : 16
+		Nested Table  : null
+--------------------------------------------------------------
+		Name          : _t10
+		Type          : int
+		Initial Value : 0
+		Size          : 4
+		Offset        : 20
+		Nested Table  : null
+--------------------------------------------------------------
+		Name          : dp
+		Type          : arr(10, arr(10, arr(10, int)))
+		Initial Value : null
+		Size          : 4000
+		Offset        : 24
+		Nested Table  : null
+--------------------------------------------------------------
+		Name          : _t11
+		Type          : int
+		Initial Value : 10
+		Size          : 4
+		Offset        : 4024
+		Nested Table  : null
+--------------------------------------------------------------
+		Name          : _t12
+		Type          : int
+		Initial Value : 10
+		Size          : 4
+		Offset        : 4028
+		Nested Table  : null
+--------------------------------------------------------------
+		Name          : _t13
+		Type          : int
+		Initial Value : 10
+		Size          : 4
+		Offset        : 4032
+		Nested Table  : null
+--------------------------------------------------------------
+		Name          : main.$0.$1
+		Type          : block
+		Initial Value : null
+		Size          : 0
+		Offset        : 4036
+		Nested Table  : main.$0.$1
+--------------------------------------------------------------
+		Name          : _t31
+		Type          : int
+		Initial Value : 0
+		Size          : 4
+		Offset        : 4036
+		Nested Table  : null
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+
+
+
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+	ST Name         : main.$0.$1
+	ST Parent       : main.$0
+	ST Symbol Count : 4
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+		Name          : _t14
+		Type          : int
+		Initial Value : 0
+		Size          : 4
+		Offset        : 0
+		Nested Table  : null
+--------------------------------------------------------------
+		Name          : _t15
+		Type          : int
+		Initial Value : 9
+		Size          : 4
+		Offset        : 4
+		Nested Table  : null
+--------------------------------------------------------------
+		Name          : _t16
+		Type          : int
+		Initial Value : null
+		Size          : 4
+		Offset        : 8
+		Nested Table  : null
+--------------------------------------------------------------
+		Name          : main.$0.$1.$2
+		Type          : block
+		Initial Value : null
+		Size          : 0
+		Offset        : 12
+		Nested Table  : main.$0.$1.$2
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+
+
+
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+	ST Name         : main.$0.$1.$2
+	ST Parent       : main.$0.$1
+	ST Symbol Count : 1
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+		Name          : main.$0.$1.$2.$3
+		Type          : block
+		Initial Value : null
+		Size          : 0
+		Offset        : 0
+		Nested Table  : main.$0.$1.$2.$3
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+
+
+
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+	ST Name         : main.$0.$1.$2.$3
+	ST Parent       : main.$0.$1.$2
+	ST Symbol Count : 4
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+		Name          : _t17
+		Type          : int
+		Initial Value : 0
+		Size          : 4
+		Offset        : 0
+		Nested Table  : null
+--------------------------------------------------------------
+		Name          : _t18
+		Type          : int
+		Initial Value : 9
+		Size          : 4
+		Offset        : 4
+		Nested Table  : null
+--------------------------------------------------------------
+		Name          : _t19
+		Type          : int
+		Initial Value : null
+		Size          : 4
+		Offset        : 8
+		Nested Table  : null
+--------------------------------------------------------------
+		Name          : main.$0.$1.$2.$3.$4
+		Type          : block
+		Initial Value : null
+		Size          : 0
+		Offset        : 12
+		Nested Table  : main.$0.$1.$2.$3.$4
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+
+
+
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+	ST Name         : main.$0.$1.$2.$3.$4
+	ST Parent       : main.$0.$1.$2.$3
+	ST Symbol Count : 3
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+		Name          : main.$0.$1.$2.$3.$4.$5
+		Type          : block
+		Initial Value : null
+		Size          : 0
+		Offset        : 0
+		Nested Table  : main.$0.$1.$2.$3.$4.$5
+--------------------------------------------------------------
+		Name          : _t28
+		Type          : int
+		Initial Value : 9
+		Size          : 4
+		Offset        : 0
+		Nested Table  : null
+--------------------------------------------------------------
+		Name          : main.$0.$1.$2.$3.$4.$6
+		Type          : block
+		Initial Value : null
+		Size          : 0
+		Offset        : 4
+		Nested Table  : main.$0.$1.$2.$3.$4.$6
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+
+
+
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+	ST Name         : main.$0.$1.$2.$3.$4.$5
+	ST Parent       : main.$0.$1.$2.$3.$4
+	ST Symbol Count : 8
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+		Name          : _t20
+		Type          : int
+		Initial Value : null
+		Size          : 4
+		Offset        : 0
+		Nested Table  : null
+--------------------------------------------------------------
+		Name          : _t21
+		Type          : int
+		Initial Value : null
+		Size          : 4
+		Offset        : 4
+		Nested Table  : null
+--------------------------------------------------------------
+		Name          : _t22
+		Type          : int
+		Initial Value : null
+		Size          : 4
+		Offset        : 8
+		Nested Table  : null
+--------------------------------------------------------------
+		Name          : _t23
+		Type          : int
+		Initial Value : null
+		Size          : 4
+		Offset        : 12
+		Nested Table  : null
+--------------------------------------------------------------
+		Name          : _t24
+		Type          : int
+		Initial Value : null
+		Size          : 4
+		Offset        : 16
+		Nested Table  : null
+--------------------------------------------------------------
+		Name          : _t25
+		Type          : int
+		Initial Value : null
+		Size          : 4
+		Offset        : 20
+		Nested Table  : null
+--------------------------------------------------------------
+		Name          : _t26
+		Type          : int
+		Initial Value : null
+		Size          : 4
+		Offset        : 24
+		Nested Table  : null
+--------------------------------------------------------------
+		Name          : _t27
+		Type          : int
+		Initial Value : null
+		Size          : 4
+		Offset        : 28
+		Nested Table  : null
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+
+
+
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+	ST Name         : main.$0.$1.$2.$3.$4.$6
+	ST Parent       : main.$0.$1.$2.$3.$4
+	ST Symbol Count : 2
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+		Name          : _t29
+		Type          : int
+		Initial Value : 0
+		Size          : 4
+		Offset        : 0
+		Nested Table  : null
+--------------------------------------------------------------
+		Name          : main.$0.$1.$2.$3.$4.$6.$7
+		Type          : block
+		Initial Value : null
+		Size          : 0
+		Offset        : 4
+		Nested Table  : main.$0.$1.$2.$3.$4.$6.$7
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+
+
+
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+	ST Name         : main.$0.$1.$2.$3.$4.$6.$7
+	ST Parent       : main.$0.$1.$2.$3.$4.$6
+	ST Symbol Count : 1
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+		Name          : _t30
+		Type          : int
+		Initial Value : null
+		Size          : 4
+		Offset        : 0
+		Nested Table  : null
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+
+
+
+PRINTING ALL QUADS
+
+------------------TAC-----------------
+   0 : heavy_looper: 
+   1 : heavy_looper.$0: 
+   2 : _t0 = 0
+   3 : k = _t0
+   4 : heavy_looper.$0.$1: 
+   5 : k = k - 1
+   6 : _t1 = 0
+   7 : if k > _t1 goto 9
+   8 : goto 11
+   9 : k = k - 1
+  10 : goto 5
+  11 : heavy_looper.$0.$2: 
+  12 : _t2 = 1
+  13 : k = _t2
+  14 : _t3 = 10
+  15 : if k < _t3 goto 20
+  16 : goto 28
+  17 : _t4 = k
+  18 : k = k + 1
+  19 : goto 14
+  20 : heavy_looper.$0.$2.$3: 
+  21 : _t5 = 10
+  22 : if k < _t5 goto 24
+  23 : goto 17
+  24 : _t6 = k
+  25 : k = k + 1
+  26 : goto 21
+  27 : goto 17
+  28 : _t7= -k
+  29 : k = _t7
+  30 : return 
+  31 : main: 
+  32 : main.$0: 
+  33 : _t8 = 0
+  34 : i = _t8
+  35 : _t9 = 0
+  36 : j = _t9
+  37 : _t10 = 0
+  38 : k = _t10
+  39 : _t11 = 10
+  40 : _t12 = 10
+  41 : _t13 = 10
+  42 : main.$0.$1: 
+  43 : _t14 = 0
+  44 : i = _t14
+  45 : _t15 = 9
+  46 : if i < _t15 goto 51
+  47 : goto 84
+  48 : _t16 = i
+  49 : i = i + 1
+  50 : goto 45
+  51 : main.$0.$1.$2: 
+  52 : main.$0.$1.$2.$3: 
+  53 : _t17 = 0
+  54 : j = _t17
+  55 : _t18 = 9
+  56 : if j < _t18 goto 61
+  57 : goto 48
+  58 : _t19 = j
+  59 : j = j + 1
+  60 : goto 55
+  61 : main.$0.$1.$2.$3.$4: 
+  62 : main.$0.$1.$2.$3.$4.$5: 
+  63 : _t20 = i * 400
+  64 : _t23 = j * 40
+  65 : _t22 = _t20 + _t23
+  66 : _t25 = k * 4
+  67 : _t24 = _t22 + _t25
+  68 : _t26 = i * j
+  69 : _t27 = _t26 - k
+  70 : dp[_t24] = _t27
+  71 : _t28 = 9
+  72 : if k < _t28 goto 62
+  73 : goto 74
+  74 : main.$0.$1.$2.$3.$4.$6: 
+  75 : _t29 = 0
+  76 : if k > _t29 goto 78
+  77 : goto 58
+  78 : main.$0.$1.$2.$3.$4.$6.$7: 
+  79 : _t30 = k
+  80 : k = k - 1
+  81 : goto 75
+  82 : goto 58
+  83 : goto 48
+  84 : _t31 = 0
+  85 : return _t31

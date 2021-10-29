@@ -131,7 +131,6 @@ changetable: %empty
             {
                   if(curr_symbol->nested_table==nullptr) 
                   {
-                        // HELP!!! CHECK THIS FUNCTION
                         Symboltable *_new = new Symboltable("");
                         _new->parent = ST;
                         STS.add(_new);
@@ -304,7 +303,6 @@ unary_expression: postfix_expression
                 | unary_operator cast_expression
                 {
                       // Checking all the unary operators one by 1
-                      cout << $1[0] << "\n";
                       $$ = new Array();
                       // Check first character
                       switch ($1[0]) {
@@ -482,7 +480,7 @@ shift_expression: additive_expression
                 { 
                       // In shift (x << i),x and i must be integers
                       // the $3 must be of integer type
-                      if (!($3->type == "int" && $1->type == "int")) {
+                      if (!($3->loc->type->name == "int" && $1->loc->type->name == "int")) {
                         cout << "TypeError: Bits to shift should be integers\n";
                       }
                       // Else shift and generate temporary
@@ -495,7 +493,7 @@ shift_expression: additive_expression
 
                 | shift_expression R_SHIFT additive_expression
                 { // Similar to left shift 
-                      if (!($3->type == "int" && $1->type == "int")) {
+                      if (!($3->loc->type->name == "int" && $1->loc->type->name == "int")) {
                         cout << "TypeError: Bits to shift should be integers\n";
                       }
                       else {
@@ -752,7 +750,6 @@ assignment_expression: conditional_expression
                      { 
                         if ($1->variety == "arr") {
                               // Check for conversion and then emit
-                              cout << $1->type->getType() << "\n";
                               pair<Symbol *, bool> c = convert($3->loc, $1->type->name);
                               if (c.second) {
                                     $3->loc = c.first;
@@ -951,7 +948,6 @@ direct_declarator: IDENTIFIER
                              SymbolType * s = new SymbolType("arr");
                              s->next = t1;
                              // Get the size of the array;
-                             cout << "KEK\n";
                              int c_size = conv_string2int($3->loc->initial_value);
                              s->size = c_size;
                              // Update the type in the symbol table
@@ -960,13 +956,19 @@ direct_declarator: IDENTIFIER
                        }
                        else {
                              // Type is already an array type
+                              SymbolType *prev = nullptr;
                               while (t1->next != nullptr) {
+                                    prev = t1;
                                     t1 = t1->next;
                               }
                               // Creation of new array type symbol
-                              t1->next = t1;
+                              SymbolType *p = t1;
                               t1 = new SymbolType("arr");
                               t1->size = conv_string2int($3->loc->initial_value);
+                              t1->next = p;
+                              prev->next = t1;
+                              $1->update($1->type);
+                              $$ = $1;
                        }              
                  }
                  | direct_declarator OPEN_BRACKET CLOSE_BRACKET
@@ -985,13 +987,19 @@ direct_declarator: IDENTIFIER
                        }
                        else {
                              // Type is already an array type
+                             SymbolType *prev = nullptr;
                               while (t1->next != nullptr) {
+                                    prev = t1;
                                     t1 = t1->next;
                               }
                               // Creation of new array type symbol
-                              t1->next = t1;
+                              SymbolType *p = t1;
                               t1 = new SymbolType("arr");
                               t1->size = 0;
+                              t1->next = p;
+                              prev->next = t1;
+                              $1->update($1->type);
+                              $$ = $1;
                        }
                  }
                  | direct_declarator OPEN_BRACKET STATIC type_qualifier_list assignment_expression CLOSE_BRACKET { }
