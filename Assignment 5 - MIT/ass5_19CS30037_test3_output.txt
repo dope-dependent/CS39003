@@ -448,28 +448,28 @@ Number of Symbol Tables: 8
 		Offset        : 215
 		Nested Table  : main.$0.$1
 --------------------------------------------------------------
-		Name          : _t37
+		Name          : _t38
 		Type          : int
 		Initial Value : 4
 		Size          : 4
 		Offset        : 215
 		Nested Table  : null
 --------------------------------------------------------------
-		Name          : _t38
+		Name          : _t39
 		Type          : int
 		Initial Value : null
 		Size          : 4
 		Offset        : 219
 		Nested Table  : null
 --------------------------------------------------------------
-		Name          : _t39
+		Name          : _t40
 		Type          : int
 		Initial Value : 2
 		Size          : 4
 		Offset        : 223
 		Nested Table  : null
 --------------------------------------------------------------
-		Name          : _t40
+		Name          : _t41
 		Type          : int
 		Initial Value : null
 		Size          : 4
@@ -587,7 +587,7 @@ Number of Symbol Tables: 8
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 	ST Name         : main.$0.$1.$2.$3.$4
 	ST Parent       : main.$0.$1.$2.$3
-	ST Symbol Count : 2
+	ST Symbol Count : 3
 
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 		Name          : _t35
@@ -597,11 +597,18 @@ Number of Symbol Tables: 8
 		Offset        : 0
 		Nested Table  : null
 --------------------------------------------------------------
+		Name          : _t36
+		Type          : int
+		Initial Value : null
+		Size          : 4
+		Offset        : 4
+		Nested Table  : null
+--------------------------------------------------------------
 		Name          : main.$0.$1.$2.$3.$4.$5
 		Type          : block
 		Initial Value : null
 		Size          : 0
-		Offset        : 4
+		Offset        : 8
 		Nested Table  : main.$0.$1.$2.$3.$4.$5
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
@@ -615,7 +622,7 @@ Number of Symbol Tables: 8
 	ST Symbol Count : 1
 
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-		Name          : _t36
+		Name          : _t37
 		Type          : int
 		Initial Value : 2
 		Size          : 4
@@ -637,8 +644,12 @@ PRINTING ALL QUADS
    5 : _t4 = 0
    6 : _t5 = _t3 - _t4
    7 : p_d = _t5
-   8 : main: 
-   9 : main.$0: 
+
+main: 
+
+
+main.$0: 
+
   10 : _t6 = 142
   11 : x = _t6
   12 : _t7= & x
@@ -677,31 +688,41 @@ PRINTING ALL QUADS
   45 : b = _t27
   46 : _t28 = f & g
   47 : c = _t28
-  48 : main.$0.$1: 
+
+main.$0.$1: 
+
   49 : _t29 = 0.23
   50 : _t30= -_t29
   51 : j = _t30
-  52 : main.$0.$1.$2: 
+
+main.$0.$1.$2: 
+
   53 : _t31 = 231
   54 : c = _t31
   55 : _t32 = 2
   56 : q = _t32
-  57 : main.$0.$1.$2.$3: 
+
+main.$0.$1.$2.$3: 
+
   58 : _t33 = 1
   59 : _t34= -_t33
   60 : b = _t34
-  61 : main.$0.$1.$2.$3.$4: 
+
+main.$0.$1.$2.$3.$4: 
+
   62 : _t35 = 2
   63 : if a == _t35 goto 65
   64 : goto 69
-  65 : main.$0.$1.$2.$3.$4.$5: 
-  66 : _t36 = 2
-  67 : a = _t36
+
+main.$0.$1.$2.$3.$4.$5: 
+
+  66 : _t37 = 2
+  67 : a = _t37
   68 : goto 69
-  69 : _t37 = 4
-  70 : _t38 = h << _t37
-  71 : i = _t38
-  72 : _t39 = 2
-  73 : _t40 = c << _t39
-  74 : g = _t40
+  69 : _t38 = 4
+  70 : _t39 = h << _t38
+  71 : i = _t39
+  72 : _t40 = 2
+  73 : _t41 = c << _t40
+  74 : g = _t41
   75 : return 

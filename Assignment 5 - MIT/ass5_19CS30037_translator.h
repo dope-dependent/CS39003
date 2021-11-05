@@ -103,7 +103,7 @@ public:
 
 // Definition of the Quad
 class Quad {
-private:
+public:
     std::string res;                    // Result
     std::string op;                     // Opcode
     std::string arg1;                   // Argument 1

@@ -590,8 +590,12 @@ Number of Symbol Tables: 11
 PRINTING ALL QUADS
 
 ------------------TAC-----------------
-   0 : swappy: 
-   1 : swappy.$0: 
+
+swappy: 
+
+
+swappy.$0: 
+
    2 : _t0= * a
    3 : temp = _t0
    4 : _t1= * a
@@ -601,59 +605,75 @@ PRINTING ALL QUADS
    8 : _t4= * a
    9 : b* = _t4
   10 : return 
-  11 : div1: 
-  12 : div1.$0: 
-  13 : _t5 = a / b
-  14 : _t6 = float2int(_t5)
-  15 : q = _t6
-  16 : return q
-  17 : mul1: 
-  18 : mul1.$0: 
-  19 : _t7 = a * b
-  20 : return _t7
-  21 : mull: 
-  22 : mull.$0: 
-  23 : _t8 = float2int(c)
-  24 : _t9 = _t8 * a
-  25 : _t10 = _t9 * b
-  26 : _t11 = _t10 * d
-  27 : return _t11
-  28 : main: 
-  29 : main.$0: 
-  30 : _t12 = 21
-  31 : _t13= -_t12
-  32 : a_232 = _t13
-  33 : _t14 = 1
-  34 : _b2 = _t14
-  35 : _t15= & a_232
-  36 : param _t15
-  37 : param _b2
-  38 : _t16 = call swappy, 2
-  39 : _t17 = 0.1
-  40 : f1 = _t17
-  41 : _t18 = 1
-  42 : f2 = _t18
-  43 : param f1
-  44 : param f2
-  45 : _t19 = call div1, 2
-  46 : c = _t19
-  47 : param a_232
-  48 : param _b2
-  49 : _t20 = call mul1, 2
-  50 : c = _t20
-  51 : _t21 = 1
-  52 : c = _t21
-  53 : _t22 = 1.2
-  54 : f1 = _t22
-  55 : _t23 = 0
-  56 : b = _t23
-  57 : _t24 = 51
-  58 : d = _t24
-  59 : param c
-  60 : param b
-  61 : param f1
-  62 : param d
-  63 : _t25 = call mull, 4
-  64 : e = _t25
-  65 : _t26 = 0
-  66 : return _t26
+
+div1: 
+
+
+div1.$0: 
+
+  14 : _t5 = a / b
+  15 : _t6 = float2int(_t5)
+  16 : q = _t6
+  17 : return q
+
+mul1: 
+
+
+mul1.$0: 
+
+  21 : _t7 = a * b
+  22 : return _t7
+
+mull: 
+
+
+mull.$0: 
+
+  26 : _t8 = float2int(c)
+  27 : _t9 = _t8 * a
+  28 : _t10 = _t9 * b
+  29 : _t11 = _t10 * d
+  30 : return _t11
+
+main: 
+
+
+main.$0: 
+
+  34 : _t12 = 21
+  35 : _t13= -_t12
+  36 : a_232 = _t13
+  37 : _t14 = 1
+  38 : _b2 = _t14
+  39 : _t15= & a_232
+  40 : param _t15
+  41 : param _b2
+  42 : _t16 = call swappy, 2
+  43 : _t17 = 0.1
+  44 : f1 = _t17
+  45 : _t18 = 1
+  46 : f2 = _t18
+  47 : param f1
+  48 : param f2
+  49 : _t19 = call div1, 2
+  50 : c = _t19
+  51 : param a_232
+  52 : param _b2
+  53 : _t20 = call mul1, 2
+  54 : c = _t20
+  55 : _t21 = 1
+  56 : c = _t21
+  57 : _t22 = 1.2
+  58 : f1 = _t22
+  59 : _t23 = 0
+  60 : b = _t23
+  61 : _t24 = 51
+  62 : d = _t24
+  63 : param c
+  64 : param b
+  65 : param f1
+  66 : param d
+  67 : _t25 = call mull, 4
+  68 : e = _t25
+  69 : _t26 = 0
+  70 : return _t26

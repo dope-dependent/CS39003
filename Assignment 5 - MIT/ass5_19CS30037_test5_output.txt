@@ -92,7 +92,7 @@ Number of Symbol Tables: 7
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 	ST Name         : fib.$0
 	ST Parent       : fib
-	ST Symbol Count : 11
+	ST Symbol Count : 13
 
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 		Name          : _t0
@@ -104,7 +104,7 @@ Number of Symbol Tables: 7
 --------------------------------------------------------------
 		Name          : _t1
 		Type          : int
-		Initial Value : 1
+		Initial Value : null
 		Size          : 4
 		Offset        : 4
 		Nested Table  : null
@@ -125,28 +125,28 @@ Number of Symbol Tables: 7
 --------------------------------------------------------------
 		Name          : _t4
 		Type          : int
-		Initial Value : 1
+		Initial Value : null
 		Size          : 4
 		Offset        : 16
 		Nested Table  : null
 --------------------------------------------------------------
 		Name          : _t5
 		Type          : int
-		Initial Value : null
+		Initial Value : 1
 		Size          : 4
 		Offset        : 20
 		Nested Table  : null
 --------------------------------------------------------------
 		Name          : _t6
 		Type          : int
-		Initial Value : null
+		Initial Value : 1
 		Size          : 4
 		Offset        : 24
 		Nested Table  : null
 --------------------------------------------------------------
 		Name          : _t7
 		Type          : int
-		Initial Value : 2
+		Initial Value : null
 		Size          : 4
 		Offset        : 28
 		Nested Table  : null
@@ -160,7 +160,7 @@ Number of Symbol Tables: 7
 --------------------------------------------------------------
 		Name          : _t9
 		Type          : int
-		Initial Value : null
+		Initial Value : 2
 		Size          : 4
 		Offset        : 36
 		Nested Table  : null
@@ -170,6 +170,20 @@ Number of Symbol Tables: 7
 		Initial Value : null
 		Size          : 4
 		Offset        : 40
+		Nested Table  : null
+--------------------------------------------------------------
+		Name          : _t11
+		Type          : int
+		Initial Value : null
+		Size          : 4
+		Offset        : 44
+		Nested Table  : null
+--------------------------------------------------------------
+		Name          : _t12
+		Type          : int
+		Initial Value : null
+		Size          : 4
+		Offset        : 48
 		Nested Table  : null
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
@@ -212,49 +226,56 @@ Number of Symbol Tables: 7
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 	ST Name         : sum.$0
 	ST Parent       : sum
-	ST Symbol Count : 6
+	ST Symbol Count : 7
 
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-		Name          : _t11
+		Name          : _t13
 		Type          : int
 		Initial Value : 0
 		Size          : 4
 		Offset        : 0
 		Nested Table  : null
 --------------------------------------------------------------
-		Name          : _t12
-		Type          : int
-		Initial Value : 0
-		Size          : 4
-		Offset        : 4
-		Nested Table  : null
---------------------------------------------------------------
-		Name          : _t13
-		Type          : int
-		Initial Value : 1
-		Size          : 4
-		Offset        : 8
-		Nested Table  : null
---------------------------------------------------------------
 		Name          : _t14
 		Type          : int
 		Initial Value : null
 		Size          : 4
-		Offset        : 12
+		Offset        : 4
 		Nested Table  : null
 --------------------------------------------------------------
 		Name          : _t15
+		Type          : int
+		Initial Value : 0
+		Size          : 4
+		Offset        : 8
+		Nested Table  : null
+--------------------------------------------------------------
+		Name          : _t16
+		Type          : int
+		Initial Value : 1
+		Size          : 4
+		Offset        : 12
+		Nested Table  : null
+--------------------------------------------------------------
+		Name          : _t17
 		Type          : int
 		Initial Value : null
 		Size          : 4
 		Offset        : 16
 		Nested Table  : null
 --------------------------------------------------------------
-		Name          : _t16
+		Name          : _t18
 		Type          : int
 		Initial Value : null
 		Size          : 4
 		Offset        : 20
+		Nested Table  : null
+--------------------------------------------------------------
+		Name          : _t19
+		Type          : int
+		Initial Value : null
+		Size          : 4
+		Offset        : 24
 		Nested Table  : null
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
@@ -290,7 +311,7 @@ Number of Symbol Tables: 7
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 	ST Name         : main.$0
 	ST Parent       : main
-	ST Symbol Count : 13
+	ST Symbol Count : 16
 
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 		Name          : q
@@ -300,88 +321,109 @@ Number of Symbol Tables: 7
 		Offset        : 0
 		Nested Table  : null
 --------------------------------------------------------------
-		Name          : _t17
+		Name          : _t20
 		Type          : int
 		Initial Value : 0
 		Size          : 4
 		Offset        : 4
 		Nested Table  : null
 --------------------------------------------------------------
-		Name          : _t18
+		Name          : _t21
 		Type          : int
 		Initial Value : 0
 		Size          : 4
 		Offset        : 8
 		Nested Table  : null
 --------------------------------------------------------------
-		Name          : _t19
+		Name          : _t22
 		Type          : int
-		Initial Value : 1
+		Initial Value : null
 		Size          : 4
 		Offset        : 12
 		Nested Table  : null
 --------------------------------------------------------------
-		Name          : _t20
+		Name          : _t23
 		Type          : int
 		Initial Value : 1
 		Size          : 4
 		Offset        : 16
 		Nested Table  : null
 --------------------------------------------------------------
-		Name          : _t21
-		Type          : int
-		Initial Value : 2
-		Size          : 4
-		Offset        : 20
-		Nested Table  : null
---------------------------------------------------------------
-		Name          : _t22
-		Type          : int
-		Initial Value : 3
-		Size          : 4
-		Offset        : 24
-		Nested Table  : null
---------------------------------------------------------------
-		Name          : _t23
-		Type          : int
-		Initial Value : 3
-		Size          : 4
-		Offset        : 28
-		Nested Table  : null
---------------------------------------------------------------
 		Name          : _t24
 		Type          : int
-		Initial Value : 4
+		Initial Value : 1
 		Size          : 4
-		Offset        : 32
+		Offset        : 20
 		Nested Table  : null
 --------------------------------------------------------------
 		Name          : _t25
 		Type          : int
 		Initial Value : null
 		Size          : 4
-		Offset        : 36
+		Offset        : 24
 		Nested Table  : null
 --------------------------------------------------------------
 		Name          : _t26
 		Type          : int
-		Initial Value : null
+		Initial Value : 2
 		Size          : 4
-		Offset        : 40
+		Offset        : 28
 		Nested Table  : null
 --------------------------------------------------------------
 		Name          : _t27
 		Type          : int
-		Initial Value : null
+		Initial Value : 3
 		Size          : 4
-		Offset        : 44
+		Offset        : 32
 		Nested Table  : null
 --------------------------------------------------------------
 		Name          : _t28
 		Type          : int
-		Initial Value : 0
+		Initial Value : null
+		Size          : 4
+		Offset        : 36
+		Nested Table  : null
+--------------------------------------------------------------
+		Name          : _t29
+		Type          : int
+		Initial Value : 3
+		Size          : 4
+		Offset        : 40
+		Nested Table  : null
+--------------------------------------------------------------
+		Name          : _t30
+		Type          : int
+		Initial Value : 4
+		Size          : 4
+		Offset        : 44
+		Nested Table  : null
+--------------------------------------------------------------
+		Name          : _t31
+		Type          : int
+		Initial Value : null
 		Size          : 4
 		Offset        : 48
+		Nested Table  : null
+--------------------------------------------------------------
+		Name          : _t32
+		Type          : int
+		Initial Value : null
+		Size          : 4
+		Offset        : 52
+		Nested Table  : null
+--------------------------------------------------------------
+		Name          : _t33
+		Type          : int
+		Initial Value : null
+		Size          : 4
+		Offset        : 56
+		Nested Table  : null
+--------------------------------------------------------------
+		Name          : _t34
+		Type          : int
+		Initial Value : 0
+		Size          : 4
+		Offset        : 60
 		Nested Table  : null
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
@@ -391,74 +433,86 @@ Number of Symbol Tables: 7
 PRINTING ALL QUADS
 
 ------------------TAC-----------------
-   0 : fib: 
-   1 : fib.$0: 
+
+fib: 
+
+
+fib.$0: 
+
    2 : _t0 = 0
    3 : if n == _t0 goto 5
    4 : goto 8
-   5 : _t1 = 1
-   6 : return _t1
+   5 : _t2 = 1
+   6 : return _t2
    7 : goto 8
-   8 : _t2 = 1
-   9 : if n == _t2 goto 11
+   8 : _t3 = 1
+   9 : if n == _t3 goto 11
   10 : goto 14
-  11 : _t3 = 1
-  12 : return _t3
+  11 : _t5 = 1
+  12 : return _t5
   13 : goto 14
-  14 : _t4 = 1
-  15 : _t5 = n - _t4
-  16 : param _t5
-  17 : _t6 = call fib, 1
-  18 : _t7 = 2
-  19 : _t8 = n - _t7
-  20 : param _t8
-  21 : _t9 = call fib, 1
-  22 : _t10 = _t6 + _t9
-  23 : return _t10
-  24 : sum: 
-  25 : sum.$0: 
-  26 : _t11 = 0
-  27 : if n == _t11 goto 29
-  28 : goto 32
-  29 : _t12 = 0
-  30 : return _t12
-  31 : goto 32
-  32 : _t13 = 1
-  33 : _t14 = n - _t13
-  34 : param _t14
-  35 : _t15 = call sum, 1
-  36 : _t16 = n + _t15
-  37 : return _t16
-  38 : main: 
-  39 : main.$0: 
-  40 : _t17 = 0
-  41 : q = _t17
-  42 : _t18 = 0
-  43 : if q != _t18 goto 45
-  44 : goto 48
-  45 : _t19 = 1
-  46 : q = _t19
-  47 : goto 48
-  48 : _t20 = 1
-  49 : if q == _t20 goto 51
-  50 : goto 54
-  51 : _t21 = 2
-  52 : q = _t21
-  53 : goto 54
-  54 : _t22 = 3
-  55 : if q == _t22 goto 57
-  56 : goto 60
-  57 : _t23 = 3
-  58 : q = _t23
-  59 : goto 62
-  60 : _t24 = 4
-  61 : q = _t24
-  62 : param q
-  63 : _t25 = call fib, 1
-  64 : q = _t25
-  65 : param q
-  66 : _t26 = call sum, 1
-  67 : _t27 = q + _t26
-  68 : q = _t27
-  69 : _t28 = 0
-  70 : return _t28
+  14 : _t6 = 1
+  15 : _t7 = n - _t6
+  16 : param _t7
+  17 : _t8 = call fib, 1
+  18 : _t9 = 2
+  19 : _t10 = n - _t9
+  20 : param _t10
+  21 : _t11 = call fib, 1
+  22 : _t12 = _t8 + _t11
+  23 : return _t12
+
+sum: 
+
+
+sum.$0: 
+
+  27 : _t13 = 0
+  28 : if n == _t13 goto 30
+  29 : goto 33
+  30 : _t15 = 0
+  31 : return _t15
+  32 : goto 33
+  33 : _t16 = 1
+  34 : _t17 = n - _t16
+  35 : param _t17
+  36 : _t18 = call sum, 1
+  37 : _t19 = n + _t18
+  38 : return _t19
+
+main: 
+
+
+main.$0: 
+
+  42 : _t20 = 0
+  43 : q = _t20
+  44 : _t21 = 0
+  45 : if q != _t21 goto 47
+  46 : goto 50
+  47 : _t23 = 1
+  48 : q = _t23
+  49 : goto 50
+  50 : _t24 = 1
+  51 : if q == _t24 goto 53
+  52 : goto 56
+  53 : _t26 = 2
+  54 : q = _t26
+  55 : goto 56
+  56 : _t27 = 3
+  57 : if q == _t27 goto 59
+  58 : goto 62
+  59 : _t29 = 3
+  60 : q = _t29
+  61 : goto 64
+  62 : _t30 = 4
+  63 : q = _t30
+  64 : param q
+  65 : _t31 = call fib, 1
+  66 : q = _t31
+  67 : param q
+  68 : _t32 = call sum, 1
+  69 : _t33 = q + _t32
+  70 : q = _t33
+  71 : _t34 = 0
+  72 : return _t34

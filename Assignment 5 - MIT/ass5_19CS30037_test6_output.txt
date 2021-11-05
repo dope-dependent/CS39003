@@ -105,7 +105,7 @@ Number of Symbol Tables: 15
 		Offset        : 8
 		Nested Table  : heavy_looper.$0.$2
 --------------------------------------------------------------
-		Name          : _t7
+		Name          : _t10
 		Type          : int
 		Initial Value : null
 		Size          : 4
@@ -120,7 +120,7 @@ Number of Symbol Tables: 15
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 	ST Name         : heavy_looper.$0.$1
 	ST Parent       : heavy_looper.$0
-	ST Symbol Count : 1
+	ST Symbol Count : 2
 
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 		Name          : _t1
@@ -128,6 +128,13 @@ Number of Symbol Tables: 15
 		Initial Value : 0
 		Size          : 4
 		Offset        : 0
+		Nested Table  : null
+--------------------------------------------------------------
+		Name          : _t2
+		Type          : int
+		Initial Value : null
+		Size          : 4
+		Offset        : 4
 		Nested Table  : null
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
@@ -138,35 +145,42 @@ Number of Symbol Tables: 15
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 	ST Name         : heavy_looper.$0.$2
 	ST Parent       : heavy_looper.$0
-	ST Symbol Count : 4
+	ST Symbol Count : 5
 
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-		Name          : _t2
+		Name          : _t3
 		Type          : int
 		Initial Value : 1
 		Size          : 4
 		Offset        : 0
 		Nested Table  : null
 --------------------------------------------------------------
-		Name          : _t3
+		Name          : _t4
 		Type          : int
 		Initial Value : 10
 		Size          : 4
 		Offset        : 4
 		Nested Table  : null
 --------------------------------------------------------------
-		Name          : _t4
+		Name          : _t5
 		Type          : int
 		Initial Value : null
 		Size          : 4
 		Offset        : 8
 		Nested Table  : null
 --------------------------------------------------------------
+		Name          : _t6
+		Type          : int
+		Initial Value : null
+		Size          : 4
+		Offset        : 12
+		Nested Table  : null
+--------------------------------------------------------------
 		Name          : heavy_looper.$0.$2.$3
 		Type          : block
 		Initial Value : null
 		Size          : 0
-		Offset        : 12
+		Offset        : 16
 		Nested Table  : heavy_looper.$0.$2.$3
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
@@ -177,21 +191,28 @@ Number of Symbol Tables: 15
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 	ST Name         : heavy_looper.$0.$2.$3
 	ST Parent       : heavy_looper.$0.$2
-	ST Symbol Count : 2
+	ST Symbol Count : 3
 
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-		Name          : _t5
+		Name          : _t7
 		Type          : int
 		Initial Value : 10
 		Size          : 4
 		Offset        : 0
 		Nested Table  : null
 --------------------------------------------------------------
-		Name          : _t6
+		Name          : _t8
 		Type          : int
 		Initial Value : null
 		Size          : 4
 		Offset        : 4
+		Nested Table  : null
+--------------------------------------------------------------
+		Name          : _t9
+		Type          : int
+		Initial Value : null
+		Size          : 4
+		Offset        : 8
 		Nested Table  : null
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
@@ -237,7 +258,7 @@ Number of Symbol Tables: 15
 		Offset        : 0
 		Nested Table  : null
 --------------------------------------------------------------
-		Name          : _t8
+		Name          : _t11
 		Type          : int
 		Initial Value : 0
 		Size          : 4
@@ -251,7 +272,7 @@ Number of Symbol Tables: 15
 		Offset        : 8
 		Nested Table  : null
 --------------------------------------------------------------
-		Name          : _t9
+		Name          : _t12
 		Type          : int
 		Initial Value : 0
 		Size          : 4
@@ -265,7 +286,7 @@ Number of Symbol Tables: 15
 		Offset        : 16
 		Nested Table  : null
 --------------------------------------------------------------
-		Name          : _t10
+		Name          : _t13
 		Type          : int
 		Initial Value : 0
 		Size          : 4
@@ -279,21 +300,21 @@ Number of Symbol Tables: 15
 		Offset        : 24
 		Nested Table  : null
 --------------------------------------------------------------
-		Name          : _t11
+		Name          : _t14
 		Type          : int
 		Initial Value : 10
 		Size          : 4
 		Offset        : 4024
 		Nested Table  : null
 --------------------------------------------------------------
-		Name          : _t12
+		Name          : _t15
 		Type          : int
 		Initial Value : 10
 		Size          : 4
 		Offset        : 4028
 		Nested Table  : null
 --------------------------------------------------------------
-		Name          : _t13
+		Name          : _t16
 		Type          : int
 		Initial Value : 10
 		Size          : 4
@@ -307,7 +328,7 @@ Number of Symbol Tables: 15
 		Offset        : 4036
 		Nested Table  : main.$0.$1
 --------------------------------------------------------------
-		Name          : _t31
+		Name          : _t38
 		Type          : int
 		Initial Value : 0
 		Size          : 4
@@ -322,35 +343,42 @@ Number of Symbol Tables: 15
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 	ST Name         : main.$0.$1
 	ST Parent       : main.$0
-	ST Symbol Count : 4
+	ST Symbol Count : 5
 
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-		Name          : _t14
+		Name          : _t17
 		Type          : int
 		Initial Value : 0
 		Size          : 4
 		Offset        : 0
 		Nested Table  : null
 --------------------------------------------------------------
-		Name          : _t15
+		Name          : _t18
 		Type          : int
 		Initial Value : 9
 		Size          : 4
 		Offset        : 4
 		Nested Table  : null
 --------------------------------------------------------------
-		Name          : _t16
+		Name          : _t19
 		Type          : int
 		Initial Value : null
 		Size          : 4
 		Offset        : 8
 		Nested Table  : null
 --------------------------------------------------------------
+		Name          : _t20
+		Type          : int
+		Initial Value : null
+		Size          : 4
+		Offset        : 12
+		Nested Table  : null
+--------------------------------------------------------------
 		Name          : main.$0.$1.$2
 		Type          : block
 		Initial Value : null
 		Size          : 0
-		Offset        : 12
+		Offset        : 16
 		Nested Table  : main.$0.$1.$2
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
@@ -379,35 +407,42 @@ Number of Symbol Tables: 15
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 	ST Name         : main.$0.$1.$2.$3
 	ST Parent       : main.$0.$1.$2
-	ST Symbol Count : 4
+	ST Symbol Count : 5
 
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-		Name          : _t17
+		Name          : _t21
 		Type          : int
 		Initial Value : 0
 		Size          : 4
 		Offset        : 0
 		Nested Table  : null
 --------------------------------------------------------------
-		Name          : _t18
+		Name          : _t22
 		Type          : int
 		Initial Value : 9
 		Size          : 4
 		Offset        : 4
 		Nested Table  : null
 --------------------------------------------------------------
-		Name          : _t19
+		Name          : _t23
 		Type          : int
 		Initial Value : null
 		Size          : 4
 		Offset        : 8
 		Nested Table  : null
 --------------------------------------------------------------
+		Name          : _t24
+		Type          : int
+		Initial Value : null
+		Size          : 4
+		Offset        : 12
+		Nested Table  : null
+--------------------------------------------------------------
 		Name          : main.$0.$1.$2.$3.$4
 		Type          : block
 		Initial Value : null
 		Size          : 0
-		Offset        : 12
+		Offset        : 16
 		Nested Table  : main.$0.$1.$2.$3.$4
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
@@ -418,7 +453,7 @@ Number of Symbol Tables: 15
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 	ST Name         : main.$0.$1.$2.$3.$4
 	ST Parent       : main.$0.$1.$2.$3
-	ST Symbol Count : 3
+	ST Symbol Count : 4
 
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 		Name          : main.$0.$1.$2.$3.$4.$5
@@ -428,18 +463,25 @@ Number of Symbol Tables: 15
 		Offset        : 0
 		Nested Table  : main.$0.$1.$2.$3.$4.$5
 --------------------------------------------------------------
-		Name          : _t28
+		Name          : _t33
 		Type          : int
 		Initial Value : 9
 		Size          : 4
 		Offset        : 0
 		Nested Table  : null
 --------------------------------------------------------------
+		Name          : _t34
+		Type          : int
+		Initial Value : null
+		Size          : 4
+		Offset        : 4
+		Nested Table  : null
+--------------------------------------------------------------
 		Name          : main.$0.$1.$2.$3.$4.$6
 		Type          : block
 		Initial Value : null
 		Size          : 0
-		Offset        : 4
+		Offset        : 8
 		Nested Table  : main.$0.$1.$2.$3.$4.$6
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
@@ -453,56 +495,56 @@ Number of Symbol Tables: 15
 	ST Symbol Count : 8
 
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-		Name          : _t20
+		Name          : _t25
 		Type          : int
 		Initial Value : null
 		Size          : 4
 		Offset        : 0
 		Nested Table  : null
 --------------------------------------------------------------
-		Name          : _t21
+		Name          : _t26
 		Type          : int
 		Initial Value : null
 		Size          : 4
 		Offset        : 4
 		Nested Table  : null
 --------------------------------------------------------------
-		Name          : _t22
+		Name          : _t27
 		Type          : int
 		Initial Value : null
 		Size          : 4
 		Offset        : 8
 		Nested Table  : null
 --------------------------------------------------------------
-		Name          : _t23
+		Name          : _t28
 		Type          : int
 		Initial Value : null
 		Size          : 4
 		Offset        : 12
 		Nested Table  : null
 --------------------------------------------------------------
-		Name          : _t24
+		Name          : _t29
 		Type          : int
 		Initial Value : null
 		Size          : 4
 		Offset        : 16
 		Nested Table  : null
 --------------------------------------------------------------
-		Name          : _t25
+		Name          : _t30
 		Type          : int
 		Initial Value : null
 		Size          : 4
 		Offset        : 20
 		Nested Table  : null
 --------------------------------------------------------------
-		Name          : _t26
+		Name          : _t31
 		Type          : int
 		Initial Value : null
 		Size          : 4
 		Offset        : 24
 		Nested Table  : null
 --------------------------------------------------------------
-		Name          : _t27
+		Name          : _t32
 		Type          : int
 		Initial Value : null
 		Size          : 4
@@ -517,21 +559,28 @@ Number of Symbol Tables: 15
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 	ST Name         : main.$0.$1.$2.$3.$4.$6
 	ST Parent       : main.$0.$1.$2.$3.$4
-	ST Symbol Count : 2
+	ST Symbol Count : 3
 
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-		Name          : _t29
+		Name          : _t35
 		Type          : int
 		Initial Value : 0
 		Size          : 4
 		Offset        : 0
 		Nested Table  : null
 --------------------------------------------------------------
+		Name          : _t36
+		Type          : int
+		Initial Value : null
+		Size          : 4
+		Offset        : 4
+		Nested Table  : null
+--------------------------------------------------------------
 		Name          : main.$0.$1.$2.$3.$4.$6.$7
 		Type          : block
 		Initial Value : null
 		Size          : 0
-		Offset        : 4
+		Offset        : 8
 		Nested Table  : main.$0.$1.$2.$3.$4.$6.$7
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
@@ -545,7 +594,7 @@ Number of Symbol Tables: 15
 	ST Symbol Count : 1
 
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-		Name          : _t30
+		Name          : _t37
 		Type          : int
 		Initial Value : null
 		Size          : 4
@@ -559,89 +608,117 @@ Number of Symbol Tables: 15
 PRINTING ALL QUADS
 
 ------------------TAC-----------------
-   0 : heavy_looper: 
-   1 : heavy_looper.$0: 
+
+heavy_looper: 
+
+
+heavy_looper.$0: 
+
    2 : _t0 = 0
    3 : k = _t0
-   4 : heavy_looper.$0.$1: 
+
+heavy_looper.$0.$1: 
+
    5 : k = k - 1
    6 : _t1 = 0
    7 : if k > _t1 goto 9
    8 : goto 11
    9 : k = k - 1
   10 : goto 5
-  11 : heavy_looper.$0.$2: 
-  12 : _t2 = 1
-  13 : k = _t2
-  14 : _t3 = 10
-  15 : if k < _t3 goto 20
+
+heavy_looper.$0.$2: 
+
+  12 : _t3 = 1
+  13 : k = _t3
+  14 : _t4 = 10
+  15 : if k < _t4 goto 20
   16 : goto 28
-  17 : _t4 = k
+  17 : _t6 = k
   18 : k = k + 1
   19 : goto 14
-  20 : heavy_looper.$0.$2.$3: 
-  21 : _t5 = 10
-  22 : if k < _t5 goto 24
+
+heavy_looper.$0.$2.$3: 
+
+  21 : _t7 = 10
+  22 : if k < _t7 goto 24
   23 : goto 17
-  24 : _t6 = k
+  24 : _t9 = k
   25 : k = k + 1
   26 : goto 21
   27 : goto 17
-  28 : _t7= -k
-  29 : k = _t7
+  28 : _t10= -k
+  29 : k = _t10
   30 : return 
-  31 : main: 
-  32 : main.$0: 
-  33 : _t8 = 0
-  34 : i = _t8
-  35 : _t9 = 0
-  36 : j = _t9
-  37 : _t10 = 0
-  38 : k = _t10
-  39 : _t11 = 10
-  40 : _t12 = 10
-  41 : _t13 = 10
-  42 : main.$0.$1: 
-  43 : _t14 = 0
-  44 : i = _t14
-  45 : _t15 = 9
-  46 : if i < _t15 goto 51
-  47 : goto 84
-  48 : _t16 = i
-  49 : i = i + 1
-  50 : goto 45
-  51 : main.$0.$1.$2: 
-  52 : main.$0.$1.$2.$3: 
-  53 : _t17 = 0
-  54 : j = _t17
-  55 : _t18 = 9
-  56 : if j < _t18 goto 61
-  57 : goto 48
-  58 : _t19 = j
-  59 : j = j + 1
-  60 : goto 55
-  61 : main.$0.$1.$2.$3.$4: 
-  62 : main.$0.$1.$2.$3.$4.$5: 
-  63 : _t20 = i * 400
-  64 : _t23 = j * 40
-  65 : _t22 = _t20 + _t23
-  66 : _t25 = k * 4
-  67 : _t24 = _t22 + _t25
-  68 : _t26 = i * j
-  69 : _t27 = _t26 - k
-  70 : dp[_t24] = _t27
-  71 : _t28 = 9
-  72 : if k < _t28 goto 62
-  73 : goto 74
-  74 : main.$0.$1.$2.$3.$4.$6: 
-  75 : _t29 = 0
-  76 : if k > _t29 goto 78
-  77 : goto 58
-  78 : main.$0.$1.$2.$3.$4.$6.$7: 
-  79 : _t30 = k
-  80 : k = k - 1
-  81 : goto 75
-  82 : goto 58
-  83 : goto 48
-  84 : _t31 = 0
-  85 : return _t31
+
+main: 
+
+
+main.$0: 
+
+  34 : _t11 = 0
+  35 : i = _t11
+  36 : _t12 = 0
+  37 : j = _t12
+  38 : _t13 = 0
+  39 : k = _t13
+  40 : _t14 = 10
+  41 : _t15 = 10
+  42 : _t16 = 10
+
+main.$0.$1: 
+
+  44 : _t17 = 0
+  45 : i = _t17
+  46 : _t18 = 9
+  47 : if i < _t18 goto 52
+  48 : goto 85
+  49 : _t20 = i
+  50 : i = i + 1
+  51 : goto 46
+
+main.$0.$1.$2: 
+
+
+main.$0.$1.$2.$3: 
+
+  54 : _t21 = 0
+  55 : j = _t21
+  56 : _t22 = 9
+  57 : if j < _t22 goto 62
+  58 : goto 49
+  59 : _t24 = j
+  60 : j = j + 1
+  61 : goto 56
+
+main.$0.$1.$2.$3.$4: 
+
+
+main.$0.$1.$2.$3.$4.$5: 
+
+  64 : _t25 = i * 400
+  65 : _t28 = j * 40
+  66 : _t27 = _t25 + _t28
+  67 : _t30 = k * 4
+  68 : _t29 = _t27 + _t30
+  69 : _t31 = i * j
+  70 : _t32 = _t31 - k
+  71 : dp[_t29] = _t32
+  72 : _t33 = 9
+  73 : if k < _t33 goto 63
+  74 : goto 75
+
+main.$0.$1.$2.$3.$4.$6: 
+
+  76 : _t35 = 0
+  77 : if k > _t35 goto 79
+  78 : goto 59
+
+main.$0.$1.$2.$3.$4.$6.$7: 
+
+  80 : _t37 = k
+  81 : k = k - 1
+  82 : goto 76
+  83 : goto 59
+  84 : goto 49
+  85 : _t38 = 0
+  86 : return _t38

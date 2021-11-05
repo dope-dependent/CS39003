@@ -139,7 +139,7 @@ changetable: %empty
                   else 
                   {
                         updateSymbolTable(curr_symbol->nested_table); // Function symbol table already exists	
-                        emit("label", ST->name);
+                        emit("func", ST->name);
                   }
             }
             ;
@@ -1321,6 +1321,7 @@ external_declaration: function_definition { }
                     
 function_definition: declaration_specifiers declarator declaration_list_opt changetable compound_statement
                    { 
+                        emit("funcend", ST->name);
                         ST->parent = STS.global();
                         table_count = 0;
                         updateSymbolTable(STS.global());
