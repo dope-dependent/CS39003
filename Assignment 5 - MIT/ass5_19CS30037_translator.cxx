@@ -182,7 +182,7 @@ void Symboltable::update()
 void Symboltable::print()
 {
     // Output the name and the parent
-    cout << "\n\n\n++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n";
+    cout << "\n\n\n++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n";
     cout << "\tST Name         : " << this->name << "\n";
     cout << "\tST Parent       : ";
     if (this->parent == nullptr)
@@ -190,28 +190,38 @@ void Symboltable::print()
     else
         cout << this->parent->name << "\n";
     cout << "\tST Symbol Count : " <<  this->symbols.size() << "\n";
-    cout << "\n++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n";
-    int k = 0;
+    cout << "\n++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n";
+    cout.width(31); cout << std::left << "Name";
+    cout.width(31); cout << std::left << "Type";
+    cout.width(33); cout << std::left << "Initial Value";
+    cout.width(9); cout << std::left << "Size";
+    cout.width(16); cout << std::left << "Offset";
+    cout.width(14); cout << std::left << "Scope";
+    cout.width(28); cout << std::left << "Nested Table";
+    cout << "\n++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n";
     for (Symbol * c : this->symbols)
     { 
-        cout << "\t\tName          : " << c->name << "\n";
-        cout << "\t\tType          : " << c->type->getType() << "\n";
-        cout << "\t\tInitial Value : ";
-        if (c->initial_value == "")
-            cout << "null\n";
-        else
-            cout << c->initial_value << "\n";
-        cout << "\t\tSize          : " << c->size << "\n";
-        cout << "\t\tOffset        : " << c->offset << "\n";
-        cout << "\t\tScope         : " << c->scope << "\n";
-        if (c->nested_table == nullptr) {cout << "\t\tNested Table  : null\n";} 
-        else cout << "\t\tNested Table  : " << c->nested_table->name << "\n";
-        if (k != this->symbols.size() - 1) {
-            cout << "--------------------------------------------------------------\n";
+        
+        cout.width(31); cout << std::left << c->name;
+        cout.width(31); cout << std::left << c->type->getType(); 
+        if (c->initial_value == "") {
+            cout.width(33); cout << std::left << "null";
+        }           
+        else {
+            cout.width(33); cout << std::left << c->initial_value;        
+        }            
+        cout.width(9); cout << std::left << c->size;
+        cout.width(16); cout << std::left << c->offset;
+        cout.width(14); cout << std::left << c->scope;
+        if (c->nested_table == nullptr) {
+            cout.width(28); cout << std::left << "null";
+        } 
+        else {
+            cout.width(28); cout << std::left << c->nested_table->name;
         }
-        k++;
+        cout << "\n";
     }
-    cout << "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n\n\n";
+    cout << "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n\n\n";
 }
 
 // Quad constructor
@@ -651,6 +661,16 @@ void SymtabStack::print() {
     for (Symboltable * p : this->tables) {
         p->print();
     }
+}
+
+void printspaces (int n) {
+    for (int i = 0; i < n; i++) cout << " ";
+}
+
+string getspaces (int n) {
+    string s;
+    for (int i = 0; i < n; i++) s += ' ';
+    return s;
 }
 
 int main()

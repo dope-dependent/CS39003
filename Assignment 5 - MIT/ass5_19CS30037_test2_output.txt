@@ -40,610 +40,212 @@ Number of Symbol Tables: 11
 
 
 
-++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 	ST Name         : Global
 	ST Parent       : null
 	ST Symbol Count : 5
 
-++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-		Name          : swappy
-		Type          : func
-		Initial Value : null
-		Size          : 0
-		Offset        : 0
-		Scope         : local
-		Nested Table  : swappy
---------------------------------------------------------------
-		Name          : div1
-		Type          : func
-		Initial Value : null
-		Size          : 0
-		Offset        : 0
-		Scope         : local
-		Nested Table  : div1
---------------------------------------------------------------
-		Name          : mul1
-		Type          : func
-		Initial Value : null
-		Size          : 0
-		Offset        : 0
-		Scope         : local
-		Nested Table  : mul1
---------------------------------------------------------------
-		Name          : mull
-		Type          : func
-		Initial Value : null
-		Size          : 0
-		Offset        : 0
-		Scope         : local
-		Nested Table  : mull
---------------------------------------------------------------
-		Name          : main
-		Type          : func
-		Initial Value : null
-		Size          : 0
-		Offset        : 0
-		Scope         : local
-		Nested Table  : main
-++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Name                           Type                           Initial Value                    Size     Offset          Scope         Nested Table                
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+swappy                         func                           null                             0        0               local         swappy                      
+div1                           func                           null                             0        0               local         div1                        
+mul1                           func                           null                             0        0               local         mul1                        
+mull                           func                           null                             0        0               local         mull                        
+main                           func                           null                             0        0               local         main                        
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 
 
 
 
-++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 	ST Name         : swappy
 	ST Parent       : Global
 	ST Symbol Count : 3
 
-++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-		Name          : a
-		Type          : ptr(int)
-		Initial Value : null
-		Size          : 4
-		Offset        : 0
-		Scope         : parameter
-		Nested Table  : null
---------------------------------------------------------------
-		Name          : b
-		Type          : ptr(int)
-		Initial Value : null
-		Size          : 4
-		Offset        : 4
-		Scope         : parameter
-		Nested Table  : null
---------------------------------------------------------------
-		Name          : swappy.$0
-		Type          : block
-		Initial Value : null
-		Size          : 0
-		Offset        : 8
-		Scope         : local
-		Nested Table  : swappy.$0
-++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Name                           Type                           Initial Value                    Size     Offset          Scope         Nested Table                
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+a                              ptr(int)                       null                             4        0               parameter     null                        
+b                              ptr(int)                       null                             4        4               parameter     null                        
+swappy.$0                      block                          null                             0        8               local         swappy.$0                   
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 
 
 
 
-++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 	ST Name         : swappy.$0
 	ST Parent       : swappy
 	ST Symbol Count : 6
 
-++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-		Name          : temp
-		Type          : int
-		Initial Value : null
-		Size          : 4
-		Offset        : 0
-		Scope         : local
-		Nested Table  : null
---------------------------------------------------------------
-		Name          : _t0
-		Type          : int
-		Initial Value : null
-		Size          : 4
-		Offset        : 4
-		Scope         : temp
-		Nested Table  : null
---------------------------------------------------------------
-		Name          : _t1
-		Type          : int
-		Initial Value : null
-		Size          : 4
-		Offset        : 8
-		Scope         : temp
-		Nested Table  : null
---------------------------------------------------------------
-		Name          : _t2
-		Type          : int
-		Initial Value : null
-		Size          : 4
-		Offset        : 12
-		Scope         : temp
-		Nested Table  : null
---------------------------------------------------------------
-		Name          : _t3
-		Type          : int
-		Initial Value : null
-		Size          : 4
-		Offset        : 16
-		Scope         : temp
-		Nested Table  : null
---------------------------------------------------------------
-		Name          : _t4
-		Type          : int
-		Initial Value : null
-		Size          : 4
-		Offset        : 20
-		Scope         : temp
-		Nested Table  : null
-++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Name                           Type                           Initial Value                    Size     Offset          Scope         Nested Table                
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+temp                           int                            null                             4        0               local         null                        
+_t0                            int                            null                             4        4               temp          null                        
+_t1                            int                            null                             4        8               temp          null                        
+_t2                            int                            null                             4        12              temp          null                        
+_t3                            int                            null                             4        16              temp          null                        
+_t4                            int                            null                             4        20              temp          null                        
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 
 
 
 
-++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 	ST Name         : div1
 	ST Parent       : Global
-	ST Symbol Count : 4
+	ST Symbol Count : 3
 
-++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-		Name          : a
-		Type          : float
-		Initial Value : null
-		Size          : 8
-		Offset        : 0
-		Scope         : parameter
-		Nested Table  : null
---------------------------------------------------------------
-		Name          : b
-		Type          : float
-		Initial Value : null
-		Size          : 8
-		Offset        : 8
-		Scope         : parameter
-		Nested Table  : null
---------------------------------------------------------------
-		Name          : return
-		Type          : int
-		Initial Value : null
-		Size          : 4
-		Offset        : 16
-		Scope         : local
-		Nested Table  : null
---------------------------------------------------------------
-		Name          : div1.$0
-		Type          : block
-		Initial Value : null
-		Size          : 0
-		Offset        : 20
-		Scope         : local
-		Nested Table  : div1.$0
-++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Name                           Type                           Initial Value                    Size     Offset          Scope         Nested Table                
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+a                              float                          null                             8        0               parameter     null                        
+b                              float                          null                             8        8               parameter     null                        
+div1.$0                        block                          null                             0        16              local         div1.$0                     
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 
 
 
 
-++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 	ST Name         : div1.$0
 	ST Parent       : div1
 	ST Symbol Count : 3
 
-++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-		Name          : q
-		Type          : int
-		Initial Value : null
-		Size          : 4
-		Offset        : 0
-		Scope         : local
-		Nested Table  : null
---------------------------------------------------------------
-		Name          : _t5
-		Type          : float
-		Initial Value : null
-		Size          : 8
-		Offset        : 4
-		Scope         : temp
-		Nested Table  : null
---------------------------------------------------------------
-		Name          : _t6
-		Type          : int
-		Initial Value : null
-		Size          : 4
-		Offset        : 12
-		Scope         : temp
-		Nested Table  : null
-++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Name                           Type                           Initial Value                    Size     Offset          Scope         Nested Table                
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+q                              int                            null                             4        0               local         null                        
+_t5                            float                          null                             8        4               temp          null                        
+_t6                            int                            null                             4        12              temp          null                        
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 
 
 
 
-++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 	ST Name         : mul1
 	ST Parent       : Global
-	ST Symbol Count : 4
+	ST Symbol Count : 3
 
-++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-		Name          : a
-		Type          : int
-		Initial Value : null
-		Size          : 4
-		Offset        : 0
-		Scope         : parameter
-		Nested Table  : null
---------------------------------------------------------------
-		Name          : b
-		Type          : int
-		Initial Value : null
-		Size          : 4
-		Offset        : 4
-		Scope         : parameter
-		Nested Table  : null
---------------------------------------------------------------
-		Name          : return
-		Type          : int
-		Initial Value : null
-		Size          : 4
-		Offset        : 8
-		Scope         : local
-		Nested Table  : null
---------------------------------------------------------------
-		Name          : mul1.$0
-		Type          : block
-		Initial Value : null
-		Size          : 0
-		Offset        : 12
-		Scope         : local
-		Nested Table  : mul1.$0
-++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Name                           Type                           Initial Value                    Size     Offset          Scope         Nested Table                
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+a                              int                            null                             4        0               parameter     null                        
+b                              int                            null                             4        4               parameter     null                        
+mul1.$0                        block                          null                             0        8               local         mul1.$0                     
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 
 
 
 
-++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 	ST Name         : mul1.$0
 	ST Parent       : mul1
 	ST Symbol Count : 1
 
-++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-		Name          : _t7
-		Type          : int
-		Initial Value : null
-		Size          : 4
-		Offset        : 0
-		Scope         : temp
-		Nested Table  : null
-++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Name                           Type                           Initial Value                    Size     Offset          Scope         Nested Table                
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+_t7                            int                            null                             4        0               temp          null                        
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 
 
 
 
-++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 	ST Name         : mull
 	ST Parent       : Global
-	ST Symbol Count : 6
+	ST Symbol Count : 5
 
-++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-		Name          : a
-		Type          : int
-		Initial Value : null
-		Size          : 4
-		Offset        : 0
-		Scope         : parameter
-		Nested Table  : null
---------------------------------------------------------------
-		Name          : b
-		Type          : int
-		Initial Value : null
-		Size          : 4
-		Offset        : 4
-		Scope         : parameter
-		Nested Table  : null
---------------------------------------------------------------
-		Name          : c
-		Type          : float
-		Initial Value : null
-		Size          : 8
-		Offset        : 8
-		Scope         : parameter
-		Nested Table  : null
---------------------------------------------------------------
-		Name          : d
-		Type          : int
-		Initial Value : null
-		Size          : 4
-		Offset        : 16
-		Scope         : parameter
-		Nested Table  : null
---------------------------------------------------------------
-		Name          : return
-		Type          : int
-		Initial Value : null
-		Size          : 4
-		Offset        : 20
-		Scope         : local
-		Nested Table  : null
---------------------------------------------------------------
-		Name          : mull.$0
-		Type          : block
-		Initial Value : null
-		Size          : 0
-		Offset        : 24
-		Scope         : local
-		Nested Table  : mull.$0
-++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Name                           Type                           Initial Value                    Size     Offset          Scope         Nested Table                
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+a                              int                            null                             4        0               parameter     null                        
+b                              int                            null                             4        4               parameter     null                        
+c                              float                          null                             8        8               parameter     null                        
+d                              int                            null                             4        16              parameter     null                        
+mull.$0                        block                          null                             0        20              local         mull.$0                     
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 
 
 
 
-++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 	ST Name         : mull.$0
 	ST Parent       : mull
 	ST Symbol Count : 4
 
-++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-		Name          : _t8
-		Type          : int
-		Initial Value : null
-		Size          : 4
-		Offset        : 0
-		Scope         : temp
-		Nested Table  : null
---------------------------------------------------------------
-		Name          : _t9
-		Type          : int
-		Initial Value : null
-		Size          : 4
-		Offset        : 4
-		Scope         : temp
-		Nested Table  : null
---------------------------------------------------------------
-		Name          : _t10
-		Type          : int
-		Initial Value : null
-		Size          : 4
-		Offset        : 8
-		Scope         : temp
-		Nested Table  : null
---------------------------------------------------------------
-		Name          : _t11
-		Type          : int
-		Initial Value : null
-		Size          : 4
-		Offset        : 12
-		Scope         : temp
-		Nested Table  : null
-++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Name                           Type                           Initial Value                    Size     Offset          Scope         Nested Table                
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+_t8                            int                            null                             4        0               temp          null                        
+_t9                            int                            null                             4        4               temp          null                        
+_t10                           int                            null                             4        8               temp          null                        
+_t11                           int                            null                             4        12              temp          null                        
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 
 
 
 
-++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 	ST Name         : main
 	ST Parent       : Global
-	ST Symbol Count : 2
+	ST Symbol Count : 1
 
-++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-		Name          : return
-		Type          : int
-		Initial Value : null
-		Size          : 4
-		Offset        : 0
-		Scope         : local
-		Nested Table  : null
---------------------------------------------------------------
-		Name          : main.$0
-		Type          : block
-		Initial Value : null
-		Size          : 0
-		Offset        : 4
-		Scope         : local
-		Nested Table  : main.$0
-++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Name                           Type                           Initial Value                    Size     Offset          Scope         Nested Table                
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+main.$0                        block                          null                             0        0               local         main.$0                     
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 
 
 
 
-++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 	ST Name         : main.$0
 	ST Parent       : main
 	ST Symbol Count : 23
 
-++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-		Name          : a_232
-		Type          : int
-		Initial Value : null
-		Size          : 4
-		Offset        : 0
-		Scope         : local
-		Nested Table  : null
---------------------------------------------------------------
-		Name          : _t12
-		Type          : int
-		Initial Value : 21
-		Size          : 4
-		Offset        : 4
-		Scope         : temp
-		Nested Table  : null
---------------------------------------------------------------
-		Name          : _t13
-		Type          : int
-		Initial Value : null
-		Size          : 4
-		Offset        : 8
-		Scope         : temp
-		Nested Table  : null
---------------------------------------------------------------
-		Name          : _b2
-		Type          : int
-		Initial Value : 1
-		Size          : 4
-		Offset        : 12
-		Scope         : local
-		Nested Table  : null
---------------------------------------------------------------
-		Name          : _t14
-		Type          : int
-		Initial Value : 1
-		Size          : 4
-		Offset        : 16
-		Scope         : temp
-		Nested Table  : null
---------------------------------------------------------------
-		Name          : _t15
-		Type          : ptr(int)
-		Initial Value : null
-		Size          : 4
-		Offset        : 20
-		Scope         : temp
-		Nested Table  : null
---------------------------------------------------------------
-		Name          : _t16
-		Type          : func
-		Initial Value : null
-		Size          : 0
-		Offset        : 24
-		Scope         : temp
-		Nested Table  : null
---------------------------------------------------------------
-		Name          : f1
-		Type          : float
-		Initial Value : 0.1
-		Size          : 8
-		Offset        : 24
-		Scope         : local
-		Nested Table  : null
---------------------------------------------------------------
-		Name          : _t17
-		Type          : float
-		Initial Value : 0.1
-		Size          : 8
-		Offset        : 32
-		Scope         : temp
-		Nested Table  : null
---------------------------------------------------------------
-		Name          : f2
-		Type          : float
-		Initial Value : 1
-		Size          : 8
-		Offset        : 40
-		Scope         : local
-		Nested Table  : null
---------------------------------------------------------------
-		Name          : _t18
-		Type          : int
-		Initial Value : 1
-		Size          : 4
-		Offset        : 48
-		Scope         : temp
-		Nested Table  : null
---------------------------------------------------------------
-		Name          : c
-		Type          : int
-		Initial Value : null
-		Size          : 4
-		Offset        : 52
-		Scope         : local
-		Nested Table  : null
---------------------------------------------------------------
-		Name          : _t19
-		Type          : func
-		Initial Value : null
-		Size          : 0
-		Offset        : 56
-		Scope         : temp
-		Nested Table  : null
---------------------------------------------------------------
-		Name          : _t20
-		Type          : func
-		Initial Value : null
-		Size          : 0
-		Offset        : 56
-		Scope         : temp
-		Nested Table  : null
---------------------------------------------------------------
-		Name          : _t21
-		Type          : int
-		Initial Value : 1
-		Size          : 4
-		Offset        : 56
-		Scope         : temp
-		Nested Table  : null
---------------------------------------------------------------
-		Name          : _t22
-		Type          : float
-		Initial Value : 1.2
-		Size          : 8
-		Offset        : 60
-		Scope         : temp
-		Nested Table  : null
---------------------------------------------------------------
-		Name          : b
-		Type          : int
-		Initial Value : 0
-		Size          : 4
-		Offset        : 68
-		Scope         : local
-		Nested Table  : null
---------------------------------------------------------------
-		Name          : _t23
-		Type          : int
-		Initial Value : 0
-		Size          : 4
-		Offset        : 72
-		Scope         : temp
-		Nested Table  : null
---------------------------------------------------------------
-		Name          : d
-		Type          : int
-		Initial Value : 51
-		Size          : 4
-		Offset        : 76
-		Scope         : local
-		Nested Table  : null
---------------------------------------------------------------
-		Name          : _t24
-		Type          : int
-		Initial Value : 51
-		Size          : 4
-		Offset        : 80
-		Scope         : temp
-		Nested Table  : null
---------------------------------------------------------------
-		Name          : e
-		Type          : int
-		Initial Value : null
-		Size          : 4
-		Offset        : 84
-		Scope         : local
-		Nested Table  : null
---------------------------------------------------------------
-		Name          : _t25
-		Type          : func
-		Initial Value : null
-		Size          : 0
-		Offset        : 88
-		Scope         : temp
-		Nested Table  : null
---------------------------------------------------------------
-		Name          : _t26
-		Type          : int
-		Initial Value : 0
-		Size          : 4
-		Offset        : 88
-		Scope         : temp
-		Nested Table  : null
-++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Name                           Type                           Initial Value                    Size     Offset          Scope         Nested Table                
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+a_232                          int                            null                             4        0               local         null                        
+_t12                           int                            21                               4        4               temp          null                        
+_t13                           int                            null                             4        8               temp          null                        
+_b2                            int                            1                                4        12              local         null                        
+_t14                           int                            1                                4        16              temp          null                        
+_t15                           ptr(int)                       null                             4        20              temp          null                        
+_t16                           func                           null                             0        24              temp          null                        
+f1                             float                          0.1                              8        24              local         null                        
+_t17                           float                          0.1                              8        32              temp          null                        
+f2                             float                          1                                8        40              local         null                        
+_t18                           int                            1                                4        48              temp          null                        
+c                              int                            null                             4        52              local         null                        
+_t19                           func                           null                             0        56              temp          null                        
+_t20                           func                           null                             0        56              temp          null                        
+_t21                           int                            1                                4        56              temp          null                        
+_t22                           float                          1.2                              8        60              temp          null                        
+b                              int                            0                                4        68              local         null                        
+_t23                           int                            0                                4        72              temp          null                        
+d                              int                            51                               4        76              local         null                        
+_t24                           int                            51                               4        80              temp          null                        
+e                              int                            null                             4        84              local         null                        
+_t25                           func                           null                             0        88              temp          null                        
+_t26                           int                            0                                4        88              temp          null                        
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 
 

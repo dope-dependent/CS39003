@@ -1040,10 +1040,10 @@ direct_declarator: IDENTIFIER
                  { 
                        // Function Call and location with parameters
                        ST->name = $1->name;
-                       if ($1->type->name != "void") {
-                             Symbol *val = ST->lookup("return");
-                             val->update($1->type);
-                       }
+                  //      if ($1->type->name != "void") {
+                  //            Symbol *val = ST->lookup("return");
+                  //            val->update($1->type);
+                  //      }
                        $1->nested_table = ST;
                        ST->parent = STS.global();
                        ST = STS.global();
@@ -1054,10 +1054,10 @@ direct_declarator: IDENTIFIER
                  { 
                        // Function Call and location with no parameters
                        ST->name = $1->name;
-                       if ($1->type->name != "void") {
-                             Symbol *val = ST->lookup("return");
-                             val->update($1->type);
-                       }
+                  //      if ($1->type->name != "void") {
+                  //            Symbol *val = ST->lookup("return");
+                  //            val->update($1->type);
+                  //      }
                        $1->nested_table = ST;
                        ST->parent = STS.global();
                        ST = STS.global();

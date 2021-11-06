@@ -209,4 +209,6 @@ int nextinstr();
 Label * find_label(std::string _str);
 void updateSymbolTable(Symboltable *_new);
 
+void printspaces(int n);
+std::string getspaces(int n);
 #endif // _TRANSLATOR_H_

@@ -27,470 +27,145 @@ Number of Symbol Tables: 7
 
 
 
-++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 	ST Name         : Global
 	ST Parent       : null
 	ST Symbol Count : 3
 
-++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-		Name          : fib
-		Type          : func
-		Initial Value : null
-		Size          : 0
-		Offset        : 0
-		Scope         : local
-		Nested Table  : fib
---------------------------------------------------------------
-		Name          : sum
-		Type          : func
-		Initial Value : null
-		Size          : 0
-		Offset        : 0
-		Scope         : local
-		Nested Table  : sum
---------------------------------------------------------------
-		Name          : main
-		Type          : func
-		Initial Value : null
-		Size          : 0
-		Offset        : 0
-		Scope         : local
-		Nested Table  : main
-++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Name                           Type                           Initial Value                    Size     Offset          Scope         Nested Table                
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+fib                            func                           null                             0        0               local         fib                         
+sum                            func                           null                             0        0               local         sum                         
+main                           func                           null                             0        0               local         main                        
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 
 
 
 
-++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 	ST Name         : fib
 	ST Parent       : Global
-	ST Symbol Count : 3
+	ST Symbol Count : 2
 
-++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-		Name          : n
-		Type          : int
-		Initial Value : null
-		Size          : 4
-		Offset        : 0
-		Scope         : parameter
-		Nested Table  : null
---------------------------------------------------------------
-		Name          : return
-		Type          : int
-		Initial Value : null
-		Size          : 4
-		Offset        : 4
-		Scope         : local
-		Nested Table  : null
---------------------------------------------------------------
-		Name          : fib.$0
-		Type          : block
-		Initial Value : null
-		Size          : 0
-		Offset        : 8
-		Scope         : local
-		Nested Table  : fib.$0
-++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Name                           Type                           Initial Value                    Size     Offset          Scope         Nested Table                
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+n                              int                            null                             4        0               parameter     null                        
+fib.$0                         block                          null                             0        4               local         fib.$0                      
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 
 
 
 
-++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 	ST Name         : fib.$0
 	ST Parent       : fib
 	ST Symbol Count : 13
 
-++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-		Name          : _t0
-		Type          : int
-		Initial Value : 0
-		Size          : 4
-		Offset        : 0
-		Scope         : temp
-		Nested Table  : null
---------------------------------------------------------------
-		Name          : _t1
-		Type          : int
-		Initial Value : null
-		Size          : 4
-		Offset        : 4
-		Scope         : temp
-		Nested Table  : null
---------------------------------------------------------------
-		Name          : _t2
-		Type          : int
-		Initial Value : 1
-		Size          : 4
-		Offset        : 8
-		Scope         : temp
-		Nested Table  : null
---------------------------------------------------------------
-		Name          : _t3
-		Type          : int
-		Initial Value : 1
-		Size          : 4
-		Offset        : 12
-		Scope         : temp
-		Nested Table  : null
---------------------------------------------------------------
-		Name          : _t4
-		Type          : int
-		Initial Value : null
-		Size          : 4
-		Offset        : 16
-		Scope         : temp
-		Nested Table  : null
---------------------------------------------------------------
-		Name          : _t5
-		Type          : int
-		Initial Value : 1
-		Size          : 4
-		Offset        : 20
-		Scope         : temp
-		Nested Table  : null
---------------------------------------------------------------
-		Name          : _t6
-		Type          : int
-		Initial Value : 1
-		Size          : 4
-		Offset        : 24
-		Scope         : temp
-		Nested Table  : null
---------------------------------------------------------------
-		Name          : _t7
-		Type          : int
-		Initial Value : null
-		Size          : 4
-		Offset        : 28
-		Scope         : temp
-		Nested Table  : null
---------------------------------------------------------------
-		Name          : _t8
-		Type          : int
-		Initial Value : null
-		Size          : 4
-		Offset        : 32
-		Scope         : temp
-		Nested Table  : null
---------------------------------------------------------------
-		Name          : _t9
-		Type          : int
-		Initial Value : 2
-		Size          : 4
-		Offset        : 36
-		Scope         : temp
-		Nested Table  : null
---------------------------------------------------------------
-		Name          : _t10
-		Type          : int
-		Initial Value : null
-		Size          : 4
-		Offset        : 40
-		Scope         : temp
-		Nested Table  : null
---------------------------------------------------------------
-		Name          : _t11
-		Type          : int
-		Initial Value : null
-		Size          : 4
-		Offset        : 44
-		Scope         : temp
-		Nested Table  : null
---------------------------------------------------------------
-		Name          : _t12
-		Type          : int
-		Initial Value : null
-		Size          : 4
-		Offset        : 48
-		Scope         : temp
-		Nested Table  : null
-++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Name                           Type                           Initial Value                    Size     Offset          Scope         Nested Table                
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+_t0                            int                            0                                4        0               temp          null                        
+_t1                            int                            null                             4        4               temp          null                        
+_t2                            int                            1                                4        8               temp          null                        
+_t3                            int                            1                                4        12              temp          null                        
+_t4                            int                            null                             4        16              temp          null                        
+_t5                            int                            1                                4        20              temp          null                        
+_t6                            int                            1                                4        24              temp          null                        
+_t7                            int                            null                             4        28              temp          null                        
+_t8                            int                            null                             4        32              temp          null                        
+_t9                            int                            2                                4        36              temp          null                        
+_t10                           int                            null                             4        40              temp          null                        
+_t11                           int                            null                             4        44              temp          null                        
+_t12                           int                            null                             4        48              temp          null                        
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 
 
 
 
-++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 	ST Name         : sum
 	ST Parent       : Global
-	ST Symbol Count : 3
+	ST Symbol Count : 2
 
-++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-		Name          : n
-		Type          : int
-		Initial Value : null
-		Size          : 4
-		Offset        : 0
-		Scope         : parameter
-		Nested Table  : null
---------------------------------------------------------------
-		Name          : return
-		Type          : int
-		Initial Value : null
-		Size          : 4
-		Offset        : 4
-		Scope         : local
-		Nested Table  : null
---------------------------------------------------------------
-		Name          : sum.$0
-		Type          : block
-		Initial Value : null
-		Size          : 0
-		Offset        : 8
-		Scope         : local
-		Nested Table  : sum.$0
-++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Name                           Type                           Initial Value                    Size     Offset          Scope         Nested Table                
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+n                              int                            null                             4        0               parameter     null                        
+sum.$0                         block                          null                             0        4               local         sum.$0                      
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 
 
 
 
-++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 	ST Name         : sum.$0
 	ST Parent       : sum
 	ST Symbol Count : 7
 
-++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-		Name          : _t13
-		Type          : int
-		Initial Value : 0
-		Size          : 4
-		Offset        : 0
-		Scope         : temp
-		Nested Table  : null
---------------------------------------------------------------
-		Name          : _t14
-		Type          : int
-		Initial Value : null
-		Size          : 4
-		Offset        : 4
-		Scope         : temp
-		Nested Table  : null
---------------------------------------------------------------
-		Name          : _t15
-		Type          : int
-		Initial Value : 0
-		Size          : 4
-		Offset        : 8
-		Scope         : temp
-		Nested Table  : null
---------------------------------------------------------------
-		Name          : _t16
-		Type          : int
-		Initial Value : 1
-		Size          : 4
-		Offset        : 12
-		Scope         : temp
-		Nested Table  : null
---------------------------------------------------------------
-		Name          : _t17
-		Type          : int
-		Initial Value : null
-		Size          : 4
-		Offset        : 16
-		Scope         : temp
-		Nested Table  : null
---------------------------------------------------------------
-		Name          : _t18
-		Type          : int
-		Initial Value : null
-		Size          : 4
-		Offset        : 20
-		Scope         : temp
-		Nested Table  : null
---------------------------------------------------------------
-		Name          : _t19
-		Type          : int
-		Initial Value : null
-		Size          : 4
-		Offset        : 24
-		Scope         : temp
-		Nested Table  : null
-++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Name                           Type                           Initial Value                    Size     Offset          Scope         Nested Table                
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+_t13                           int                            0                                4        0               temp          null                        
+_t14                           int                            null                             4        4               temp          null                        
+_t15                           int                            0                                4        8               temp          null                        
+_t16                           int                            1                                4        12              temp          null                        
+_t17                           int                            null                             4        16              temp          null                        
+_t18                           int                            null                             4        20              temp          null                        
+_t19                           int                            null                             4        24              temp          null                        
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 
 
 
 
-++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 	ST Name         : main
 	ST Parent       : Global
-	ST Symbol Count : 2
+	ST Symbol Count : 1
 
-++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-		Name          : return
-		Type          : int
-		Initial Value : null
-		Size          : 4
-		Offset        : 0
-		Scope         : local
-		Nested Table  : null
---------------------------------------------------------------
-		Name          : main.$0
-		Type          : block
-		Initial Value : null
-		Size          : 0
-		Offset        : 4
-		Scope         : local
-		Nested Table  : main.$0
-++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Name                           Type                           Initial Value                    Size     Offset          Scope         Nested Table                
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+main.$0                        block                          null                             0        0               local         main.$0                     
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 
 
 
 
-++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 	ST Name         : main.$0
 	ST Parent       : main
 	ST Symbol Count : 18
 
-++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-		Name          : q
-		Type          : int
-		Initial Value : 0
-		Size          : 4
-		Offset        : 0
-		Scope         : local
-		Nested Table  : null
---------------------------------------------------------------
-		Name          : _t20
-		Type          : int
-		Initial Value : 0
-		Size          : 4
-		Offset        : 4
-		Scope         : temp
-		Nested Table  : null
---------------------------------------------------------------
-		Name          : _t21
-		Type          : int
-		Initial Value : 0
-		Size          : 4
-		Offset        : 8
-		Scope         : temp
-		Nested Table  : null
---------------------------------------------------------------
-		Name          : _t22
-		Type          : int
-		Initial Value : null
-		Size          : 4
-		Offset        : 12
-		Scope         : temp
-		Nested Table  : null
---------------------------------------------------------------
-		Name          : _t23
-		Type          : int
-		Initial Value : 1
-		Size          : 4
-		Offset        : 16
-		Scope         : temp
-		Nested Table  : null
---------------------------------------------------------------
-		Name          : _t24
-		Type          : int
-		Initial Value : 1
-		Size          : 4
-		Offset        : 20
-		Scope         : temp
-		Nested Table  : null
---------------------------------------------------------------
-		Name          : _t25
-		Type          : int
-		Initial Value : null
-		Size          : 4
-		Offset        : 24
-		Scope         : temp
-		Nested Table  : null
---------------------------------------------------------------
-		Name          : _t26
-		Type          : int
-		Initial Value : 2
-		Size          : 4
-		Offset        : 28
-		Scope         : temp
-		Nested Table  : null
---------------------------------------------------------------
-		Name          : _t27
-		Type          : int
-		Initial Value : 3
-		Size          : 4
-		Offset        : 32
-		Scope         : temp
-		Nested Table  : null
---------------------------------------------------------------
-		Name          : _t28
-		Type          : int
-		Initial Value : null
-		Size          : 4
-		Offset        : 36
-		Scope         : temp
-		Nested Table  : null
---------------------------------------------------------------
-		Name          : _t29
-		Type          : int
-		Initial Value : 3
-		Size          : 4
-		Offset        : 40
-		Scope         : temp
-		Nested Table  : null
---------------------------------------------------------------
-		Name          : _t30
-		Type          : int
-		Initial Value : 4
-		Size          : 4
-		Offset        : 44
-		Scope         : temp
-		Nested Table  : null
---------------------------------------------------------------
-		Name          : _t31
-		Type          : func
-		Initial Value : null
-		Size          : 0
-		Offset        : 48
-		Scope         : temp
-		Nested Table  : null
---------------------------------------------------------------
-		Name          : _t32
-		Type          : int
-		Initial Value : null
-		Size          : 4
-		Offset        : 48
-		Scope         : temp
-		Nested Table  : null
---------------------------------------------------------------
-		Name          : _t33
-		Type          : func
-		Initial Value : null
-		Size          : 0
-		Offset        : 52
-		Scope         : temp
-		Nested Table  : null
---------------------------------------------------------------
-		Name          : _t34
-		Type          : func
-		Initial Value : null
-		Size          : 0
-		Offset        : 52
-		Scope         : temp
-		Nested Table  : null
---------------------------------------------------------------
-		Name          : _t35
-		Type          : int
-		Initial Value : null
-		Size          : 4
-		Offset        : 52
-		Scope         : temp
-		Nested Table  : null
---------------------------------------------------------------
-		Name          : _t36
-		Type          : int
-		Initial Value : 0
-		Size          : 4
-		Offset        : 56
-		Scope         : temp
-		Nested Table  : null
-++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Name                           Type                           Initial Value                    Size     Offset          Scope         Nested Table                
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+q                              int                            0                                4        0               local         null                        
+_t20                           int                            0                                4        4               temp          null                        
+_t21                           int                            0                                4        8               temp          null                        
+_t22                           int                            null                             4        12              temp          null                        
+_t23                           int                            1                                4        16              temp          null                        
+_t24                           int                            1                                4        20              temp          null                        
+_t25                           int                            null                             4        24              temp          null                        
+_t26                           int                            2                                4        28              temp          null                        
+_t27                           int                            3                                4        32              temp          null                        
+_t28                           int                            null                             4        36              temp          null                        
+_t29                           int                            3                                4        40              temp          null                        
+_t30                           int                            4                                4        44              temp          null                        
+_t31                           func                           null                             0        48              temp          null                        
+_t32                           int                            null                             4        48              temp          null                        
+_t33                           func                           null                             0        52              temp          null                        
+_t34                           func                           null                             0        52              temp          null                        
+_t35                           int                            null                             4        52              temp          null                        
+_t36                           int                            0                                4        56              temp          null                        
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 
 
