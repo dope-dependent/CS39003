@@ -134,7 +134,7 @@ Number of Symbol Tables: 7
 		Nested Table  : null
 --------------------------------------------------------------
 		Name          : call
-		Type          : void
+		Type          : func
 		Initial Value : null
 		Size          : 0
 		Offset        : 237
@@ -142,9 +142,9 @@ Number of Symbol Tables: 7
 		Nested Table  : call
 --------------------------------------------------------------
 		Name          : main
-		Type          : int
+		Type          : func
 		Initial Value : null
-		Size          : 4
+		Size          : 0
 		Offset        : 237
 		Scope         : local
 		Nested Table  : main
@@ -400,7 +400,7 @@ Number of Symbol Tables: 7
 
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 		Name          : _t15
-		Type          : void
+		Type          : func
 		Initial Value : null
 		Size          : 0
 		Offset        : 0

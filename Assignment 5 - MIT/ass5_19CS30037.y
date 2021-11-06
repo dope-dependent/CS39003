@@ -1341,6 +1341,7 @@ external_declaration: function_definition { }
 function_definition: declaration_specifiers declarator declaration_list_opt changetable compound_statement
                    { 
                         emit("funcend", ST->name);
+                        $2->type = new SymbolType("func");
                         ST->parent = STS.global();
                         table_count = 0;
                         updateSymbolTable(STS.global());

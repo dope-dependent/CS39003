@@ -35,7 +35,7 @@ Number of Symbol Tables: 15
 
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 		Name          : heavy_looper
-		Type          : void
+		Type          : func
 		Initial Value : null
 		Size          : 0
 		Offset        : 0
@@ -43,9 +43,9 @@ Number of Symbol Tables: 15
 		Nested Table  : heavy_looper
 --------------------------------------------------------------
 		Name          : main
-		Type          : int
+		Type          : func
 		Initial Value : null
-		Size          : 4
+		Size          : 0
 		Offset        : 0
 		Scope         : local
 		Nested Table  : main

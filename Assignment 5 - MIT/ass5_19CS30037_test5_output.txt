@@ -15,7 +15,9 @@
 
 
 
+AssignmentError: Conversion between incompatible types
 
+TypeError: Addition between inconvertible types
 
 
 
@@ -32,26 +34,26 @@ Number of Symbol Tables: 7
 
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 		Name          : fib
-		Type          : int
+		Type          : func
 		Initial Value : null
-		Size          : 4
+		Size          : 0
 		Offset        : 0
 		Scope         : local
 		Nested Table  : fib
 --------------------------------------------------------------
 		Name          : sum
-		Type          : int
+		Type          : func
 		Initial Value : null
-		Size          : 4
-		Offset        : 4
+		Size          : 0
+		Offset        : 0
 		Scope         : local
 		Nested Table  : sum
 --------------------------------------------------------------
 		Name          : main
-		Type          : int
+		Type          : func
 		Initial Value : null
-		Size          : 4
-		Offset        : 8
+		Size          : 0
+		Offset        : 0
 		Scope         : local
 		Nested Table  : main
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -342,7 +344,7 @@ Number of Symbol Tables: 7
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 	ST Name         : main.$0
 	ST Parent       : main
-	ST Symbol Count : 16
+	ST Symbol Count : 18
 
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 		Name          : q
@@ -442,9 +444,9 @@ Number of Symbol Tables: 7
 		Nested Table  : null
 --------------------------------------------------------------
 		Name          : _t31
-		Type          : int
+		Type          : func
 		Initial Value : null
-		Size          : 4
+		Size          : 0
 		Offset        : 48
 		Scope         : temp
 		Nested Table  : null
@@ -453,23 +455,39 @@ Number of Symbol Tables: 7
 		Type          : int
 		Initial Value : null
 		Size          : 4
-		Offset        : 52
+		Offset        : 48
 		Scope         : temp
 		Nested Table  : null
 --------------------------------------------------------------
 		Name          : _t33
-		Type          : int
+		Type          : func
 		Initial Value : null
-		Size          : 4
-		Offset        : 56
+		Size          : 0
+		Offset        : 52
 		Scope         : temp
 		Nested Table  : null
 --------------------------------------------------------------
 		Name          : _t34
+		Type          : func
+		Initial Value : null
+		Size          : 0
+		Offset        : 52
+		Scope         : temp
+		Nested Table  : null
+--------------------------------------------------------------
+		Name          : _t35
+		Type          : int
+		Initial Value : null
+		Size          : 4
+		Offset        : 52
+		Scope         : temp
+		Nested Table  : null
+--------------------------------------------------------------
+		Name          : _t36
 		Type          : int
 		Initial Value : 0
 		Size          : 4
-		Offset        : 60
+		Offset        : 56
 		Scope         : temp
 		Nested Table  : null
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -546,11 +564,9 @@ PRINTING ALL QUADS
   63 : q = _t30
   64 : param q
   65 : _t31 = call fib, 1
-  66 : q = _t31
-  67 : param q
-  68 : _t32 = call sum, 1
-  69 : _t33 = q + _t32
-  70 : q = _t33
-  71 : _t34 = 0
-  72 : return _t34
-  73 : funcend main
+  66 : param q
+  67 : _t33 = call sum, 1
+  68 : q = q
+  69 : _t36 = 0
+  70 : return _t36
+  71 : funcend main

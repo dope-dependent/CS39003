@@ -30,9 +30,9 @@ Number of Symbol Tables: 5
 
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 		Name          : main
-		Type          : int
+		Type          : func
 		Initial Value : null
-		Size          : 4
+		Size          : 0
 		Offset        : 0
 		Scope         : local
 		Nested Table  : main

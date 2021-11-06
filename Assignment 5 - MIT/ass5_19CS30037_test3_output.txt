@@ -113,7 +113,7 @@ Number of Symbol Tables: 8
 		Nested Table  : null
 --------------------------------------------------------------
 		Name          : main
-		Type          : void
+		Type          : func
 		Initial Value : null
 		Size          : 0
 		Offset        : 48
