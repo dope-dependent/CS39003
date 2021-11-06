@@ -57,7 +57,7 @@ public:
     int size;                   // Size of the symbol 
     int offset;                 // Offset of the symbol
     Symboltable * nested_table; // Pointer to the nested symbol table
-
+    std::string scope;          // Scope of the symbol (local, temporary or parameter)
     Symbol(std::string name);
     Symbol(std::string name, 
         std::string type, 

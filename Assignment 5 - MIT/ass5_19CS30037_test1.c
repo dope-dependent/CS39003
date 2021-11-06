@@ -1,41 +1,28 @@
-int x = -7; // Global int
-float sq = -3; // Global float
+int globalI = 5;
+// char c = 'z' doesnt work
+int globalUI;
+char globalUC;
+char *globalPStr = "Hello";
+char *globalUPStr;
+char globalAStr[100] = "Hello Im learning x86";
+char globalUAStr[100];
+
+void call(int x)
+{
+    x = x + 6;
+    x /= 19;
+    int y, z, A[100];
+    y = 9;
+    return;
+}
 
 int main()
 {
-	int i, j, n;	// int
-	int sum=0; // int declaration
-	char a ='a'; // character
-	int p[5]; // 1D integer array
-	int dp[5][5]; // 2D integer array
-	float tq = -21; // float
-	n=5;
-	j=100;
-	i=0;
-    int *q = &i;  // pointer
-
-	// While loops
-	while(i<5) 
-	{
-		i = i + 1;
-		j = j + 1;
-		p[i]=i * j;
-		dp[i][j] = i - j;
-	}
-
-	// Do while loop
-	do 
-	{
-		sum = sum - p[i] + p[i] + p[i];
-	} while(i < n);
-	
-	// Nested for loop
-	for(i=0;i<n;i++)
-	{
-		for(j=0;j<n;j++)  // nested for loop
-			dp[i][j] = sum + i*j; // multi dimensional array
-	}
-
-	// Return testing
-	return 0;
+    int i = 0;
+    int n = 10;
+    for (int j = 0; j < n; j++)
+    {
+        call(i);
+    }
+    return 0;
 }

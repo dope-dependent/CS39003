@@ -36,6 +36,7 @@ Number of Symbol Tables: 7
 		Initial Value : null
 		Size          : 4
 		Offset        : 0
+		Scope         : local
 		Nested Table  : fib
 --------------------------------------------------------------
 		Name          : sum
@@ -43,6 +44,7 @@ Number of Symbol Tables: 7
 		Initial Value : null
 		Size          : 4
 		Offset        : 4
+		Scope         : local
 		Nested Table  : sum
 --------------------------------------------------------------
 		Name          : main
@@ -50,6 +52,7 @@ Number of Symbol Tables: 7
 		Initial Value : null
 		Size          : 4
 		Offset        : 8
+		Scope         : local
 		Nested Table  : main
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
@@ -68,6 +71,7 @@ Number of Symbol Tables: 7
 		Initial Value : null
 		Size          : 4
 		Offset        : 0
+		Scope         : parameter
 		Nested Table  : null
 --------------------------------------------------------------
 		Name          : return
@@ -75,6 +79,7 @@ Number of Symbol Tables: 7
 		Initial Value : null
 		Size          : 4
 		Offset        : 4
+		Scope         : local
 		Nested Table  : null
 --------------------------------------------------------------
 		Name          : fib.$0
@@ -82,6 +87,7 @@ Number of Symbol Tables: 7
 		Initial Value : null
 		Size          : 0
 		Offset        : 8
+		Scope         : local
 		Nested Table  : fib.$0
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
@@ -100,6 +106,7 @@ Number of Symbol Tables: 7
 		Initial Value : 0
 		Size          : 4
 		Offset        : 0
+		Scope         : temp
 		Nested Table  : null
 --------------------------------------------------------------
 		Name          : _t1
@@ -107,6 +114,7 @@ Number of Symbol Tables: 7
 		Initial Value : null
 		Size          : 4
 		Offset        : 4
+		Scope         : temp
 		Nested Table  : null
 --------------------------------------------------------------
 		Name          : _t2
@@ -114,6 +122,7 @@ Number of Symbol Tables: 7
 		Initial Value : 1
 		Size          : 4
 		Offset        : 8
+		Scope         : temp
 		Nested Table  : null
 --------------------------------------------------------------
 		Name          : _t3
@@ -121,6 +130,7 @@ Number of Symbol Tables: 7
 		Initial Value : 1
 		Size          : 4
 		Offset        : 12
+		Scope         : temp
 		Nested Table  : null
 --------------------------------------------------------------
 		Name          : _t4
@@ -128,6 +138,7 @@ Number of Symbol Tables: 7
 		Initial Value : null
 		Size          : 4
 		Offset        : 16
+		Scope         : temp
 		Nested Table  : null
 --------------------------------------------------------------
 		Name          : _t5
@@ -135,6 +146,7 @@ Number of Symbol Tables: 7
 		Initial Value : 1
 		Size          : 4
 		Offset        : 20
+		Scope         : temp
 		Nested Table  : null
 --------------------------------------------------------------
 		Name          : _t6
@@ -142,6 +154,7 @@ Number of Symbol Tables: 7
 		Initial Value : 1
 		Size          : 4
 		Offset        : 24
+		Scope         : temp
 		Nested Table  : null
 --------------------------------------------------------------
 		Name          : _t7
@@ -149,6 +162,7 @@ Number of Symbol Tables: 7
 		Initial Value : null
 		Size          : 4
 		Offset        : 28
+		Scope         : temp
 		Nested Table  : null
 --------------------------------------------------------------
 		Name          : _t8
@@ -156,6 +170,7 @@ Number of Symbol Tables: 7
 		Initial Value : null
 		Size          : 4
 		Offset        : 32
+		Scope         : temp
 		Nested Table  : null
 --------------------------------------------------------------
 		Name          : _t9
@@ -163,6 +178,7 @@ Number of Symbol Tables: 7
 		Initial Value : 2
 		Size          : 4
 		Offset        : 36
+		Scope         : temp
 		Nested Table  : null
 --------------------------------------------------------------
 		Name          : _t10
@@ -170,6 +186,7 @@ Number of Symbol Tables: 7
 		Initial Value : null
 		Size          : 4
 		Offset        : 40
+		Scope         : temp
 		Nested Table  : null
 --------------------------------------------------------------
 		Name          : _t11
@@ -177,6 +194,7 @@ Number of Symbol Tables: 7
 		Initial Value : null
 		Size          : 4
 		Offset        : 44
+		Scope         : temp
 		Nested Table  : null
 --------------------------------------------------------------
 		Name          : _t12
@@ -184,6 +202,7 @@ Number of Symbol Tables: 7
 		Initial Value : null
 		Size          : 4
 		Offset        : 48
+		Scope         : temp
 		Nested Table  : null
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
@@ -202,6 +221,7 @@ Number of Symbol Tables: 7
 		Initial Value : null
 		Size          : 4
 		Offset        : 0
+		Scope         : parameter
 		Nested Table  : null
 --------------------------------------------------------------
 		Name          : return
@@ -209,6 +229,7 @@ Number of Symbol Tables: 7
 		Initial Value : null
 		Size          : 4
 		Offset        : 4
+		Scope         : local
 		Nested Table  : null
 --------------------------------------------------------------
 		Name          : sum.$0
@@ -216,6 +237,7 @@ Number of Symbol Tables: 7
 		Initial Value : null
 		Size          : 0
 		Offset        : 8
+		Scope         : local
 		Nested Table  : sum.$0
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
@@ -234,6 +256,7 @@ Number of Symbol Tables: 7
 		Initial Value : 0
 		Size          : 4
 		Offset        : 0
+		Scope         : temp
 		Nested Table  : null
 --------------------------------------------------------------
 		Name          : _t14
@@ -241,6 +264,7 @@ Number of Symbol Tables: 7
 		Initial Value : null
 		Size          : 4
 		Offset        : 4
+		Scope         : temp
 		Nested Table  : null
 --------------------------------------------------------------
 		Name          : _t15
@@ -248,6 +272,7 @@ Number of Symbol Tables: 7
 		Initial Value : 0
 		Size          : 4
 		Offset        : 8
+		Scope         : temp
 		Nested Table  : null
 --------------------------------------------------------------
 		Name          : _t16
@@ -255,6 +280,7 @@ Number of Symbol Tables: 7
 		Initial Value : 1
 		Size          : 4
 		Offset        : 12
+		Scope         : temp
 		Nested Table  : null
 --------------------------------------------------------------
 		Name          : _t17
@@ -262,6 +288,7 @@ Number of Symbol Tables: 7
 		Initial Value : null
 		Size          : 4
 		Offset        : 16
+		Scope         : temp
 		Nested Table  : null
 --------------------------------------------------------------
 		Name          : _t18
@@ -269,6 +296,7 @@ Number of Symbol Tables: 7
 		Initial Value : null
 		Size          : 4
 		Offset        : 20
+		Scope         : temp
 		Nested Table  : null
 --------------------------------------------------------------
 		Name          : _t19
@@ -276,6 +304,7 @@ Number of Symbol Tables: 7
 		Initial Value : null
 		Size          : 4
 		Offset        : 24
+		Scope         : temp
 		Nested Table  : null
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
@@ -294,6 +323,7 @@ Number of Symbol Tables: 7
 		Initial Value : null
 		Size          : 4
 		Offset        : 0
+		Scope         : local
 		Nested Table  : null
 --------------------------------------------------------------
 		Name          : main.$0
@@ -301,6 +331,7 @@ Number of Symbol Tables: 7
 		Initial Value : null
 		Size          : 0
 		Offset        : 4
+		Scope         : local
 		Nested Table  : main.$0
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
@@ -319,6 +350,7 @@ Number of Symbol Tables: 7
 		Initial Value : 0
 		Size          : 4
 		Offset        : 0
+		Scope         : local
 		Nested Table  : null
 --------------------------------------------------------------
 		Name          : _t20
@@ -326,6 +358,7 @@ Number of Symbol Tables: 7
 		Initial Value : 0
 		Size          : 4
 		Offset        : 4
+		Scope         : temp
 		Nested Table  : null
 --------------------------------------------------------------
 		Name          : _t21
@@ -333,6 +366,7 @@ Number of Symbol Tables: 7
 		Initial Value : 0
 		Size          : 4
 		Offset        : 8
+		Scope         : temp
 		Nested Table  : null
 --------------------------------------------------------------
 		Name          : _t22
@@ -340,6 +374,7 @@ Number of Symbol Tables: 7
 		Initial Value : null
 		Size          : 4
 		Offset        : 12
+		Scope         : temp
 		Nested Table  : null
 --------------------------------------------------------------
 		Name          : _t23
@@ -347,6 +382,7 @@ Number of Symbol Tables: 7
 		Initial Value : 1
 		Size          : 4
 		Offset        : 16
+		Scope         : temp
 		Nested Table  : null
 --------------------------------------------------------------
 		Name          : _t24
@@ -354,6 +390,7 @@ Number of Symbol Tables: 7
 		Initial Value : 1
 		Size          : 4
 		Offset        : 20
+		Scope         : temp
 		Nested Table  : null
 --------------------------------------------------------------
 		Name          : _t25
@@ -361,6 +398,7 @@ Number of Symbol Tables: 7
 		Initial Value : null
 		Size          : 4
 		Offset        : 24
+		Scope         : temp
 		Nested Table  : null
 --------------------------------------------------------------
 		Name          : _t26
@@ -368,6 +406,7 @@ Number of Symbol Tables: 7
 		Initial Value : 2
 		Size          : 4
 		Offset        : 28
+		Scope         : temp
 		Nested Table  : null
 --------------------------------------------------------------
 		Name          : _t27
@@ -375,6 +414,7 @@ Number of Symbol Tables: 7
 		Initial Value : 3
 		Size          : 4
 		Offset        : 32
+		Scope         : temp
 		Nested Table  : null
 --------------------------------------------------------------
 		Name          : _t28
@@ -382,6 +422,7 @@ Number of Symbol Tables: 7
 		Initial Value : null
 		Size          : 4
 		Offset        : 36
+		Scope         : temp
 		Nested Table  : null
 --------------------------------------------------------------
 		Name          : _t29
@@ -389,6 +430,7 @@ Number of Symbol Tables: 7
 		Initial Value : 3
 		Size          : 4
 		Offset        : 40
+		Scope         : temp
 		Nested Table  : null
 --------------------------------------------------------------
 		Name          : _t30
@@ -396,6 +438,7 @@ Number of Symbol Tables: 7
 		Initial Value : 4
 		Size          : 4
 		Offset        : 44
+		Scope         : temp
 		Nested Table  : null
 --------------------------------------------------------------
 		Name          : _t31
@@ -403,6 +446,7 @@ Number of Symbol Tables: 7
 		Initial Value : null
 		Size          : 4
 		Offset        : 48
+		Scope         : temp
 		Nested Table  : null
 --------------------------------------------------------------
 		Name          : _t32
@@ -410,6 +454,7 @@ Number of Symbol Tables: 7
 		Initial Value : null
 		Size          : 4
 		Offset        : 52
+		Scope         : temp
 		Nested Table  : null
 --------------------------------------------------------------
 		Name          : _t33
@@ -417,6 +462,7 @@ Number of Symbol Tables: 7
 		Initial Value : null
 		Size          : 4
 		Offset        : 56
+		Scope         : temp
 		Nested Table  : null
 --------------------------------------------------------------
 		Name          : _t34
@@ -424,6 +470,7 @@ Number of Symbol Tables: 7
 		Initial Value : 0
 		Size          : 4
 		Offset        : 60
+		Scope         : temp
 		Nested Table  : null
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 

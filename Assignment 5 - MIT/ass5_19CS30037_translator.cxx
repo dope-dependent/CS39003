@@ -72,7 +72,7 @@ void SymbolType::printType() { cout << this->getType(); }
 Symbol::Symbol(string name, string type, string initval, int width, Symboltable *nested_table)
     : name(name), type(new SymbolType(type, width)), initial_value(initval), nested_table(nested_table)
 {
-    cout << "Symbol constructor called\n";
+    // cout << "Symbol constructor called\n";
     this->size = this->type->getSize(); // Get the size
     this->offset = 0;                   // Initial offset is 0
     // cout << "Symbol constructor ended\n";
@@ -121,6 +121,7 @@ Symbol *Symboltable::lookup(string _id)
     if (check != nullptr) return check;
     // Else create a new symbol with this name
     Symbol *ns = new Symbol(_id);
+    ns->scope = "local";
     // Add to the list of symbols
     this->symbols.push_back(ns);
     // cout << "Symboltable Lookup exited \n";
@@ -153,6 +154,7 @@ Symbol *Symboltable::gentemp(SymbolType *_type)
     Symbol *ns = new Symbol(namx);
     ns->type = _type;
     ns->size = _type->getSize();
+    ns->scope = "temp";
     this->symbols.push_back(ns);
     // cout << "ST->gentemp ended\n";
     return this->symbols.back(); // The latest symbol
@@ -201,6 +203,7 @@ void Symboltable::print()
             cout << c->initial_value << "\n";
         cout << "\t\tSize          : " << c->size << "\n";
         cout << "\t\tOffset        : " << c->offset << "\n";
+        cout << "\t\tScope         : " << c->scope << "\n";
         if (c->nested_table == nullptr) {cout << "\t\tNested Table  : null\n";} 
         else cout << "\t\tNested Table  : " << c->nested_table->name << "\n";
         if (k != this->symbols.size() - 1) {

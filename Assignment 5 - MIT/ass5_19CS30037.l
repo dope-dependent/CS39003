@@ -12,7 +12,7 @@ extern "C" int yylex();
 /* Regular Expressions Definitions */
 IDENTIFIER     [a-zA-Z_][a-zA-Z0-9_]*
 INT_CONST      [1-9][0-9]*|[0]
-STRING_LITERAL \"("\'"|"\""|"\?"|"\\"|"\a"|"\b"|"\f"|"\n"|"\r"|"\t"|"\v"|[^\"\\])*\"
+STRING_LITERAL \"(\\.|[^"\\])*\"
 FLOATING_CONST [0-9]+[eE][+-]?[0-9]+|[0-9]*\.[0-9]+([eE][+-]?[0-9]+)?|[0-9]+\.([eE][+-]?[0-9]+)?
 CHAR_CONST     \'("\'"|"\""|"\?"|"\\"|"\a"|"\b"|"\f"|"\n"|"\r"|"\t"|"\v"|[^\'\\\n])*\'
 WS             [ \t]

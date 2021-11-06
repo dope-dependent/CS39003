@@ -1097,7 +1097,10 @@ parameter_list: parameter_declaration { }
               | parameter_list COMMA parameter_declaration { }                   
               ;
 
-parameter_declaration: declaration_specifiers declarator { }                   
+parameter_declaration: declaration_specifiers declarator {
+                        $2->scope = "parameter";
+                     }
+                     ;                   
                      | declaration_specifiers { }                   
                      ;
 
