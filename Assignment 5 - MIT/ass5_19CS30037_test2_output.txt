@@ -590,12 +590,8 @@ Number of Symbol Tables: 11
 PRINTING ALL QUADS
 
 ------------------TAC-----------------
-
-swappy: 
-
-
-swappy.$0: 
-
+   0 : swappy: 
+   1 : swappy.$0: 
    2 : _t0= * a
    3 : temp = _t0
    4 : _t1= * a
@@ -605,41 +601,29 @@ swappy.$0:
    8 : _t4= * a
    9 : b* = _t4
   10 : return 
-
-div1: 
-
-
-div1.$0: 
-
+  11 : funcend swappy
+  12 : div1: 
+  13 : div1.$0: 
   14 : _t5 = a / b
   15 : _t6 = float2int(_t5)
   16 : q = _t6
   17 : return q
-
-mul1: 
-
-
-mul1.$0: 
-
+  18 : funcend div1
+  19 : mul1: 
+  20 : mul1.$0: 
   21 : _t7 = a * b
   22 : return _t7
-
-mull: 
-
-
-mull.$0: 
-
+  23 : funcend mul1
+  24 : mull: 
+  25 : mull.$0: 
   26 : _t8 = float2int(c)
   27 : _t9 = _t8 * a
   28 : _t10 = _t9 * b
   29 : _t11 = _t10 * d
   30 : return _t11
-
-main: 
-
-
-main.$0: 
-
+  31 : funcend mull
+  32 : main: 
+  33 : main.$0: 
   34 : _t12 = 21
   35 : _t13= -_t12
   36 : a_232 = _t13
@@ -677,3 +661,4 @@ main.$0:
   68 : e = _t25
   69 : _t26 = 0
   70 : return _t26
+  71 : funcend main

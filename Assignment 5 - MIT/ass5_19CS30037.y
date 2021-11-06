@@ -127,6 +127,22 @@ X: %empty
 	}  
 	;
 
+blocktable: %empty
+            {
+                  if(curr_symbol->nested_table==nullptr) 
+                  {
+                        Symboltable *_new = new Symboltable("");
+                        _new->parent = ST;
+                        STS.add(_new);
+                        updateSymbolTable(_new); // Function symbol table doesn't already exist
+                  }
+                  else 
+                  {
+                        updateSymbolTable(curr_symbol->nested_table); // Function symbol table already exists	
+                        emit("label", ST->name);
+                  }   
+            }
+            ;
 changetable: %empty
             {
                   if(curr_symbol->nested_table==nullptr) 
@@ -1159,7 +1175,7 @@ labeled_statement: IDENTIFIER COLON M statement
                  { }
                  ;
 
-compound_statement: OPEN_BRACE X changetable block_item_list_opt CLOSE_BRACE
+compound_statement: OPEN_BRACE X blocktable block_item_list_opt CLOSE_BRACE
                   { 
                         // Copy the block item list
                         $$ = $4;
@@ -1233,10 +1249,10 @@ selection_statement: IF OPEN_PARENTHESIS expression CLOSE_PARENTHESIS M statemen
                    
                    ;
 
-iteration_statement: WHILE OPEN_PARENTHESIS X changetable M expression CLOSE_PARENTHESIS M statement
+iteration_statement: WHILE OPEN_PARENTHESIS X blocktable M expression CLOSE_PARENTHESIS M statement
                    { 
                         // X creates the separate symbol table
-                        // Changetable changes to the nested symbol table
+                        // blocktable changes to the nested symbol table
                         // while M1 (B) M2 S1
                         $$ = new Next();
                         conv_int2bool(*$6);      // Convert expression to boolean
@@ -1259,7 +1275,7 @@ iteration_statement: WHILE OPEN_PARENTHESIS X changetable M expression CLOSE_PAR
                         $$->nextlist = $7->falselist; // Exit to the falselist of expression
                    }
                    
-                   | FOR OPEN_PARENTHESIS X changetable expression_statement M expression_statement M expression N CLOSE_PARENTHESIS M statement
+                   | FOR OPEN_PARENTHESIS X blocktable expression_statement M expression_statement M expression N CLOSE_PARENTHESIS M statement
                    { 
                         // for M1 (E1; M1 E2; M2 E3 N) M3 S 
                         $$ = new Next();
@@ -1272,7 +1288,7 @@ iteration_statement: WHILE OPEN_PARENTHESIS X changetable M expression CLOSE_PAR
                         ST = ST->parent;
                    }
 
-                   | FOR OPEN_PARENTHESIS X changetable declaration M expression_statement M expression N CLOSE_PARENTHESIS M statement
+                   | FOR OPEN_PARENTHESIS X blocktable declaration M expression_statement M expression N CLOSE_PARENTHESIS M statement
                    { 
                         // for M1 (E1; M1 E2; M2 E3 N) M3 S 
                         // Repeat the same as above. 
@@ -1286,7 +1302,7 @@ iteration_statement: WHILE OPEN_PARENTHESIS X changetable M expression CLOSE_PAR
                         ST = ST->parent;
                    }
                    
-                   | FOR OPEN_PARENTHESIS X changetable declaration M expression_statement M expression_statement M expression N CLOSE_PARENTHESIS M statement
+                   | FOR OPEN_PARENTHESIS X blocktable declaration M expression_statement M expression_statement M expression N CLOSE_PARENTHESIS M statement
                    { /* Not supported */ }
                    ;
 

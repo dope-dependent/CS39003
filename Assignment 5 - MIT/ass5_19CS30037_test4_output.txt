@@ -367,12 +367,8 @@ Number of Symbol Tables: 5
 PRINTING ALL QUADS
 
 ------------------TAC-----------------
-
-main: 
-
-
-main.$0: 
-
+   0 : main: 
+   1 : main.$0: 
    2 : _t0 = 2
    3 : a = _t0
    4 : _t1 = 3
@@ -386,15 +382,11 @@ main.$0:
   12 : _t5 = 1
   13 : if a > _t5 goto 15
   14 : goto 26
-
-main.$0.$1: 
-
+  15 : main.$0.$1: 
   16 : _t7 = 2
   17 : if b <= _t7 goto 19
   18 : goto 23
-
-main.$0.$1.$2: 
-
+  19 : main.$0.$1.$2: 
   20 : _t9 = 2
   21 : b = _t9
   22 : goto 28
@@ -442,3 +434,4 @@ main.$0.$1.$2:
   64 : c = _t29
   65 : _t30 = 0
   66 : return _t30
+  67 : funcend main

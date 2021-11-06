@@ -301,7 +301,7 @@ void Quad::print()
             cout << res << ": ";
         }
         else if (op == "funcend") {
-            cout << "";
+            cout << op << " " << res;
         }
         else
             cout << "No matching operator found";
@@ -325,12 +325,13 @@ void QuadArray::print()
     for (Quad * q : this->quads)
     {
         if (q->op == "funcend") {
+            printf("%4d : ", index);
+            q->print();
             index++;
         }
         else if (q->op == "func") {
-            cout << "\n";
+            printf("%4d : ", index);
             q->print();
-            cout << "\n";
             index++;
         }
         else {
